@@ -8,7 +8,7 @@ using System;
 
 namespace LibraNET.Data.Migrations
 {
-    [DbContext(typeof(LibraNetContext))]
+    [DbContext(typeof(LibraNetDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

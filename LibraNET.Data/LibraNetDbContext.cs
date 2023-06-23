@@ -3,13 +3,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace LibraNET.Data
 {
-    public class LibraNetContext : IdentityDbContext
+    public class LibraNetDbContext : IdentityDbContext
     {
-        public LibraNetContext(DbContextOptions options) : base(options)
-        {
-        }
-
-        protected LibraNetContext()
+        public LibraNetDbContext(DbContextOptions options) : base(options)
         {
         }
 

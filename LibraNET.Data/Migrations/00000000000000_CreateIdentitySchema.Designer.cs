@@ -9,7 +9,7 @@ using System;
 
 namespace LibraNET.Data.Migrations
 {
-    [DbContext(typeof(LibraNetContext))]
+    [DbContext(typeof(LibraNetDbContext))]
     [Migration("00000000000000_CreateIdentitySchema")]
     partial class CreateIdentitySchema
     {
