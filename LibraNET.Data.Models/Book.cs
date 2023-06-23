@@ -13,6 +13,7 @@ namespace LibraNET.Data.Models
             BooksAuthors = new List<BookAuthor>();
             BooksCategories = new List<BookCategory>();
             Comments = new List<Comment>();
+            Ratings = new List<Rating>();
         }
 
         [Key]
@@ -43,13 +44,17 @@ namespace LibraNET.Data.Models
         public string Language { get; set; } = null!;
 
         [Required]
+        public string ImageURL { get; set; } = null!;
+
+        [Required]
         [ForeignKey(nameof(Publisher))]
         public int PublisherId { get; set; }
 
 
-        public ICollection<BookAuthor> BooksAuthors { get; set; }
-        public ICollection<BookCategory> BooksCategories { get; set; }
-        public ICollection<Comment> Comments { get; set; }
-        public Publisher Publisher { get; set; } = null!;
+        public virtual ICollection<BookAuthor> BooksAuthors { get; set; }
+        public virtual ICollection<BookCategory> BooksCategories { get; set; }
+        public virtual ICollection<Comment> Comments { get; set; }
+        public virtual ICollection<Rating> Ratings { get; set; }
+        public virtual Publisher Publisher { get; set; } = null!;
     }
 }
