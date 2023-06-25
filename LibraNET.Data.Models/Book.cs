@@ -12,6 +12,7 @@ namespace LibraNET.Data.Models
             Id = Guid.NewGuid();
             BooksAuthors = new List<BookAuthor>();
             BooksCategories = new List<BookCategory>();
+            UsersFavouriteBooks = new List<UserFavouriteBook>();
             Comments = new List<Comment>();
             Ratings = new List<Rating>();
         }
@@ -53,6 +54,7 @@ namespace LibraNET.Data.Models
 
         public virtual ICollection<BookAuthor> BooksAuthors { get; set; }
         public virtual ICollection<BookCategory> BooksCategories { get; set; }
+        public virtual ICollection<UserFavouriteBook> UsersFavouriteBooks { get; set; }
         public virtual ICollection<Comment> Comments { get; set; }
         public virtual ICollection<Rating> Ratings { get; set; }
         public virtual Publisher Publisher { get; set; } = null!;
