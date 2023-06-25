@@ -26,6 +26,7 @@ namespace LibraNET.Data
 
         public DbSet<BookCategory> BooksCategories { get; set; } = null!;
 
+        public DbSet<UserFavouriteBook> UsersFavouriteBooks { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -36,7 +37,10 @@ namespace LibraNET.Data
                 .HasKey(e => new { e.BookId, e.AuthorId });
 
             modelBuilder.Entity<BookCategory>()
-                .HasKey(e => new { e.BookId, e.CategoryId }); 
+                .HasKey(e => new { e.BookId, e.CategoryId });
+
+            modelBuilder.Entity<UserFavouriteBook>()
+                .HasKey(e => new { e.BookId, e.UserId }); 
 
             base.OnModelCreating(modelBuilder);
         }
