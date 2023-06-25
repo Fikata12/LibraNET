@@ -12,7 +12,7 @@ namespace LibraNET.Data.Models
 
         [Required]
         [ForeignKey(nameof(Rater))]
-        public Guid RaterId { get; set; }
+        public string RaterId { get; set; } = null!;
 
         [Required]
         public int Value { get; set; }

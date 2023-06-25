@@ -25,7 +25,7 @@ namespace LibraNET.Data.Models
 
         [Required]
         [ForeignKey(nameof(Commenter))]
-        public Guid CommenterId { get; set; }
+        public string CommenterId { get; set; } = null!;
 
         [Required]
         [ForeignKey(nameof(Book))]

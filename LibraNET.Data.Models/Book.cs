@@ -48,7 +48,7 @@ namespace LibraNET.Data.Models
 
         [Required]
         [ForeignKey(nameof(Publisher))]
-        public int PublisherId { get; set; }
+        public Guid PublisherId { get; set; }
 
 
         public virtual ICollection<BookAuthor> BooksAuthors { get; set; }
