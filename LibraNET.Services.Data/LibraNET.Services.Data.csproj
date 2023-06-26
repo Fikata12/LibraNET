@@ -11,4 +11,8 @@
     <ProjectReference Include="..\LibraNET.Services.Mapping\LibraNET.Services.Mapping.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Contracts\" />
+  </ItemGroup>
+
 </Project>
