@@ -1,4 +1,5 @@
 using LibraNET.Data;
+using LibraNET.Services.Mapping;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,8 +13,9 @@ namespace LibraNET
 
             // Add services to the container.
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
-            builder.Services.AddDbContext<LibraNetDbContext>(options =>
-                options.UseSqlServer(connectionString));
+
+            builder.Services.AddDbContext<LibraNetDbContext>(options => options.UseSqlServer(connectionString));
+
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
             builder.Services.AddDefaultIdentity<IdentityUser>(options =>
@@ -24,7 +26,13 @@ namespace LibraNET
                 options.Password.RequireDigit = false;
             })
                 .AddEntityFrameworkStores<LibraNetDbContext>();
+
             builder.Services.AddControllersWithViews();
+
+            builder.Services.AddAutoMapper(cfg =>
+            {
+                cfg.AddProfile<LibraNetProfile>();
+            });
 
             var app = builder.Build();
 
