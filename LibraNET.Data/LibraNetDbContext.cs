@@ -1,4 +1,5 @@
-﻿using LibraNET.Data.Models;
+﻿using LibraNET.Data.Configurations;
+using LibraNET.Data.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -40,7 +41,9 @@ namespace LibraNET.Data
                 .HasKey(e => new { e.BookId, e.CategoryId });
 
             modelBuilder.Entity<UserFavouriteBook>()
-                .HasKey(e => new { e.BookId, e.UserId }); 
+                .HasKey(e => new { e.BookId, e.UserId });
+
+            // modelBuilder.ApplyConfiguration(new PublisherEntityConfiguration());
 
             base.OnModelCreating(modelBuilder);
         }
