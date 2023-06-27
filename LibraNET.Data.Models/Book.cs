@@ -14,6 +14,7 @@ namespace LibraNET.Data.Models
             UsersFavouriteBooks = new List<UserFavouriteBook>();
             Comments = new List<Comment>();
             Ratings = new List<Rating>();
+            AddedDate = DateTime.Now;
         }
 
         [Key]
@@ -29,7 +30,7 @@ namespace LibraNET.Data.Models
         [Required]
         public DateTime PublicationDate { get; set; }
 
-        [Required]
+		[Required]
         [MaxLength(DescriptionMaxLength)]
         public string Description { get; set; } = null!;
 
@@ -47,8 +48,11 @@ namespace LibraNET.Data.Models
         [ForeignKey(nameof(Publisher))]
         public Guid PublisherId { get; set; }
 
+		[Required]
+		public DateTime AddedDate { get; set; }
 
-        public virtual ICollection<BookAuthor> BooksAuthors { get; set; }
+
+		public virtual ICollection<BookAuthor> BooksAuthors { get; set; }
         public virtual ICollection<BookCategory> BooksCategories { get; set; }
         public virtual ICollection<UserFavouriteBook> UsersFavouriteBooks { get; set; }
         public virtual ICollection<Comment> Comments { get; set; }
