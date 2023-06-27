@@ -1,5 +1,4 @@
-﻿using LibraNET.Data.Models.Enums;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using static LibraNET.Common.ValidationConstants.Book;
 
@@ -36,9 +35,6 @@ namespace LibraNET.Data.Models
 
         [Required]
         public int PageCount { get; set; }
-
-        [Required]
-        public AgeGroup AgeGroup { get; set; }
 
         [Required]
         [MaxLength(LanguageMaxLength)]
