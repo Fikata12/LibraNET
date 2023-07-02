@@ -4,8 +4,8 @@
     {
         public static class Book
         {
-            public const int TitleMaxLenght = 120;
-            public const int TitleMinLenght = 1;
+            public const int TitleMaxLength = 120;
+            public const int TitleMinLength = 1;
 
             public const int ISBNLength = 13;
 
@@ -21,14 +21,14 @@
 
         public static class Author
         {
-            public const int FirstNameMaxLenght = 50;
-            public const int FirstNameMinLenght = 2;
+            public const int FirstNameMaxLength = 30;
+            public const int FirstNameMinLength = 1;
 
-            public const int MiddleNameMaxLenght = 50;
-            public const int MiddleNameMinLenght = 2;
+            public const int MiddleNameMaxLength = 30;
+            public const int MiddleNameMinLength = 1;
 
-            public const int LastNameMaxLenght = 50;
-            public const int LastNameMinLenght = 2;
+            public const int LastNameMaxLength = 30;
+            public const int LastNameMinLength = 1;
 
             public const int DescriptionMaxLength = 2100;
             public const int DescriptionMinLength = 30;
@@ -36,20 +36,41 @@
 
         public static class Category
         {
-            public const int NameMaxLenght = 30;
-            public const int NameMinLenght = 3;
+            public const int NameMaxLength = 30;
+            public const int NameMinLength = 3;
         }
 
         public static class Comment
         {
-            public const int TextMaxLenght = 300;
-            public const int TextMinLenght = 1;
+            public const int TextMaxLength = 300;
+            public const int TextMinLength = 1;
         }
 
         public static class Publisher
         {
-            public const int NameMaxLenght = 50;
-            public const int NameMinLenght = 3;
+            public const int NameMaxLength = 50;
+            public const int NameMinLength = 3;
         }
-    }
+
+		public static class Order
+		{
+			public const int RecipientNameMaxLength = 60;
+			public const int RecipientNameMinLength = 6;
+
+			public const int PhoneNumberLength = 10;
+
+			public const int AddressMaxLength = 150;
+		}
+
+		public static class Address
+		{
+			public const int TownNameMaxLength = 30;
+			public const int TownNameMinLength = 3;
+
+            public const int PostCodeLength = 4;
+
+			public const int AddressMaxLength = 50;
+			public const int AddressMinLength = 5;
+		}
+	}
 }

@@ -14,6 +14,8 @@ namespace LibraNET.Data.Models
             UsersFavouriteBooks = new List<UserFavouriteBook>();
             Comments = new List<Comment>();
             Ratings = new List<Rating>();
+            CartsBooks = new List<CartBook>();
+            OrdersBooks = new List<OrderBook>();
             AddedDate = DateTime.Now;
         }
 
@@ -21,7 +23,7 @@ namespace LibraNET.Data.Models
         public Guid Id { get; set; }
 
         [Required]
-        [MaxLength(TitleMaxLenght)]
+        [MaxLength(TitleMaxLength)]
         public string Title { get; set; } = null!;
 
         [MaxLength(ISBNLength)]
@@ -45,6 +47,12 @@ namespace LibraNET.Data.Models
         public string ImageURL { get; set; } = null!;
 
         [Required]
+        public decimal Price { get; set; }
+
+        [Required]
+        public int AvailableCount { get; set; }
+
+		[Required]
         [ForeignKey(nameof(Publisher))]
         public Guid PublisherId { get; set; }
 
@@ -57,6 +65,8 @@ namespace LibraNET.Data.Models
         public virtual ICollection<UserFavouriteBook> UsersFavouriteBooks { get; set; }
         public virtual ICollection<Comment> Comments { get; set; }
         public virtual ICollection<Rating> Ratings { get; set; }
-        public virtual Publisher Publisher { get; set; } = null!;
+        public virtual ICollection<CartBook> CartsBooks { get; set; }
+		public virtual ICollection<OrderBook> OrdersBooks { get; set; }
+		public virtual Publisher Publisher { get; set; } = null!;
     }
 }

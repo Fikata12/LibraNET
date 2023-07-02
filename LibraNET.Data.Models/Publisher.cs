@@ -15,7 +15,7 @@ namespace LibraNET.Data.Models
         public Guid Id { get; set; }
 
         [Required]
-        [MaxLength(NameMaxLenght)]
+        [MaxLength(NameMaxLength)]
         public string Name { get; set; } = null!;
 
         public string? WebsiteURL { get; set; }

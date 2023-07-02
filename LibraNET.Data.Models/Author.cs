@@ -15,14 +15,14 @@ namespace LibraNET.Data.Models
         public Guid Id { get; set; }
 
         [Required]
-        [MaxLength(FirstNameMaxLenght)]
+        [MaxLength(FirstNameMaxLength)]
         public string FirstName { get; set; } = null!;
 
-        [MaxLength(MiddleNameMaxLenght)]
+        [MaxLength(MiddleNameMaxLength)]
         public string? MiddleName { get; set; }
 
         [Required]
-        [MaxLength(LastNameMaxLenght)]
+        [MaxLength(LastNameMaxLength)]
         public string LastName { get; set; } = null!;
 
         [Required]
