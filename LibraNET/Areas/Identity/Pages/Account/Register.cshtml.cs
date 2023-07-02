@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Text.Encodings.Web;
@@ -19,6 +20,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using static LibraNET.Common.ValidationConstants.ApplicationUser;
 
 namespace LibraNET.Areas.Identity.Pages.Account
 {
@@ -71,6 +73,29 @@ namespace LibraNET.Areas.Identity.Pages.Account
         /// </summary>
         public class InputModel
         {
+			[Required]
+			[Display(Name = "First Name")]
+			[StringLength(FirstNameMaxLength, 
+                ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", 
+                MinimumLength = FirstNameMinLength)]
+			public string FirstName { get; set; }
+
+			[Required]
+			[Display(Name = "Last Name")]
+			[StringLength(LastNameMaxLength, 
+                ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", 
+                MinimumLength = LastNameMinLength)]
+			public string LastName { get; set; }
+
+            [Required]
+            [Display(Name = "Phone Number")]
+            [StringLength(PhoneNumberMaxLength,
+                ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.",
+                MinimumLength = PhoneNumberMinLength)]
+            [RegularExpression(@"^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$", 
+                ErrorMessage = "Enter a valid Phone Number.")]
+            public string PhoneNumber { get; set; }
+
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
@@ -85,7 +110,7 @@ namespace LibraNET.Areas.Identity.Pages.Account
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
             [Required]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            [StringLength(30, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 8)]
             [DataType(DataType.Password)]
             [Display(Name = "Password")]
             public string Password { get; set; }
@@ -115,6 +140,9 @@ namespace LibraNET.Areas.Identity.Pages.Account
             {
                 var user = CreateUser();
 
+                user.FirstName = Input.FirstName;
+                user.LastName = Input.LastName;
+                user.PhoneNumber = Input.PhoneNumber;
                 user.Cart = new Cart
                 {
                     UserId = user.Id
