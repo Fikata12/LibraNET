@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace LibraNET.Data.Migrations
 {
-    public partial class AddShoppingFunctionality : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -106,7 +106,9 @@ namespace LibraNET.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CartId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    FirstName = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true),
+                    LastName = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true),
+                    CartId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -466,20 +468,6 @@ namespace LibraNET.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.InsertData(
-                table: "Publishers",
-                columns: new[] { "Id", "Name", "WebsiteURL" },
-                values: new object[,]
-                {
-                    { new Guid("1fe0e05b-8bf7-4034-a531-cbf1ceedfeae"), "Harper Collins", "https://www.harpercollins.com/" },
-                    { new Guid("326d34d0-1613-4d97-a408-cc448fdd98de"), "Macmillan Publishers", "https://us.macmillan.com/" },
-                    { new Guid("57822c42-f2e5-4b20-91ea-c5708d69268c"), "Insight Editions", "https://insighteditions.com/" },
-                    { new Guid("965bc0c9-e32c-4497-9765-ada17c48bdb7"), "Bloomsbury", "https://www.bloomsbury.com/uk/" },
-                    { new Guid("b87a72b0-cd7a-43f6-aebf-56e2e9a3ea9a"), "McGraw-Hill Education", "https://www.mheducation.com/" },
-                    { new Guid("d910ff66-1bc5-4024-8824-42905435f749"), "Penguin Random House", "https://www.penguinrandomhouse.com/" },
-                    { new Guid("ec896ef0-6aee-44c6-817c-ca28c7a22ac3"), "Hachette Livre", "https://www.hachette.com/en/" }
-                });
-
             migrationBuilder.CreateIndex(
                 name: "IX_Addresses_UserId",
                 table: "Addresses",
@@ -521,7 +509,8 @@ namespace LibraNET.Data.Migrations
                 name: "IX_AspNetUsers_CartId",
                 table: "AspNetUsers",
                 column: "CartId",
-                unique: true);
+                unique: true,
+                filter: "[CartId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "UserNameIndex",

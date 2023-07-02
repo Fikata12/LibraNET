@@ -43,6 +43,14 @@ namespace LibraNET.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 			modelBuilder.Entity<ApplicationUser>()
+			.Property(e => e.CartId)
+			.IsRequired(false);
+
+            modelBuilder.Entity<ApplicationUser>()
+            .Property(e => e.PhoneNumber)
+            .IsRequired(false);
+
+            modelBuilder.Entity<ApplicationUser>()
 				.HasOne(e => e.Cart)
 				.WithOne(e => e.User)
 				.OnDelete(DeleteBehavior.NoAction);
@@ -65,7 +73,7 @@ namespace LibraNET.Data
 			modelBuilder.Entity<OrderBook>()
 				.HasKey(e => new { e.OrderId, e.BookId });
 
-            modelBuilder.ApplyConfiguration(new PublisherEntityConfiguration());
+            //modelBuilder.ApplyConfiguration(new PublisherEntityConfiguration());
 
             base.OnModelCreating(modelBuilder);
         }

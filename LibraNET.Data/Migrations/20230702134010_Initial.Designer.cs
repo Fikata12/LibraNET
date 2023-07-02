@@ -4,6 +4,7 @@ using LibraNET.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LibraNET.Data.Migrations
 {
     [DbContext(typeof(LibraNetDbContext))]
-    partial class LibraNetDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230702134010_Initial")]
+    partial class Initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -102,8 +104,7 @@ namespace LibraNET.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")
-                        .HasMaxLength(13)
-                        .HasColumnType("nvarchar(13)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
@@ -364,8 +365,8 @@ namespace LibraNET.Data.Migrations
 
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
-                        .HasMaxLength(13)
-                        .HasColumnType("nvarchar(13)");
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");

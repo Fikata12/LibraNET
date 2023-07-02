@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LibraNET.Data.Migrations
 {
     [DbContext(typeof(LibraNetDbContext))]
-    [Migration("20230702022616_AddShoppingFunctionality")]
-    partial class AddShoppingFunctionality
+    [Migration("20230702144729_AddPhoneNumberMaxLength")]
+    partial class AddPhoneNumberMaxLength
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -64,7 +64,7 @@ namespace LibraNET.Data.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("CartId")
+                    b.Property<Guid?>("CartId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("ConcurrencyStamp")
@@ -77,6 +77,14 @@ namespace LibraNET.Data.Migrations
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
+
+                    b.Property<string>("FirstName")
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<string>("LastName")
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
@@ -96,7 +104,8 @@ namespace LibraNET.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(13)
+                        .HasColumnType("nvarchar(13)");
 
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
@@ -114,7 +123,8 @@ namespace LibraNET.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CartId")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[CartId] IS NOT NULL");
 
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
@@ -356,8 +366,8 @@ namespace LibraNET.Data.Migrations
 
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
+                        .HasMaxLength(13)
+                        .HasColumnType("nvarchar(13)");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
@@ -415,50 +425,6 @@ namespace LibraNET.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Publishers");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("d910ff66-1bc5-4024-8824-42905435f749"),
-                            Name = "Penguin Random House",
-                            WebsiteURL = "https://www.penguinrandomhouse.com/"
-                        },
-                        new
-                        {
-                            Id = new Guid("ec896ef0-6aee-44c6-817c-ca28c7a22ac3"),
-                            Name = "Hachette Livre",
-                            WebsiteURL = "https://www.hachette.com/en/"
-                        },
-                        new
-                        {
-                            Id = new Guid("1fe0e05b-8bf7-4034-a531-cbf1ceedfeae"),
-                            Name = "Harper Collins",
-                            WebsiteURL = "https://www.harpercollins.com/"
-                        },
-                        new
-                        {
-                            Id = new Guid("326d34d0-1613-4d97-a408-cc448fdd98de"),
-                            Name = "Macmillan Publishers",
-                            WebsiteURL = "https://us.macmillan.com/"
-                        },
-                        new
-                        {
-                            Id = new Guid("965bc0c9-e32c-4497-9765-ada17c48bdb7"),
-                            Name = "Bloomsbury",
-                            WebsiteURL = "https://www.bloomsbury.com/uk/"
-                        },
-                        new
-                        {
-                            Id = new Guid("57822c42-f2e5-4b20-91ea-c5708d69268c"),
-                            Name = "Insight Editions",
-                            WebsiteURL = "https://insighteditions.com/"
-                        },
-                        new
-                        {
-                            Id = new Guid("b87a72b0-cd7a-43f6-aebf-56e2e9a3ea9a"),
-                            Name = "McGraw-Hill Education",
-                            WebsiteURL = "https://www.mheducation.com/"
-                        });
                 });
 
             modelBuilder.Entity("LibraNET.Data.Models.Rating", b =>
@@ -645,8 +611,7 @@ namespace LibraNET.Data.Migrations
                     b.HasOne("LibraNET.Data.Models.Cart", "Cart")
                         .WithOne("User")
                         .HasForeignKey("LibraNET.Data.Models.ApplicationUser", "CartId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("Cart");
                 });

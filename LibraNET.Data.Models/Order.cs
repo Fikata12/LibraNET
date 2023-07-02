@@ -21,7 +21,7 @@ namespace LibraNET.Data.Models
 		public string RecipientName { get; set; } = null!;
 
 		[Required]
-		[MaxLength(PhoneNumberLength)]
+		[MaxLength(PhoneNumberMaxLength)]
 		public string PhoneNumber { get; set; } = null!;
 
 		[Required]

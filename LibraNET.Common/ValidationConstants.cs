@@ -57,9 +57,10 @@
 			public const int RecipientNameMaxLength = 60;
 			public const int RecipientNameMinLength = 6;
 
-			public const int PhoneNumberLength = 10;
+            public const int PhoneNumberMaxLength = 13;
+            public const int PhoneNumberMinLength = 10;
 
-			public const int AddressMaxLength = 150;
+            public const int AddressMaxLength = 150;
 		}
 
 		public static class Address
@@ -72,5 +73,17 @@
 			public const int AddressMaxLength = 50;
 			public const int AddressMinLength = 5;
 		}
+
+        public static class ApplicationUser
+        {
+            public const int FirstNameMaxLength = 30;
+            public const int FirstNameMinLength = 1;
+
+			public const int LastNameMaxLength = 30;
+			public const int LastNameMinLength = 1;
+
+            public const int PhoneNumberMaxLength = 13;
+            public const int PhoneNumberMinLength = 10;
+        }
 	}
 }
