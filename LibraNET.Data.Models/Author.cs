@@ -28,7 +28,7 @@ namespace LibraNET.Data.Models
         public string Description { get; set; } = null!;
 
         [Required]
-        public string ImageURL { get; set; } = null!;
+        public string ImagePath { get; set; } = null!;
 
 
         public virtual ICollection<BookAuthor> BooksAuthors { get; set; }
