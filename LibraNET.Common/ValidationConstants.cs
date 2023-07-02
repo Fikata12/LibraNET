@@ -21,14 +21,8 @@
 
         public static class Author
         {
-            public const int FirstNameMaxLength = 30;
-            public const int FirstNameMinLength = 1;
-
-            public const int MiddleNameMaxLength = 30;
-            public const int MiddleNameMinLength = 1;
-
-            public const int LastNameMaxLength = 30;
-            public const int LastNameMinLength = 1;
+            public const int NameMaxLength = 90;
+            public const int NameMinLength = 3;
 
             public const int DescriptionMaxLength = 2100;
             public const int DescriptionMinLength = 30;

@@ -15,15 +15,8 @@ namespace LibraNET.Data.Models
         public Guid Id { get; set; }
 
         [Required]
-        [MaxLength(FirstNameMaxLength)]
-        public string FirstName { get; set; } = null!;
-
-        [MaxLength(MiddleNameMaxLength)]
-        public string? MiddleName { get; set; }
-
-        [Required]
-        [MaxLength(LastNameMaxLength)]
-        public string LastName { get; set; } = null!;
+        [MaxLength(NameMaxLength)]
+        public string Name { get; set; } = null!;
 
         [Required]
         public DateTime BirthDate { get; set; }
