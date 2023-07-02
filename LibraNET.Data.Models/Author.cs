@@ -19,11 +19,6 @@ namespace LibraNET.Data.Models
         public string Name { get; set; } = null!;
 
         [Required]
-        public DateTime BirthDate { get; set; }
-
-        public DateTime? DeathDate { get; set; }
-
-        [Required]
         [MaxLength(DescriptionMaxLength)]
         public string Description { get; set; } = null!;
 
