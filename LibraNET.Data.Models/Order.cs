@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using LibraNET.Data.Models.Enums;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using static LibraNET.Common.ValidationConstants.Order;
 
@@ -33,7 +34,10 @@ namespace LibraNET.Data.Models
         [Required]
         public DateTime Date { get; set; }
 
-        [Required]
+		[Required]
+		public OrderStatus Status { get; set; }
+
+		[Required]
         [MaxLength(AddressMaxLength)]
         public string Address { get; set; } = null!;
 
