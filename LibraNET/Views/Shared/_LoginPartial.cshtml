@@ -5,11 +5,11 @@
 <ul class="navbar-nav">
 	@if (SignInManager.IsSignedIn(User))
 	{
-		int atIndex = @User.Identity!.Name!.IndexOf('@');
-		string username = @User.Identity.Name.Substring(0, atIndex);
+		var user = await UserManager.GetUserAsync(User);
+		string name = $"{user.FirstName} {user.LastName}";
 
 		<li class="nav-item">
-			<a class="nav-link text-white" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello, @username!</a>
+			<a class="nav-link text-white" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello, @name!</a>
 		</li>
 		<li class="nav-item">
 			<form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
