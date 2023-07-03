@@ -13,12 +13,17 @@ namespace LibraNET.Data.Configurations
 				new Category
 				{
 					Id = Guid.Parse("ebf52f81-9a9f-47cd-a9a5-be672bb85c4a"),
-					Name = "Art"
+					Name = "Cooking"
 				},
 				new Category
 				{
 					Id = Guid.Parse("45ba1bb0-d9d5-485a-a6c0-1d691ab334ed"),
 					Name = "Fiction"
+				},
+				new Category
+				{
+					Id = Guid.Parse("03f32211-7021-4b30-863d-e81a2766623e"),
+					Name = "Fantasy"
 				},
 				new Category
 				{
@@ -49,6 +54,11 @@ namespace LibraNET.Data.Configurations
 				{
 					Id = Guid.Parse("b15c4a7f-0b30-4fdf-b664-991785501402"),
 					Name = "Biography"
+				},
+				new Category
+				{
+					Id = Guid.Parse("016437a5-5135-43d3-850d-99e150d64e61"),
+					Name = "Mystery"
 				}
 			});
 		}

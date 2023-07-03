@@ -56,12 +56,6 @@ namespace LibraNET.Data
 			modelBuilder.Entity<Rating>()
                 .HasKey(e => new { e.BookId, e.UserId });
 
-            modelBuilder.Entity<BookAuthor>()
-                .HasKey(e => new { e.BookId, e.AuthorId });
-
-            modelBuilder.Entity<BookCategory>()
-                .HasKey(e => new { e.BookId, e.CategoryId });
-
             modelBuilder.Entity<UserFavouriteBook>()
                 .HasKey(e => new { e.BookId, e.UserId });
 
