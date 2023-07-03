@@ -20,8 +20,6 @@ namespace LibraNET.Data
 
         public DbSet<Comment> Comments { get; set; } = null!;
 
-        public DbSet<Publisher> Publishers { get; set; } = null!;
-
         public DbSet<Rating> Ratings { get; set; } = null!;
 
         public DbSet<BookAuthor> BooksAuthors { get; set; } = null!;

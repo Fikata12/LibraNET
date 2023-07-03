@@ -52,9 +52,9 @@ namespace LibraNET.Data.Models
         [Required]
         public int AvailableCount { get; set; }
 
-		[Required]
-        [ForeignKey(nameof(Publisher))]
-        public Guid PublisherId { get; set; }
+        [Required]
+        [MaxLength(PublisherNameMaxLength)]
+        public string PublisherName { get; set; } = null!;
 
 		[Required]
 		public DateTime AddedDate { get; set; }
@@ -67,6 +67,5 @@ namespace LibraNET.Data.Models
         public virtual ICollection<Rating> Ratings { get; set; }
         public virtual ICollection<CartBook> CartsBooks { get; set; }
 		public virtual ICollection<OrderBook> OrdersBooks { get; set; }
-		public virtual Publisher Publisher { get; set; } = null!;
     }
 }

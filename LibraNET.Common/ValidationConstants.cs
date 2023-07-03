@@ -17,7 +17,10 @@
 
             public const int LanguageMaxLength = 20;
             public const int LanguageMinLength = 3;
-        }
+
+			public const int PublisherNameMaxLength = 50;
+			public const int PublisherNameMinLength = 3;
+		} 
 
         public static class Author
         {
@@ -38,12 +41,6 @@
         {
             public const int TextMaxLength = 300;
             public const int TextMinLength = 1;
-        }
-
-        public static class Publisher
-        {
-            public const int NameMaxLength = 50;
-            public const int NameMinLength = 3;
         }
 
 		public static class Order
