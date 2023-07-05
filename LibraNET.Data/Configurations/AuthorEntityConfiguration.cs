@@ -86,8 +86,36 @@ namespace LibraNET.Data.Configurations
 					Name = "Chris Kane",
 					Description = "Chris Kane has worked in the Corporate Real Estate sector for over 30 years, having operated as the Vice President of International Corporate Real Estate for The Walt Disney Company, before acting as Head of Corporate Real Estate at the BBC, where he was responsible for the creation of MediaCityUK in Salford and oversaw the £1bn development of Broadcasting House, as well as the inception of White City innovation/creative quarter in West London. Chris is also a founding member and director of EverythingOmni, a global advisory, advocacy and thought leadership group, focused on workplace development and innovation.",
 					ImagePath = "~/Images/Authors/3a5625b9-a4eb-475e-bbc1-e759dcf8ea7d.jpg"
-				}
-			});
+				},
+                new Author
+                {
+                    Id = Guid.Parse("b2f940f9-91d8-454a-83f8-47e43572fed3"),
+                    Name = "Edmund Morris",
+                    Description = "Edmund Morris was born and educated in Kenya and attended college in South Africa. He worked as an advertising copywriter in London before immigrating to the United States in 1968. His first book, The Rise of Theodore Roosevelt, won the Pulitzer Prize and the National Book Award in 1980. Its sequel, Theodore Rex, won the Los Angeles Times Book Prize for Biography in 2001. In between these two books, Morris became President Reagan’s authorized biographer and wrote the national bestseller Dutch: A Memoir of Ronald Reagan. He then completed his trilogy on the life of the twenty-sixth president with Colonel Roosevelt, also a bestseller, and has published Beethoven: The Universal Composer and This Living Hand and Other Essays. Edison is his final work of biography. He was married to fellow biographer Sylvia Jukes Morris for fifty-two years. Edmund Morris died in 2019.",
+                    ImagePath = "~/Images/Authors/c8150876-a823-4f18-a8d0-626513d25c4d.jpg"
+                },
+                new Author
+                {
+                    Id = Guid.Parse("9e230070-3689-4b47-83d8-92befb937998"),
+                    Name = "Virpi Mikkonen",
+                    Description = "Virpi Mikkonen is leading healthy recipe designer, health coach, author of 5 cookbooks and an entrepreneur specialized in beautiful nourishing food & natural lifestyle. Known for her highly visual and joyful approach to wholesome food and feeling good, she has gained a wide success among the foodies & wellness seekers around the world.",
+                    ImagePath = "~/Images/Authors/0cc23000-3de8-4321-a1fc-c5cc620aa9f1.jpg"
+                },
+                new Author
+                {
+                    Id = Guid.Parse("04e87959-6cbb-4622-8206-fa729197d3e7"),
+                    Name = "Tuulia Talvio",
+                    Description = "Originally from the western part of Finland, Tuulia was raised near the sea. Presently, she resides in Helsinki with her husband and son. While she often dreams of basking in the sun during winters, she remains deeply connected to her Nordic heritage, appreciating the unique magic and abundance of delicious berries found in the northern region.",
+                    ImagePath = "~/Images/Authors/fc0494d9-d3da-433f-b0f1-3760d0ce00ca.jpg"
+                },
+                new Author
+                {
+                    Id = Guid.Parse("241d25a6-e7d1-4c66-b080-7845342274f1"),
+                    Name = "Prince Harry, The Duke of Sussex",
+                    Description = "Prince Harry, The Duke of Sussex, is a husband, father, humanitarian, military veteran, mental wellness advocate, and environmentalist. He resides in Santa Barbara, California, with his family and three dogs.",
+                    ImagePath = "~/Images/Authors/34773977-1191-4385-839e-33bc59a200e1.jpg"
+                },
+            });
 		}
 	}
 }

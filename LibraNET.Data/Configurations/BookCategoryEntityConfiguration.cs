@@ -66,8 +66,23 @@ namespace LibraNET.Data.Configurations
 				{
 					BookId = Guid.Parse("c482f838-87c4-4443-b143-62637d4f97e7"),
 					CategoryId = Guid.Parse("8fe24dbf-2cb9-44b3-ac5a-5f759ea51e7e")
-				}
-			});
+				},
+                new BookCategory
+                {
+                    BookId = Guid.Parse("09aef649-020c-401b-aeb2-07c3101d2ec8"),
+                    CategoryId = Guid.Parse("b15c4a7f-0b30-4fdf-b664-991785501402")
+                },
+                new BookCategory
+                {
+                    BookId = Guid.Parse("09aef649-020c-401b-aeb2-07c3101d2ec8"),
+                    CategoryId = Guid.Parse("b15c4a7f-0b30-4fdf-b664-991785501402")
+                },
+                new BookCategory
+                {
+                    BookId = Guid.Parse("ed7abc74-4b8b-481d-9d43-ec14ada15dcc"),
+                    CategoryId = Guid.Parse("b15c4a7f-0b30-4fdf-b664-991785501402")
+                },
+            });
 		}
 	}
 }

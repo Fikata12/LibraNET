@@ -159,8 +159,54 @@ namespace LibraNET.Data.Configurations
 				AvailableCount = 17,
 				PublisherName = "Bloomsbury",
 				AddedDate = DateTime.Now
-				}
-			});
+				},
+                new Book
+                {
+                Id = Guid.Parse("09aef649-020c-401b-aeb2-07c3101d2ec8"),
+                Title = "The Rise of Theodore Roosevelt",
+                ISBN = "9781400069651",
+                PublicationDate = DateTime.Parse("23.11.2010"),
+                Description = "This classic biography is the story of seven men—a naturalist, a writer, a lover, a hunter, a ranchman, a soldier, and a politician—who merged at age forty-two to become the youngest President in history. The Rise of Theodore Roosevelt begins at the apex of his international prestige. That was on New Year’s Day, 1907, when TR, who had just won the Nobel Peace Prize, threw open the doors of the White House to the American people and shook 8,150 hands. One visitor remarked afterward, “You go to the White House, you shake hands with Roosevelt and hear him talk—and then you go home to wring the personality out of your clothes.” The rest of this book tells the story of TR’s irresistible rise to power. During the years 1858–1901, Theodore Roosevelt transformed himself from a frail, asthmatic boy into a full-blooded man. Fresh out of Harvard, he simultaneously published a distinguished work of naval history and became the fist-swinging leader of a Republican insurgency in the New York State Assembly. He chased thieves across the Badlands of North Dakota with a copy of Anna Karenina in one hand and a Winchester rifle in the other. Married to his childhood sweetheart in 1886, he became the country squire of Sagamore Hill on Long Island, a flamboyant civil service reformer in Washington, D.C., and a night-stalking police commissioner in New York City. As assistant secretary of the navy, he almost single-handedly brought about the Spanish-American War. After leading “Roosevelt’s Rough Riders” in the famous charge up San Juan Hill, Cuba, he returned home a military hero, and was rewarded with the governorship of New York. In what he called his “spare hours” he fathered six children and wrote fourteen books. By 1901, the man Senator Mark Hanna called “that damned cowboy” was vice president. Seven months later, an assassin’s bullet gave TR the national leadership he had always craved. His is a story so prodigal in its variety, so surprising in its turns of fate, that previous biographers have treated it as a series of haphazard episodes. This book, the only full study of TR’s pre-presidential years, shows that he was an inevitable chief executive. “It was as if he were subconsciously aware that he was a man of many selves,” the author writes, “and set about developing each one in turn, knowing that one day he would be President of all the people.”",
+                PageCount = 960,
+                Language = "English",
+                ImagePath = "~/Images/Books/c9a2a08a-8b4c-4603-9abb-af67ec9d92a1.jpg",
+                Price = 40,
+                AvailableCount = 4,
+                PublisherName = "Random House",
+                AddedDate = DateTime.Now
+                },
+                new Book
+                {
+                Id = Guid.Parse("485c54bc-b294-420b-ba53-c4c219af644d"),
+                Title = "N'ice Cream",
+                ISBN = "9780735210455",
+                PublicationDate = DateTime.Parse("17.05.2016"),
+                Description = "Just in time to beat the summer heat, N’ice Cream offers 80 decadent and healthy ice cream recipes made from all-natural, wholesome vegan ingredients like fruits, berries, and plant-based milks and nuts–as the authors say, “no weird stuff.” Get ready to have your ice cream and eat it too. Award-winning Finnish author Virpi and coauthor Tuulia show that making your own ice cream can be easy and good for you at the same time. These recipes can be made with or without an ice cream maker, and include foolproof instant ice creams that can be savored right away. As Tuulia and Virpi say, people deserve to eat goodies without feeling crappy afterwards, and now they can; all the recipes are dairy-free, gluten-free, and refined-sugar-free, and many are nut-free and raw as well. These delicious recipes include creamy ice creams, soft serves, and milkshakes; fresh sorbets and popsicles; party fare like ice cream cakes, sauces, and more. Enjoy light, summery treats like Coconut Water Coolers and Apple Avocado Mint Popsicles, or relish more decadent fare like the Dreamy Chocolate Sundae and Mint Chocolate Ice Cream Sandwiches. The book itself is gorgeously designed with mouth-watering photographs. Perfect for those who want to devour summer treats without guilt, N’ice Cream is about to make your summer a whole lot more delicious.",
+                PageCount = 224,
+                Language = "English",
+                ImagePath = "~/Images/Books/46872adf-b4ba-4857-b5fa-028f95f3a233.jpg",
+                Price = 25,
+                AvailableCount = 6,
+                PublisherName = "Avery",
+                AddedDate = DateTime.Now
+                },
+                new Book
+                {
+                Id = Guid.Parse("ed7abc74-4b8b-481d-9d43-ec14ada15dcc"),
+                Title = "Spare",
+                ISBN = "9780593593806",
+                PublicationDate = DateTime.Parse("10.01.2023"),
+                Description = "It was one of the most searing images of the twentieth century: two young boys, two princes, walking behind their mother’s coffin as the world watched in sorrow—and horror. As Princess Diana was laid to rest, billions wondered what Prince William and Prince Harry must be thinking and feeling—and how their lives would play out from that point on. For Harry, this is that story at last. Before losing his mother, twelve-year-old Prince Harry was known as the carefree one, the happy-go-lucky Spare to the more serious Heir. Grief changed everything. He struggled at school, struggled with anger, with loneliness—and, because he blamed the press for his mother’s death, he struggled to accept life in the spotlight. At twenty-one, he joined the British Army. The discipline gave him structure, and two combat tours made him a hero at home. But he soon felt more lost than ever, suffering from post-traumatic stress and prone to crippling panic attacks. Above all, he couldn’t find true love. Then he met Meghan. The world was swept away by the couple’s cinematic romance and rejoiced in their fairy-tale wedding. But from the beginning, Harry and Meghan were preyed upon by the press, subjected to waves of abuse, racism, and lies. Watching his wife suffer, their safety and mental health at risk, Harry saw no other way to prevent the tragedy of history repeating itself but to flee his mother country. Over the centuries, leaving the Royal Family was an act few had dared. The last to try, in fact, had been his mother. . . .  For the first time, Prince Harry tells his own story, chronicling his journey with raw, unflinching honesty. A landmark publication, Spare is full of insight, revelation, self-examination, and hard-won wisdom about the eternal power of love over grief.",
+                PageCount = 416,
+                Language = "English",
+                ImagePath = "~/Images/Books/296983b7-6271-4133-ac16-460f54fc3e10.jpg",
+                Price = 36,
+                AvailableCount = 15,
+                PublisherName = "Random House",
+                AddedDate = DateTime.Now
+                },
+
+            });
 		}
 	}
 }
