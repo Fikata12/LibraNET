@@ -114,7 +114,7 @@ namespace LibraNET.Data.Configurations
                     Name = "Prince Harry, The Duke of Sussex",
                     Description = "Prince Harry, The Duke of Sussex, is a husband, father, humanitarian, military veteran, mental wellness advocate, and environmentalist. He resides in Santa Barbara, California, with his family and three dogs.",
                     ImagePath = "~/Images/Authors/34773977-1191-4385-839e-33bc59a200e1.jpg"
-                },
+                }
             });
 		}
 	}

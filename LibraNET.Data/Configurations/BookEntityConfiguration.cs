@@ -204,8 +204,7 @@ namespace LibraNET.Data.Configurations
                 AvailableCount = 15,
                 PublisherName = "Random House",
                 AddedDate = DateTime.Now
-                },
-
+                }
             });
 		}
 	}
