@@ -97,11 +97,7 @@ namespace LibraNET.Data.Configurations
                 {
                     BookId = Guid.Parse("ed7abc74-4b8b-481d-9d43-ec14ada15dcc"),
                     AuthorId = Guid.Parse("241d25a6-e7d1-4c66-b080-7845342274f1")
-                },new BookAuthor
-                {
-                    BookId = Guid.Parse("000"),
-                    AuthorId = Guid.Parse("000")
-                },
+                }
             });
 		}
 	}

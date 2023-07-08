@@ -75,7 +75,7 @@ namespace LibraNET.Data.Configurations
                 new BookCategory
                 {
                     BookId = Guid.Parse("09aef649-020c-401b-aeb2-07c3101d2ec8"),
-                    CategoryId = Guid.Parse("b15c4a7f-0b30-4fdf-b664-991785501402")
+                    CategoryId = Guid.Parse("1dd3c6f1-da15-421e-90a7-d8cbb8449371")
                 },
                 new BookCategory
                 {
