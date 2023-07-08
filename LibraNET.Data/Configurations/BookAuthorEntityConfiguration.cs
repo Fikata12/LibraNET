@@ -78,26 +78,26 @@ namespace LibraNET.Data.Configurations
 					BookId = Guid.Parse("c482f838-87c4-4443-b143-62637d4f97e7"),
 					AuthorId = Guid.Parse("3bca8dab-0014-4e00-9024-bdfe1be5bb24")
 				},
-                new BookAuthor
-                {
-                    BookId = Guid.Parse("09aef649-020c-401b-aeb2-07c3101d2ec8"),
-                    AuthorId = Guid.Parse("b2f940f9-91d8-454a-83f8-47e43572fed3")
-                },
-                new BookAuthor
-                {
-                    BookId = Guid.Parse("485c54bc-b294-420b-ba53-c4c219af644d"),
-                    AuthorId = Guid.Parse("9e230070-3689-4b47-83d8-92befb937998")
-                },
-                new BookAuthor
-                {
-                    BookId = Guid.Parse("485c54bc-b294-420b-ba53-c4c219af644d"),
-                    AuthorId = Guid.Parse("04e87959-6cbb-4622-8206-fa729197d3e7")
-                },new BookAuthor
-                {
-                    BookId = Guid.Parse("ed7abc74-4b8b-481d-9d43-ec14ada15dcc"),
-                    AuthorId = Guid.Parse("241d25a6-e7d1-4c66-b080-7845342274f1")
-                }
-            });
+				new BookAuthor
+				{
+					BookId = Guid.Parse("09aef649-020c-401b-aeb2-07c3101d2ec8"),
+					AuthorId = Guid.Parse("b2f940f9-91d8-454a-83f8-47e43572fed3")
+				},
+				new BookAuthor
+				{
+					BookId = Guid.Parse("485c54bc-b294-420b-ba53-c4c219af644d"),
+					AuthorId = Guid.Parse("9e230070-3689-4b47-83d8-92befb937998")
+				},
+				new BookAuthor
+				{
+					BookId = Guid.Parse("485c54bc-b294-420b-ba53-c4c219af644d"),
+					AuthorId = Guid.Parse("04e87959-6cbb-4622-8206-fa729197d3e7")
+				},new BookAuthor
+				{
+					BookId = Guid.Parse("ed7abc74-4b8b-481d-9d43-ec14ada15dcc"),
+					AuthorId = Guid.Parse("241d25a6-e7d1-4c66-b080-7845342274f1")
+				}
+			});
 		}
 	}
 }
