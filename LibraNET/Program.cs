@@ -1,5 +1,7 @@
 using LibraNET.Data;
 using LibraNET.Data.Models;
+using LibraNET.Services.Data;
+using LibraNET.Services.Data.Contracts;
 using LibraNET.Services.Mapping;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -35,6 +37,8 @@ namespace LibraNET
             {
                 cfg.AddProfile<LibraNetProfile>();
             });
+
+            builder.Services.AddScoped<IBookService, BookService>();
 
             var app = builder.Build();
 

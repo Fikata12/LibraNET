@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\LibraNET.Data.Models\LibraNET.Data.Models.csproj" />
     <ProjectReference Include="..\LibraNET.Web.ViewModels\LibraNET.Web.ViewModels.csproj" />
   </ItemGroup>
 

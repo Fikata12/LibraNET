@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using LibraNET.Data.Models;
+using LibraNET.Web.ViewModels.Book;
 
 namespace LibraNET.Services.Mapping
 {
@@ -6,7 +8,9 @@ namespace LibraNET.Services.Mapping
     {
         public LibraNetProfile()
         {
-
+            CreateMap<Book, BookIndexViewModel>()
+                .ForMember(d => d.ImageId, 
+                opt => opt.MapFrom(s => s.ImageId.ToString()));
         }
     }
 }

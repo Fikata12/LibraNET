@@ -1,4 +1,4 @@
-namespace LibraNET.Models
+namespace LibraNET.Web.ViewModels
 {
     public class ErrorViewModel
     {
