@@ -44,7 +44,7 @@ namespace LibraNET.Data.Models
         public string Language { get; set; } = null!;
 
         [Required]
-        public string ImagePath { get; set; } = null!;
+        public Guid ImageId { get; set; }
 
         [Required]
         public decimal Price { get; set; }

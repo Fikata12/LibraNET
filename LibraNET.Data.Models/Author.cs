@@ -23,9 +23,9 @@ namespace LibraNET.Data.Models
         public string Description { get; set; } = null!;
 
         [Required]
-        public string ImagePath { get; set; } = null!;
+		public Guid ImageId { get; set; }
 
 
-        public virtual ICollection<BookAuthor> BooksAuthors { get; set; }
+		public virtual ICollection<BookAuthor> BooksAuthors { get; set; }
     }
 }
