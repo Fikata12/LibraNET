@@ -8,14 +8,30 @@
 		var user = await UserManager.GetUserAsync(User);
 		string name = $"{user.FirstName} {user.LastName}";
 
-		<li class="nav-item">
-			<a class="nav-link text-white" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello, @name!</a>
+		<li class="nav-item px-1">
+			<a class="nav-link text-white">
+				<i class="bi bi-heart-fill" style="font-size: 1.2rem;"></i>
+				<span>Favorite</span>
+			</a>
 		</li>
-		<li class="nav-item">
-			<form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-				<button type="submit" class="nav-link btn btn-link text-white">Logout</button>
-			</form>
+		<li class="nav-item px-1">
+			<a class="nav-link text-white">
+				<i class="bi bi-bag-fill" style="font-size: 1.2rem;"></i>
+				<span>Bag</span>
+			</a>
 		</li>
+		<li class="nav-item px-1">
+			<a class="nav-link text-white">
+				<i class="bi bi-person-fill" style="font-size: 1.2rem;"></i>
+				<span>Account</span>
+			</a>
+		</li>
+		@*
+	<li class="nav-item">
+	<form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+	<button type="submit" class="nav-link btn btn-link text-white">Logout</button>
+	</form>
+	</li>*@
 	}
 	else
 	{
