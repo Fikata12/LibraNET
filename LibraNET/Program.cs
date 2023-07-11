@@ -3,6 +3,7 @@ using LibraNET.Data.Models;
 using LibraNET.Services.Data;
 using LibraNET.Services.Data.Contracts;
 using LibraNET.Services.Mapping;
+using LibraNET.Web.Infrastructure.ModelBinders;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -31,7 +32,12 @@ namespace LibraNET
             })
                 .AddEntityFrameworkStores<LibraNetDbContext>();
 
-            builder.Services.AddControllersWithViews();
+            builder.Services
+                .AddControllersWithViews()
+                .AddMvcOptions(options =>
+                {
+                    options.ModelBinderProviders.Insert(0, new DecimalModelBinderProvider());
+                });
 
             builder.Services.AddAutoMapper(cfg =>
             {

@@ -56,6 +56,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\LibraNET.Services.Data\LibraNET.Services.Data.csproj" />
+    <ProjectReference Include="..\LibraNET.Web.Infrastructure\LibraNET.Web.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
