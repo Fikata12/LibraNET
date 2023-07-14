@@ -15,12 +15,6 @@ namespace LibraNET.Data.Models
         public Guid Id { get; set; }
 
         [Required]
-        public int BookCount { get; set; }
-
-        [Required]
-        public decimal Price { get; set; }
-
-        [Required]
         [ForeignKey(nameof(User))]
         public Guid UserId { get; set; }
 

@@ -14,8 +14,6 @@ namespace LibraNET.Data.Models
 		[Required]
 		public int BookCount { get; set; } 
 
-		[Required]
-		public decimal Price { get; set; }
 
 		public virtual Cart Cart { get; set; } = null!;
 		public virtual Book Book { get; set; } = null!;

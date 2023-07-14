@@ -25,12 +25,6 @@ namespace LibraNET.Data.Models
 		[MaxLength(PhoneNumberMaxLength)]
 		public string PhoneNumber { get; set; } = null!;
 
-		[Required]
-        public decimal Price { get; set; }
-
-        [Required]
-        public int BookCount { get; set; }
-
         [Required]
         public DateTime Date { get; set; }
 
