@@ -25,6 +25,8 @@ namespace LibraNET.Data.Models
         [Required]
 		public Guid ImageId { get; set; }
 
+		[Required]
+		public bool IsDeleted { get; set; }
 
 		public virtual ICollection<BookAuthor> BooksAuthors { get; set; }
     }

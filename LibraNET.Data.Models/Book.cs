@@ -59,6 +59,9 @@ namespace LibraNET.Data.Models
 		[Required]
 		public DateTime AddedDate { get; set; }
 
+        [Required]
+        public bool IsDeleted { get; set; }
+
 
 		public virtual ICollection<BookAuthor> BooksAuthors { get; set; }
         public virtual ICollection<BookCategory> BooksCategories { get; set; }

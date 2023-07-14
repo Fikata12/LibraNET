@@ -30,8 +30,10 @@ namespace LibraNET.Data.Models
         [ForeignKey(nameof(Book))]
         public Guid BookId { get; set; }
 
+		[Required]
+		public bool IsDeleted { get; set; }
 
-        public virtual ApplicationUser User { get; set; } = null!;
+		public virtual ApplicationUser User { get; set; } = null!;
         public virtual Book Book { get; set; } = null!;
     }
 }
