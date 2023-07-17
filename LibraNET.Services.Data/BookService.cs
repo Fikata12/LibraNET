@@ -2,12 +2,12 @@
 using AutoMapper.QueryableExtensions;
 using LibraNET.Data;
 using LibraNET.Services.Data.Contracts;
-using LibraNET.Web.ViewModels.Book;
+using LibraNET.Web.ViewModels;
 using Microsoft.EntityFrameworkCore;
 
 namespace LibraNET.Services.Data
 {
-	public class BookService : IBookService
+    public class BookService : IBookService
 	{
 		private readonly LibraNetDbContext context;
         private readonly IMapper mapper;
@@ -18,14 +18,15 @@ namespace LibraNET.Services.Data
             this.mapper = mapper;
         }
 
-        public async Task<ICollection<BookHomeViewModel>> GetNewestBooks()
+        public async Task<ICollection<HomeBookViewModel>> LastThreeBooks()
         {
             return await context.Books
                 .AsNoTracking()
                 .OrderByDescending(b => b.PublicationDate)
                 .Take(3)
-                .ProjectTo<BookHomeViewModel>(mapper.ConfigurationProvider)
+                .ProjectTo<HomeBookViewModel>(mapper.ConfigurationProvider)
                 .ToListAsync();
         }
+
     }
 }

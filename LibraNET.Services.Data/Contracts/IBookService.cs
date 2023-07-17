@@ -1,9 +1,9 @@
-﻿using LibraNET.Web.ViewModels.Book;
+﻿using LibraNET.Web.ViewModels;
 
 namespace LibraNET.Services.Data.Contracts
 {
-	public interface IBookService
+    public interface IBookService
 	{
-		Task<ICollection<BookHomeViewModel>> GetNewestBooks();
+		Task<ICollection<HomeBookViewModel>> LastThreeBooks();
 	}
 }
