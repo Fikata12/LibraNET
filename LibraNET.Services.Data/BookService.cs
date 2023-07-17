@@ -18,13 +18,13 @@ namespace LibraNET.Services.Data
             this.mapper = mapper;
         }
 
-        public async Task<ICollection<BookIndexViewModel>> GetNewestBooks()
+        public async Task<ICollection<BookHomeViewModel>> GetNewestBooks()
         {
             return await context.Books
                 .AsNoTracking()
                 .OrderByDescending(b => b.PublicationDate)
                 .Take(3)
-                .ProjectTo<BookIndexViewModel>(mapper.ConfigurationProvider)
+                .ProjectTo<BookHomeViewModel>(mapper.ConfigurationProvider)
                 .ToListAsync();
         }
     }

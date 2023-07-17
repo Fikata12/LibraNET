@@ -8,7 +8,7 @@ namespace LibraNET.Services.Mapping
     {
         public LibraNetProfile()
         {
-            CreateMap<Book, BookIndexViewModel>()
+            CreateMap<Book, BookHomeViewModel>()
                 .ForMember(d => d.ImageId, 
                 opt => opt.MapFrom(s => s.ImageId.ToString()));
         }

@@ -1,8 +1,8 @@
 ﻿namespace LibraNET.Web.ViewModels.Book
 {
-	public class BookIndexViewModel
+	public class BookHomeViewModel
 	{
-		public Guid Id { get; set; }
+		public string Id { get; set; } = null!;
 
 		public string Title { get; set; } = null!;
 
