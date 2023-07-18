@@ -81,6 +81,11 @@ namespace LibraNET.Data.Configurations
 				{
 					BookId = Guid.Parse("ed7abc74-4b8b-481d-9d43-ec14ada15dcc"),
 					CategoryId = Guid.Parse("b15c4a7f-0b30-4fdf-b664-991785501402")
+				},
+				new BookCategory
+				{
+					BookId = Guid.Parse("485c54bc-b294-420b-ba53-c4c219af644d"),
+					CategoryId = Guid.Parse("ebf52f81-9a9f-47cd-a9a5-be672bb85c4a")
 				}
 			});
 		}
