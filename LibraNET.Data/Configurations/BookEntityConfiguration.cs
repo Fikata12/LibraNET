@@ -64,7 +64,7 @@ namespace LibraNET.Data.Configurations
 				Description = "Charlie Wynwood and Silas Nash have been best friends since they could walk. They've been in love since the age of fourteen. But as of this morning...they are complete strangers. Their first kiss, their first fight, the moment they fell in love...every memory has vanished. Now Charlie and Silas must work together to uncover the truth about what happened to them and why.\r\n\r\nBut the more they learn about the couple they used to be...the more they question why they were ever together to begin with. Forgetting is terrifying, but remembering may be worse.",
 				PageCount = 416,
 				Language = "English",
-				ImageId = Guid.Parse("e97e05ae-a5ab-4096-b9b8-0c2a3d05d8a9"),
+				ImageId = Guid.Parse("d0829ed0-e541-4cd3-94d4-703173069313"),
 				Price = 17.99m,
 				AvailableCount = 7,
 				PublisherName = "Canary Street Press",
