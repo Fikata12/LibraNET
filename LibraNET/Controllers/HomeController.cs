@@ -18,7 +18,7 @@ namespace LibraNET.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
-            var books = await bookService.LastThreeBooks();
+            var books = await bookService.LastThreeBooksAsync();
             return View(books);
         }
 
