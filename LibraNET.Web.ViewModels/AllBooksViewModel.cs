@@ -8,40 +8,37 @@ namespace LibraNET.Web.ViewModels
         public AllBooksViewModel()
         {
             CurrentPage = DefaultPage;
-			this.BooksPerPage = EntitiesPerPage;
 
-            ChosenCategories = new List<CategoryViewModel>();
-            ChosenAuthors = new List<AllBooksAuthorViewModel>();
-
-			Categories = new List<CategoryViewModel>();
-			Authors = new List<AllBooksAuthorViewModel>();
+			Categories = new List<FiltersCategoryViewModel>();
+			Authors = new List<FiltersAuthorViewModel>();
 			Books = new List<AllBooksBookViewModel>();
+
+			SelectedAuthorsIds = new List<string>();
+			SelectedCategoriesIds = new List<string>();
 		}
 		public string? SearchString { get; set; }
 
         public BookSorting? BookSorting { get; set; }
 
-		public ICollection<CategoryViewModel> ChosenCategories { get; set; }
+		public ICollection<FiltersCategoryViewModel> Categories { get; set; }
 
-		public ICollection<CategoryViewModel> Categories { get; set; }
+		public ICollection<string> SelectedCategoriesIds { get; set; }
 
-		public ICollection<AllBooksAuthorViewModel> ChosenAuthors { get; set; }
+		public ICollection<FiltersAuthorViewModel> Authors { get; set; }
 
-		public ICollection<AllBooksAuthorViewModel> Authors { get; set; }
+		public ICollection<string> SelectedAuthorsIds { get; set; }
 
-		public int ChosenMinPrice { get; set; }
+		public int SelectedMinPrice { get; set; }
 
 		public int MinPrice { get; set; }
 
-		public int ChosenMaxPrice { get; set; }
+		public int SelectedMaxPrice { get; set; }
 
         public int MaxPrice { get; set; }
 
 		public int AllBooksCount { get; set; }
 
         public int CurrentPage { get; set; }
-
-        public int BooksPerPage { get; set; }
 
         public ICollection<AllBooksBookViewModel> Books { get; set; }
 	}

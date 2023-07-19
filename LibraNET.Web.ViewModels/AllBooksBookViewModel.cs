@@ -5,7 +5,7 @@
         public AllBooksBookViewModel()
         {
             Authors = new List<AllBooksAuthorViewModel>();
-            Categories = new List<CategoryViewModel>();
+            Categories = new List<AllBooksCategoryViewModel>();
         }
         public string Id { get; set; } = null!;
 
@@ -19,6 +19,6 @@
 
 		public IList<AllBooksAuthorViewModel> Authors { get; set; }
 
-		public IList<CategoryViewModel> Categories { get; set; }
+		public IList<AllBooksCategoryViewModel> Categories { get; set; }
 	}
 }

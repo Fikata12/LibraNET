@@ -25,26 +25,43 @@ namespace LibraNET.Controllers
 			model.MinPrice = Convert.ToInt32(Math.Floor(await bookService.MinPrice()));
 			model.MaxPrice = Convert.ToInt32(Math.Ceiling(await bookService.MaxPrice()));
 
-			if (model.ChosenMinPrice == 0)
+			if (model.SelectedMinPrice == 0)
 			{
-				model.ChosenMinPrice = model.MinPrice;
+				model.SelectedMinPrice = model.MinPrice;
 			}
 
-			if (model.ChosenMaxPrice == 0)
+			if (model.SelectedMaxPrice == 0)
 			{
-				model.ChosenMaxPrice = model.MaxPrice;
+				model.SelectedMaxPrice = model.MaxPrice;
+			}
+
+
+			model.Authors = await authorService.AllForFiltersAsync();
+
+			foreach (var id in model.SelectedAuthorsIds)
+			{
+				var author = model.Authors.FirstOrDefault(a => a.Id == id);
+				if (author != null)
+				{
+					author.IsSelected = true;
+				}
+			}
+
+			model.Categories = await categoryService.AllForFiltersAsync();
+
+			foreach (var id in model.SelectedCategoriesIds)
+			{
+				var category = model.Categories.FirstOrDefault(a => a.Id == id);
+				if (category != null)
+				{
+					category.IsSelected = true;
+				}
 			}
 
 			var serviceModel = await bookService.CurrentBooksPageAsync(model);
 
 			model.Books = serviceModel.Books;
 			model.AllBooksCount = serviceModel.AllBooksCount;
-
-
-
-			model.Categories = await categoryService.AllAsync();
-
-			model.Authors = await authorService.AllAsync();
 
 			return View(model);
 		}

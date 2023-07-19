@@ -1,0 +1,33 @@
+﻿@using System.Text;
+@using static LibraNET.Common.GeneralApplicationConstants;
+@model AllBooksBookViewModel
+<div class="my-3 col-md-8 col-lg-6 col-xl-4">
+	<div class="card text-black">
+		<div class="text-center img-container">
+			<img class="p-3" src="~/Images/Books/@(Model.ImageId).jpg" alt="@Model.Title" />
+		</div>
+		<div class="card-body text-center">
+			<h5 class="card-title">@Model.Title</h5>
+			<p class="text-muted authors">
+				@{
+					StringBuilder authorsText = new StringBuilder();
+					authorsText.Append(Model.Authors.Count == 1 ? "Author: " : "Authors: ");
+					string authors = string.Join(", ", Model.Authors.Select(a => a.Name));
+					authorsText.Append(authors);
+				}
+
+				@authorsText.ToString()
+			</p>
+			<p class="text-muted mb-4">
+				@{
+					StringBuilder categoriesText = new StringBuilder();
+					categoriesText.Append(Model.Categories.Count == 1 ? "Category: " : "Categories: ");
+					string categories = string.Join(", ", Model.Categories.Select(a => a.Name));
+					categoriesText.Append(categories);
+				}
+				@categoriesText.ToString()
+			</p>
+			<h5 class="fw-bold">@($"${Model.Price:f2}")</h5>
+		</div>
+	</div>
+</div>

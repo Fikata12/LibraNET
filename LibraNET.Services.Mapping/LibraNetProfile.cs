@@ -31,17 +31,17 @@ namespace LibraNET.Services.Mapping
 				.ForMember(d => d.Name,
 				opt => opt.MapFrom(s => s.Author.Name));
 
-			CreateMap<BookCategory, CategoryViewModel>()
+			CreateMap<BookCategory, AllBooksCategoryViewModel>()
 				.ForMember(d => d.Id,
 				opt => opt.MapFrom(s => s.Category.Id.ToString()))
 				.ForMember(d => d.Name,
 				opt => opt.MapFrom(s => s.Category.Name));
 
-			CreateMap<Author, AllBooksAuthorViewModel>()
+			CreateMap<Author, FiltersAuthorViewModel>()
 				.ForMember(d => d.Id,
 				opt => opt.MapFrom(s => s.Id.ToString()));
 
-			CreateMap<Category, CategoryViewModel>()
+			CreateMap<Category, FiltersCategoryViewModel>()
 				.ForMember(d => d.Id,
 				opt => opt.MapFrom(s => s.Id.ToString()));
 		}

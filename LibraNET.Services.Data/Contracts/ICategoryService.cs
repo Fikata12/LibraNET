@@ -4,6 +4,6 @@ namespace LibraNET.Services.Data.Contracts
 {
 	public interface ICategoryService
 	{
-		Task<IList<CategoryViewModel>> AllAsync();
+		Task<ICollection<FiltersCategoryViewModel>> AllForFiltersAsync();
 	}
 }

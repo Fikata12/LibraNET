@@ -18,11 +18,11 @@ namespace LibraNET.Services.Data
 			this.mapper = mapper;
 		}
 
-		public async Task<IList<CategoryViewModel>> AllAsync()
+		public async Task<ICollection<FiltersCategoryViewModel>> AllForFiltersAsync()
 		{
 			return await context.Categories
 				.AsNoTracking()
-				.ProjectTo<CategoryViewModel>(mapper.ConfigurationProvider)
+				.ProjectTo<FiltersCategoryViewModel>(mapper.ConfigurationProvider)
 				.ToListAsync();
 		}
 	}

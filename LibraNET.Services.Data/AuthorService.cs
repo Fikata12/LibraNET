@@ -18,11 +18,11 @@ namespace LibraNET.Services.Data
 			this.mapper = mapper;
 		}
 
-		public async Task<IList<AllBooksAuthorViewModel>> AllAsync()
+		public async Task<ICollection<FiltersAuthorViewModel>> AllForFiltersAsync()
 		{
 			return await context.Authors
 				.AsNoTracking()
-				.ProjectTo<AllBooksAuthorViewModel>(mapper.ConfigurationProvider)
+				.ProjectTo<FiltersAuthorViewModel>(mapper.ConfigurationProvider)
 				.ToListAsync();
 		}
 	}

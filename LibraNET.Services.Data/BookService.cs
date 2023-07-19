@@ -1,12 +1,12 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using LibraNET.Data;
-using LibraNET.Data.Models;
 using LibraNET.Services.Data.Contracts;
 using LibraNET.Services.Data.Models;
 using LibraNET.Web.ViewModels;
 using LibraNET.Web.ViewModels.Enums;
 using Microsoft.EntityFrameworkCore;
+using static LibraNET.Common.GeneralApplicationConstants;
 
 namespace LibraNET.Services.Data
 {
@@ -35,16 +35,16 @@ namespace LibraNET.Services.Data
 		{
 			var booksQuery = context.Books.AsNoTracking();
 
-			if (model.ChosenCategories.Any())
+			if (model.Categories.Any(c => c.IsSelected))
 			{
 				booksQuery = booksQuery
-					.Where(b => model.ChosenCategories.Any(c => b.BooksCategories.Any(bc => c.Id == bc.CategoryId.ToString())));
+					.Where(b => b.BooksCategories.Any(bc => model.SelectedCategoriesIds.Contains(bc.CategoryId.ToString())));
 			}
 
-			if (model.ChosenAuthors.Any())
+			if (model.Authors.Any(a => a.IsSelected))
 			{
 				booksQuery = booksQuery
-					.Where(b => model.ChosenAuthors.Any(a => b.BooksAuthors.Any(ba => a.Id == ba.AuthorId.ToString())));
+					.Where(b => b.BooksAuthors.Any(ba => model.SelectedAuthorsIds.Contains(ba.AuthorId.ToString())));
 			}
 
 			if (!string.IsNullOrWhiteSpace(model.SearchString))
@@ -52,10 +52,10 @@ namespace LibraNET.Services.Data
 				string wildCard = $"%{model.SearchString}%";
 
 				booksQuery = booksQuery.Where(b => EF.Functions.Like(b.Title, wildCard) ||
-										 b.ISBN != null ? EF.Functions.Like(b.ISBN!, wildCard) : false);
+										 (b.ISBN != null && EF.Functions.Like(b.ISBN!, wildCard)));
 			}
 
-			booksQuery = booksQuery.Where(b => b.Price >= model.ChosenMinPrice && b.Price <= model.ChosenMaxPrice);
+			booksQuery = booksQuery.Where(b => b.Price >= model.SelectedMinPrice && b.Price <= model.SelectedMaxPrice);
 
 			switch (model.BookSorting)
 			{
@@ -77,8 +77,8 @@ namespace LibraNET.Services.Data
 			}
 
 			ICollection<AllBooksBookViewModel> books = await booksQuery
-				.Skip((model.CurrentPage - 1) * model.BooksPerPage)
-				.Take(model.BooksPerPage)
+				.Skip((model.CurrentPage - 1) * EntitiesPerPage)
+				.Take(EntitiesPerPage)
 				.ProjectTo<AllBooksBookViewModel>(mapper.ConfigurationProvider)
 				.ToListAsync();
 

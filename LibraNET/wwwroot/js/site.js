@@ -34,18 +34,24 @@ function setRightValue() {
     range.style.right = (100 - percent) + "%";
 }
 
-function changeBtnTxt() {
-    if ($('#filter-btn div').html() == "Hide filters") {
-        $('#filter-btn div').html("Show filters");
-    }
-    else {
-        $('#filter-btn div').html("Hide filters");
-    }
+setLeftValue();
+setRightValue();
 
-}
+inputLeft.addEventListener("input", setLeftValue);
+inputRight.addEventListener("input", setRightValue);
+
+let filterbar = document.querySelector("#filterbar");
+
+filterbar.addEventListener('hide.bs.collapse', function () {
+    $('#filter-btn').html("Show filters");
+})
+
+filterbar.addEventListener('show.bs.collapse', function () {
+    $('#filter-btn').html("Hide filters");
+})
 
 function submitForm() {
-    document.getElementById("sortForm").submit();
+    document.getElementById("filterForm").submit();
 }
 
 function resetFilters() {
@@ -53,10 +59,9 @@ function resetFilters() {
     for (const checkbox of checkboxes) {
         checkbox.checked = false;
     }
+
+    inputLeft.value = inputLeft.min;
+    inputRight.value = inputRight.max;
+
+    submitForm();
 }
-
-setLeftValue();
-setRightValue();
-
-inputLeft.addEventListener("input", setLeftValue);
-inputRight.addEventListener("input", setRightValue);
