@@ -1,8 +1,9 @@
 ﻿using LibraNET.Services.Data.Contracts;
-using LibraNET.Services.Data.Models;
 using LibraNET.Web.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using X.PagedList;
+using static LibraNET.Common.GeneralApplicationConstants;
 
 namespace LibraNET.Controllers
 {
@@ -58,9 +59,9 @@ namespace LibraNET.Controllers
 				}
 			}
 
-			var serviceModel = await bookService.CurrentBooksPageAsync(model);
+			var serviceModel = await bookService.AllAsync(model);
 
-			model.Books = serviceModel.Books;
+			model.Books = await serviceModel.Books.ToPagedListAsync(model.CurrentPage, EntitiesPerPage);
 			model.AllBooksCount = serviceModel.AllBooksCount;
 
 			return View(model);

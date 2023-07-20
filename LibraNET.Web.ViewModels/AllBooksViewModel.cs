@@ -1,4 +1,5 @@
 ﻿using LibraNET.Web.ViewModels.Enums;
+using X.PagedList;
 using static LibraNET.Common.GeneralApplicationConstants;
 
 namespace LibraNET.Web.ViewModels
@@ -11,14 +12,13 @@ namespace LibraNET.Web.ViewModels
 
 			Categories = new List<FiltersCategoryViewModel>();
 			Authors = new List<FiltersAuthorViewModel>();
-			Books = new List<AllBooksBookViewModel>();
 
 			SelectedAuthorsIds = new List<string>();
 			SelectedCategoriesIds = new List<string>();
 		}
 		public string? SearchString { get; set; }
 
-        public BookSorting? BookSorting { get; set; }
+        public BookSorting BookSorting { get; set; }
 
 		public ICollection<FiltersCategoryViewModel> Categories { get; set; }
 
@@ -40,6 +40,6 @@ namespace LibraNET.Web.ViewModels
 
         public int CurrentPage { get; set; }
 
-        public ICollection<AllBooksBookViewModel> Books { get; set; }
+        public IPagedList<AllBooksBookViewModel> Books { get; set; }
 	}
 }

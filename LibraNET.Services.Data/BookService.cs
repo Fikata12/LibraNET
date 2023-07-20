@@ -32,7 +32,7 @@ namespace LibraNET.Services.Data
 				.ToListAsync();
 		}
 
-		public async Task<CurrentBooksServiceModel> CurrentBooksPageAsync(AllBooksViewModel model)
+		public async Task<CurrentBooksServiceModel> AllAsync(AllBooksViewModel model)
 		{
 			var booksQuery = context.Books.AsNoTracking();
 
@@ -79,8 +79,6 @@ namespace LibraNET.Services.Data
 
 			ICollection<AllBooksBookViewModel> books = await booksQuery
 				.Where(b =>  !b.IsDeleted)
-				.Skip((model.CurrentPage - 1) * EntitiesPerPage)
-				.Take(EntitiesPerPage)
 				.ProjectTo<AllBooksBookViewModel>(mapper.ConfigurationProvider)
 				.ToListAsync();
 

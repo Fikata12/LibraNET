@@ -1,4 +1,6 @@
-﻿@model AllBooksViewModel
+﻿@using X.PagedList.Mvc.Core;
+@using X.PagedList.Web.Common;
+@model AllBooksViewModel
 <div class="container">
 	<form asp-controller="Book" asp-action="All" id="filterForm" method="get">
 		<div class="rounded d-flex align-items-center border" id="header">
@@ -95,29 +97,27 @@
 				</div>
 			</div>
 		</div>
-	</form>
-	@{
-		int previousPage = Model.CurrentPage - 1;
-		if (previousPage == 0)
-		{
-			previousPage = 1;
+		@{
+			int previousPage = Model.CurrentPage - 1;
+			if (previousPage == 0)
+			{
+				previousPage = 1;
+			}
+			int maxPage = (int)Math.Ceiling((double)Model.AllBooksCount / EntitiesPerPage);
 		}
-		int maxPage = (int)Math.Ceiling((double)Model.AllBooksCount / EntitiesPerPage);
-	}
-	@if (Model.Books.Any())
-	{
-		<nav class="text-center">
-			<ul class="pagination d-inline-flex">
-				<li class="page-item">
-					<a class="page-link font-weight-bold">&lt;</a>
-				</li>
-				<li class="page-item">
-					<a class="page-link">1</a>
-				</li>
-				<li class="page-item">
-					<a class="page-link font-weight-bold">&gt;</a>
-				</li>
-			</ul>
-		</nav>
-	}
+		@if (Model.Books.Any())
+		{
+			@Html.PagedListPager(Model.Books, 
+				CurrentPage => Url.Action("All", "Book", new {
+					CurrentPage,
+					SearchString = Model.SearchString,
+					BookSorting = (int)Model.BookSorting,
+					SelectedCategoriesIds = Model.SelectedCategoriesIds,
+					SelectedAuthorsIds = Model.SelectedAuthorsIds,
+					SelectedMinPrice = Model.SelectedMinPrice,
+					SelectedMaxPrice = Model.SelectedMaxPrice
+				}), 
+				PagedListRenderOptions.OnlyShowFivePagesAtATime);
+		}
+	</form>
 </div>
