@@ -25,6 +25,7 @@ namespace LibraNET.Services.Data
 		{
 			return await context.Books
 				.AsNoTracking()
+				.Where(b => !b.IsDeleted)
 				.OrderByDescending(b => b.PublicationDate)
 				.Take(3)
 				.ProjectTo<HomeBookViewModel>(mapper.ConfigurationProvider)
