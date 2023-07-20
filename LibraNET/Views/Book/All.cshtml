@@ -105,19 +105,25 @@
 			}
 			int maxPage = (int)Math.Ceiling((double)Model.AllBooksCount / EntitiesPerPage);
 		}
-		@if (Model.Books.Any())
-		{
-			@Html.PagedListPager(Model.Books, 
-				CurrentPage => Url.Action("All", "Book", new {
-					CurrentPage,
-					SearchString = Model.SearchString,
-					BookSorting = (int)Model.BookSorting,
-					SelectedCategoriesIds = Model.SelectedCategoriesIds,
-					SelectedAuthorsIds = Model.SelectedAuthorsIds,
-					SelectedMinPrice = Model.SelectedMinPrice,
-					SelectedMaxPrice = Model.SelectedMaxPrice
-				}), 
-				PagedListRenderOptions.OnlyShowFivePagesAtATime);
-		}
 	</form>
+	@if (Model.Books.Any())
+	{
+			@Html.PagedListPager(Model.Books,
+		CurrentPage => Url.Action("All", "Book", new {
+		CurrentPage,
+		SearchString = Model.SearchString,
+		BookSorting = (int)Model.BookSorting,
+		SelectedCategoriesIds = Model.SelectedCategoriesIds,
+		SelectedAuthorsIds = Model.SelectedAuthorsIds,
+		SelectedMinPrice = Model.SelectedMinPrice,
+		SelectedMaxPrice = Model.SelectedMaxPrice
+		}),
+		new PagedListRenderOptions {
+			LiElementClasses = new string[] { "page-item"},
+			PageClasses = new string[] { "page-link", "text-success" },
+			MaximumPageNumbersToDisplay = 3,
+			UlElementClasses = new string[] { "pagination", "justify-content-center"},
+			ContainerDivClasses = new string[] { "pagination-container", "py-5" }
+		})
+	}
 </div>
