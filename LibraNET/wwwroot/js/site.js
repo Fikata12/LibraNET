@@ -58,6 +58,7 @@ document.addEventListener("DOMContentLoaded", function () {
         filterbtn.textContent = "Hide filters";
         return;
     }
+
     filterbtn.textContent = "Show filters";
 })
 
