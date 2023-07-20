@@ -77,6 +77,7 @@ namespace LibraNET.Services.Data
 			}
 
 			ICollection<AllBooksBookViewModel> books = await booksQuery
+				.Where(b =>  !b.IsDeleted)
 				.Skip((model.CurrentPage - 1) * EntitiesPerPage)
 				.Take(EntitiesPerPage)
 				.ProjectTo<AllBooksBookViewModel>(mapper.ConfigurationProvider)
