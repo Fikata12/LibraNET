@@ -41,12 +41,33 @@ inputLeft.addEventListener("input", setLeftValue);
 inputRight.addEventListener("input", setRightValue);
 
 let filterbar = document.querySelector("#filterbar");
+let filterbtn = document.querySelector("#filter-btn");
+
+document.addEventListener("DOMContentLoaded", function () {
+    if (localStorage.getItem("areFiltersShown") == null) {
+        localStorage.setItem('areFiltersShown', true);
+    }
+
+    let areFiltersShown = JSON.parse(localStorage.getItem("areFiltersShown"));
+
+    if (!areFiltersShown) {
+        filterbar.classList.remove("show");
+        filterbar.classList.add("collapse");
+        filterbtn.textContent = "Show filters";
+        return;
+    }
+    filterbtn.textContent = "Hide filters";
+})
 
 filterbar.addEventListener('hide.bs.collapse', function () {
+    localStorage.setItem('areFiltersShown', false);
+
     $('#filter-btn').html("Show filters");
 })
 
 filterbar.addEventListener('show.bs.collapse', function () {
+    localStorage.setItem('areFiltersShown', true);
+
     $('#filter-btn').html("Hide filters");
 })
 
