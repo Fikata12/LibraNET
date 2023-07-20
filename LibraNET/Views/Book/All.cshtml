@@ -39,8 +39,8 @@
 						@foreach (var author in @Model.Authors)
 						{
 							<div class="form-check align-content-center mx-1">
-								<input class="form-check-input" name="SelectedAuthorsIds" value="@author.Id" 
-								type="checkbox" checked="@author.IsSelected" id="@author.Id">
+								<input class="form-check-input" name="SelectedAuthorsIds" value="@author.Id"
+									   type="checkbox" checked="@author.IsSelected" id="@author.Id">
 								<label class="form-check-label" for="@author.Id">@author.Name</label>
 							</div>
 						}
@@ -52,8 +52,8 @@
 						@foreach (var category in @Model.Categories)
 						{
 							<div class="form-check align-content-center mx-1">
-								<input class="form-check-input" name="SelectedCategoriesIds" value="@category.Id" 
-								type="checkbox" checked="@category.IsSelected" id="@category.Id">
+								<input class="form-check-input" name="SelectedCategoriesIds" value="@category.Id"
+									   type="checkbox" checked="@category.IsSelected" id="@category.Id">
 								<label class="form-check-label" for="@category.Id">@category.Name</label>
 							</div>
 						}
@@ -64,10 +64,10 @@
 					<div id="price">
 						<div class="middle">
 							<div class="multi-range-slider">
-								<input asp-for="SelectedMinPrice" type="range" id="input-left" 
-								min="@Model.MinPrice" max="@Model.MaxPrice">
-								<input asp-for="SelectedMaxPrice" type="range" id="input-right" 
-								min="@Model.MinPrice" max="@Model.MaxPrice">
+								<input asp-for="SelectedMinPrice" type="range" id="input-left"
+									   min="@Model.MinPrice" max="@Model.MaxPrice">
+								<input asp-for="SelectedMaxPrice" type="range" id="input-right"
+									   min="@Model.MinPrice" max="@Model.MaxPrice">
 								<div class="slider">
 									<div class="track"></div>
 									<div class="range"></div>
@@ -85,6 +85,10 @@
 			</div>
 			<div id="products">
 				<div class="row justify-content-center">
+					@if (!Model.Books.Any())
+					{
+						<h2 class="text-center py-5 text-muted">No books found by the given criteria!</h2>
+					}
 					@foreach (var book in Model.Books)
 					{
 						<partial name="_BookPartial" model="@book"></partial>
@@ -93,13 +97,28 @@
 			</div>
 		</div>
 	</form>
-	<nav class="text-center">
-		<ul class="pagination d-inline-flex">
-			<li class="page-item"> <a class="page-link" href="#" aria-label="Previous"> <span aria-hidden="true" class="font-weight-bold">&lt;</span></a> </li>
-			<li class="page-item active"><a class="page-link" href="#">1</a></li>
-			<li class="page-item"><a class="page-link" href="#">..</a></li>
-			<li class="page-item"><a class="page-link" href="#">24</a></li>
-			<li class="page-item"> <a class="page-link" href="#" aria-label="Next"> <span aria-hidden="true" class="font-weight-bold">&gt;</span></a> </li>
-		</ul>
-	</nav>
+	@{
+		int previousPage = Model.CurrentPage - 1;
+		if (previousPage == 0)
+		{
+			previousPage = 1;
+		}
+		int maxPage = (int)Math.Ceiling((double)Model.AllBooksCount / EntitiesPerPage);
+	}
+	@if (Model.Books.Any())
+	{
+		<nav class="text-center">
+			<ul class="pagination d-inline-flex">
+				<li class="page-item">
+					<a class="page-link font-weight-bold">&lt;</a>
+				</li>
+				<li class="page-item">
+					<a class="page-link">1</a>
+				</li>
+				<li class="page-item">
+					<a class="page-link font-weight-bold">&gt;</a>
+				</li>
+			</ul>
+		</nav>
+	}
 </div>
