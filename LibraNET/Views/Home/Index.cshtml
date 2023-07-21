@@ -1,4 +1,4 @@
-﻿@model ICollection<HomeBookViewModel>
+﻿@model ICollection<BookViewModel>
 @{
 	ViewData["Title"] = "Home Page";
 }
@@ -19,20 +19,7 @@
 	<div class="row justify-content-center py-3">
 		@foreach (var book in Model)
 		{
-			<div class="col-md-8 col-lg-6 col-xl-4 py-1">
-				<div class="card" style=" margin-bottom: 2rem; background-color: #e9ecef; border-radius: 0.9rem;">
-					<div class="text-center mt-5 mb-3">
-						<img src="~/Images/Books/@(book.ImageId).jpg" style="height: 400px; width:auto" class="card-img-top" />
-					</div>
-					<div class="card-body">
-						<h2 class="card-title text-center">@book.Title</h2>
-						<p class="card-text">@(book.Description.Substring(0, 230))...</p>
-						<p>
-							<a class="btn btn-secondary" asp-controller="Book" asp-action="Details" asp-route-id="@book.Id" role="button">View details »</a>
-						</p>
-					</div>
-				</div>
-			</div>
+			<partial name="_BookPartial" model="book"></partial>
 		}
 	</div>
 </div>

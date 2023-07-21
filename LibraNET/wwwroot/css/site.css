@@ -105,13 +105,14 @@ body {
         border-radius: 2px
     }
 
-#products .card {
+
+.product-card {
     cursor: pointer;
     transition: .3s all ease-in-out;
     border: hidden !important;
 }
 
-    #products .card p, .card-title {
+    .product-card p, .card-title {
         overflow: hidden;
         text-overflow: ellipsis;
         display: -webkit-box;
@@ -136,11 +137,11 @@ body {
         max-height: 100%;
     }
 
-#products .card:hover {
+.product-card:hover {
     box-shadow: 2px 2px 15px #b7b7b7;
 }
 
-#products .card .product-name {
+.product-card .product-name {
     font-weight: 600
 }
 

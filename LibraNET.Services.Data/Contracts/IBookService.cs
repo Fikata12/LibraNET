@@ -5,7 +5,7 @@ namespace LibraNET.Services.Data.Contracts
 {
     public interface IBookService
 	{
-		Task<ICollection<HomeBookViewModel>> LastThreeBooksAsync();
+		Task<ICollection<BookViewModel>> LastThreeBooksAsync();
 		Task<CurrentBooksServiceModel> AllAsync(AllBooksViewModel model);
 		Task<decimal> MinPrice();
 		Task<decimal> MaxPrice();

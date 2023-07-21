@@ -21,14 +21,14 @@ namespace LibraNET.Services.Data
 			this.mapper = mapper;
 		}
 
-		public async Task<ICollection<HomeBookViewModel>> LastThreeBooksAsync()
+		public async Task<ICollection<BookViewModel>> LastThreeBooksAsync()
 		{
 			return await context.Books
 				.AsNoTracking()
 				.Where(b => !b.IsDeleted)
 				.OrderByDescending(b => b.PublicationDate)
 				.Take(3)
-				.ProjectTo<HomeBookViewModel>(mapper.ConfigurationProvider)
+				.ProjectTo<BookViewModel>(mapper.ConfigurationProvider)
 				.ToListAsync();
 		}
 
