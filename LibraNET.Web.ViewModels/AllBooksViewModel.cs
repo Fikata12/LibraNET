@@ -18,7 +18,7 @@ namespace LibraNET.Web.ViewModels
 		}
 		public string? SearchString { get; set; }
 
-        public BookSorting BookSorting { get; set; }
+		public BookSorting BookSorting { get; set; }
 
 		public ICollection<FiltersCategoryViewModel> Categories { get; set; }
 
@@ -40,6 +40,6 @@ namespace LibraNET.Web.ViewModels
 
         public int CurrentPage { get; set; }
 
-        public IPagedList<BookViewModel> Books { get; set; }
+        public IPagedList<BookViewModel> Books { get; set; } = null!;
 	}
 }
