@@ -40,6 +40,6 @@ namespace LibraNET.Web.ViewModels
 
         public int CurrentPage { get; set; }
 
-        public IPagedList<AllBooksBookViewModel> Books { get; set; }
+        public IPagedList<BookViewModel> Books { get; set; }
 	}
 }

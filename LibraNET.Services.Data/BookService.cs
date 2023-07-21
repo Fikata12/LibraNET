@@ -77,9 +77,9 @@ namespace LibraNET.Services.Data
 					break;
 			}
 
-			ICollection<AllBooksBookViewModel> books = await booksQuery
+			ICollection<BookViewModel> books = await booksQuery
 				.Where(b =>  !b.IsDeleted)
-				.ProjectTo<AllBooksBookViewModel>(mapper.ConfigurationProvider)
+				.ProjectTo<BookViewModel>(mapper.ConfigurationProvider)
 				.ToListAsync();
 
 			int allBooksCount = booksQuery.Count();

@@ -6,11 +6,11 @@ namespace LibraNET.Services.Data.Models
 	{
 		public CurrentBooksServiceModel()
 		{
-			Books = new List<AllBooksBookViewModel>();
+			Books = new List<BookViewModel>();
 		}
 
 		public int AllBooksCount { get; set; }
 
-		public ICollection<AllBooksBookViewModel> Books { get; set; }
+		public ICollection<BookViewModel> Books { get; set; }
 	}
 }

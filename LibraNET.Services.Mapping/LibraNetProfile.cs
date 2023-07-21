@@ -15,7 +15,7 @@ namespace LibraNET.Services.Mapping
 				opt => opt.MapFrom(s => s.Id.ToString()));
 
 			// ./Book/All
-			CreateMap<Book, AllBooksBookViewModel>()
+			CreateMap<Book, BookViewModel>()
 				.ForMember(d => d.ImageId,
 				opt => opt.MapFrom(s => s.ImageId.ToString()))
 				.ForMember(d => d.Id,
@@ -25,13 +25,13 @@ namespace LibraNET.Services.Mapping
 				.ForMember(d => d.Categories,
 				opt => opt.MapFrom(s => s.BooksCategories));
 
-			CreateMap<BookAuthor, AllBooksAuthorViewModel>()
+			CreateMap<BookAuthor, BookAuthorViewModel>()
 				.ForMember(d => d.Id,
 				opt => opt.MapFrom(s => s.Author.Id.ToString()))
 				.ForMember(d => d.Name,
 				opt => opt.MapFrom(s => s.Author.Name));
 
-			CreateMap<BookCategory, AllBooksCategoryViewModel>()
+			CreateMap<BookCategory, BookCategoryViewModel>()
 				.ForMember(d => d.Id,
 				opt => opt.MapFrom(s => s.Category.Id.ToString()))
 				.ForMember(d => d.Name,
