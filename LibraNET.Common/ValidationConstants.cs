@@ -18,6 +18,12 @@
             public const int LanguageMaxLength = 20;
             public const int LanguageMinLength = 3;
 
+            public const string PriceMinValue = "0";
+            public const string PriceMaxValue = "20000";
+
+            public const int CountMinValue = 0;
+            public const int CountMaxValue = int.MaxValue;
+
 			public const int PublisherNameMaxLength = 50;
 			public const int PublisherNameMinLength = 3;
 		} 

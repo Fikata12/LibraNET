@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using LibraNET.Data;
+using LibraNET.Data.Models;
 using LibraNET.Services.Data.Contracts;
 using LibraNET.Services.Data.Models;
 using LibraNET.Web.ViewModels.Book;
@@ -99,6 +100,12 @@ namespace LibraNET.Services.Data
 		public async Task<decimal> MaxPrice()
 		{
 			return await context.Books.MaxAsync(b => b.Price);
+		}
+
+		public async Task Add(BookFormModel model)
+		{
+			await context.Books.AddAsync(mapper.Map<Book>(model));
+			await context.SaveChangesAsync();
 		}
 	}
 }

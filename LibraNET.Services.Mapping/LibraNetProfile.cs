@@ -39,6 +39,8 @@ namespace LibraNET.Services.Mapping
 			CreateMap<Category, FiltersCategoryViewModel>()
 				.ForMember(d => d.Id,
 				opt => opt.MapFrom(s => s.Id.ToString()));
+
+			CreateMap<BookFormModel, Book>();
 		}
     }
 }
