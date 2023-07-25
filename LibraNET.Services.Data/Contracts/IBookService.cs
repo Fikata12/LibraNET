@@ -7,7 +7,8 @@ namespace LibraNET.Services.Data.Contracts
 	{
 		Task<ICollection<BookViewModel>> LastThreeBooksAsync();
 		Task<CurrentBooksServiceModel> AllAsync(AllBooksViewModel model);
-		Task<decimal> MinPrice();
-		Task<decimal> MaxPrice();
-	}
+		Task<decimal> MinPriceAsync();
+		Task<decimal> MaxPriceAsync();
+		Task<string> AddAndReturnIdAsync(BookFormModel model);
+    }
 }

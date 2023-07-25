@@ -6,5 +6,7 @@ namespace LibraNET.Services.Data.Contracts
 	{
 		Task<ICollection<FiltersCategoryViewModel>> AllForFiltersAsync();
 		Task<ICollection<BookCategoryViewModel>> AllForDropdownAsync();
-	}
+        Task<bool> ExistsByIdAsync(ICollection<string> ids);
+
+    }
 }

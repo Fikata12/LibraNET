@@ -12,6 +12,8 @@ namespace LibraNET.Web.ViewModels.Book
         {
 			Authors = new List<BookAuthorViewModel>();
 			Categories = new List<BookCategoryViewModel>();
+			SelectedAuthorsIds = new List<string>();
+			SelectedCategoriesIds = new List<string>();
 		}
         [Required]
 		[MaxLength(TitleMaxLength)]
@@ -58,14 +60,12 @@ namespace LibraNET.Web.ViewModels.Book
 		public string PublisherName { get; set; } = null!;
 
 		[Required]
-		public string AuthorId { get; set; } = null!;
+		public ICollection<string> SelectedAuthorsIds { get; set; }
 
-		[Required]
-		public string CategoryId { get; set; } = null!;
+        [Required]
+        public ICollection<string> SelectedCategoriesIds { get; set; }
 
-
-		public ICollection<BookAuthorViewModel> Authors { get; set; }
-
+        public ICollection<BookAuthorViewModel> Authors { get; set; }
 
 		public ICollection<BookCategoryViewModel> Categories { get; set; }
 	}

@@ -92,20 +92,24 @@ namespace LibraNET.Services.Data
 			};
 		}
 
-		public async Task<decimal> MinPrice()
+		public async Task<decimal> MinPriceAsync()
 		{
 			return await context.Books.MinAsync(b => b.Price);
 		}
 
-		public async Task<decimal> MaxPrice()
+		public async Task<decimal> MaxPriceAsync()
 		{
 			return await context.Books.MaxAsync(b => b.Price);
 		}
 
-		public async Task Add(BookFormModel model)
+		public async Task<string> AddAndReturnIdAsync(BookFormModel model)
 		{
-			await context.Books.AddAsync(mapper.Map<Book>(model));
+			var book = mapper.Map<Book>(model);
+
+            await context.Books.AddAsync(book);
 			await context.SaveChangesAsync();
+
+			return book.Id.ToString();
 		}
 	}
 }

@@ -5,7 +5,7 @@ namespace LibraNET.Services.Data
 {
 	public class ImageService : IImageService
 	{
-		public async Task<Guid> UploadBookImageAsync(IFormFile file)
+		public async Task<string> UploadBookImageAsync(IFormFile file)
 		{
 			Guid imageId = Guid.NewGuid();
 			var fileName = imageId.ToString() + Path.GetExtension(file.FileName);
@@ -16,10 +16,10 @@ namespace LibraNET.Services.Data
 				await file.CopyToAsync(fileStream);
 			}
 
-			return imageId;
+			return imageId.ToString();
 		}
 
-		public async Task<Guid> UploadAuthorImageAsync(IFormFile file)
+		public async Task<string> UploadAuthorImageAsync(IFormFile file)
 		{
 			Guid imageId = Guid.NewGuid();
 			var fileName = imageId.ToString() + Path.GetExtension(file.FileName);
@@ -30,7 +30,7 @@ namespace LibraNET.Services.Data
 				await file.CopyToAsync(fileStream);
 			}
 
-			return imageId;
+			return imageId.ToString();
 		}
 
 		public string GetBookImageNameById(string bookImageId)

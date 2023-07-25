@@ -33,5 +33,14 @@ namespace LibraNET.Services.Data
 				.ProjectTo<BookAuthorViewModel>(mapper.ConfigurationProvider)
 				.ToListAsync();
 		}
+
+		public async Task<bool> ExistsByIdAsync(ICollection<string> ids)
+		{
+			var existingIds = await context.Authors.Select(c => c.Id.ToString()).ToListAsync();
+
+			bool result = ids.All(id => existingIds.Any(eid => eid == id));
+
+			return result;
+		}
 	}
 }

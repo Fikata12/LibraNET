@@ -6,10 +6,10 @@ using LibraNET.Web.ViewModels.Category;
 
 namespace LibraNET.Services.Mapping
 {
-    public class LibraNetProfile : Profile
-    {
-        public LibraNetProfile()
-        {
+	public class LibraNetProfile : Profile
+	{
+		public LibraNetProfile()
+		{
 			CreateMap<Book, BookViewModel>()
 				.ForMember(d => d.ImageId,
 				opt => opt.MapFrom(s => s.ImageId.ToString()))
@@ -40,11 +40,23 @@ namespace LibraNET.Services.Mapping
 				.ForMember(d => d.Id,
 				opt => opt.MapFrom(s => s.Id.ToString()));
 
-			CreateMap<BookFormModel, Book>();
+			CreateMap<BookFormModel, Book>()
+				.ForMember(d => d.BooksAuthors,
+				opt => opt.MapFrom(s => s.SelectedAuthorsIds))
+				.ForMember(d => d.BooksCategories,
+				opt => opt.MapFrom(s => s.SelectedCategoriesIds));
+
+			CreateMap<string, BookAuthor>()
+				.ForMember(d => d.AuthorId,
+				opt => opt.MapFrom(s => s));
+
+			CreateMap<string, BookCategory>()
+				.ForMember(d => d.CategoryId,
+				opt => opt.MapFrom(s => s));
 
 			CreateMap<Author, BookAuthorViewModel>();
 
 			CreateMap<Category, BookCategoryViewModel>();
-        }
-    }
+		}
+	}
 }
