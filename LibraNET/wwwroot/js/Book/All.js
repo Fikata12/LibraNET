@@ -44,13 +44,13 @@ let filterbar = document.querySelector("#filterbar");
 let filterbtn = document.querySelector("#filter-btn");
 
 document.addEventListener("DOMContentLoaded", function () {
-    if (localStorage.getItem("areFiltersShown") == null) {
+    if (sessionStorage.getItem("areFiltersShown") == null) {
         filterbar.classList.remove("collapse");
         filterbar.classList.add("show");
-        localStorage.setItem('areFiltersShown', true);
+        sessionStorage.setItem('areFiltersShown', true);
     }
 
-    let areFiltersShown = JSON.parse(localStorage.getItem("areFiltersShown"));
+    let areFiltersShown = JSON.parse(sessionStorage.getItem("areFiltersShown"));
 
     if (areFiltersShown) {
         filterbar.classList.remove("collapse");
@@ -63,13 +63,13 @@ document.addEventListener("DOMContentLoaded", function () {
 })
 
 filterbar.addEventListener('hide.bs.collapse', function () {
-    localStorage.setItem('areFiltersShown', false);
+    sessionStorage.setItem('areFiltersShown', false);
 
     $('#filter-btn').html("Show filters");
 })
 
 filterbar.addEventListener('show.bs.collapse', function () {
-    localStorage.setItem('areFiltersShown', true);
+    sessionStorage.setItem('areFiltersShown', true);
 
     $('#filter-btn').html("Hide filters");
 })
