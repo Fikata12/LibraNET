@@ -1,8 +1,8 @@
-﻿using LibraNET.Web.ViewModels;
+﻿using LibraNET.Web.ViewModels.Book;
 
 namespace LibraNET.Services.Data.Models
 {
-	public class CurrentBooksServiceModel
+    public class CurrentBooksServiceModel
 	{
 		public CurrentBooksServiceModel()
 		{

@@ -1,5 +1,5 @@
 ﻿using LibraNET.Services.Data.Contracts;
-using LibraNET.Web.ViewModels;
+using LibraNET.Web.ViewModels.Book;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using X.PagedList;
@@ -7,7 +7,7 @@ using static LibraNET.Common.GeneralApplicationConstants;
 
 namespace LibraNET.Controllers
 {
-	public class BookController : BaseController
+    public class BookController : BaseController
 	{
 		private readonly IBookService bookService;
 		private readonly IAuthorService authorService;

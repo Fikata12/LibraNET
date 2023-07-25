@@ -1,5 +1,5 @@
 ﻿using LibraNET.Services.Data.Models;
-using LibraNET.Web.ViewModels;
+using LibraNET.Web.ViewModels.Book;
 
 namespace LibraNET.Services.Data.Contracts
 {

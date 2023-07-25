@@ -1,4 +1,7 @@
-﻿namespace LibraNET.Web.ViewModels
+﻿using LibraNET.Web.ViewModels.Author;
+using LibraNET.Web.ViewModels.Category;
+
+namespace LibraNET.Web.ViewModels.Book
 {
     public class BookViewModel
     {
@@ -15,10 +18,10 @@
 
         public decimal Price { get; set; }
 
-		public string ImageId { get; set; } = null!;
+        public string ImageId { get; set; } = null!;
 
-		public IList<BookAuthorViewModel> Authors { get; set; }
+        public IList<BookAuthorViewModel> Authors { get; set; }
 
-		public IList<BookCategoryViewModel> Categories { get; set; }
-	}
+        public IList<BookCategoryViewModel> Categories { get; set; }
+    }
 }

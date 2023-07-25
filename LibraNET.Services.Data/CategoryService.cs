@@ -2,12 +2,12 @@
 using AutoMapper.QueryableExtensions;
 using LibraNET.Data;
 using LibraNET.Services.Data.Contracts;
-using LibraNET.Web.ViewModels;
+using LibraNET.Web.ViewModels.Category;
 using Microsoft.EntityFrameworkCore;
 
 namespace LibraNET.Services.Data
 {
-	public class CategoryService : ICategoryService
+    public class CategoryService : ICategoryService
 	{
 		private readonly LibraNetDbContext context;
 		private readonly IMapper mapper;

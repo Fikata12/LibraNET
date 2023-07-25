@@ -3,14 +3,14 @@ using AutoMapper.QueryableExtensions;
 using LibraNET.Data;
 using LibraNET.Services.Data.Contracts;
 using LibraNET.Services.Data.Models;
-using LibraNET.Web.ViewModels;
+using LibraNET.Web.ViewModels.Book;
 using LibraNET.Web.ViewModels.Enums;
 using Microsoft.EntityFrameworkCore;
 using static LibraNET.Common.GeneralApplicationConstants;
 
 namespace LibraNET.Services.Data
 {
-	public class BookService : IBookService
+    public class BookService : IBookService
 	{
 		private readonly LibraNetDbContext context;
 		private readonly IMapper mapper;

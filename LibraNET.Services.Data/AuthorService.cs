@@ -2,12 +2,12 @@
 using AutoMapper.QueryableExtensions;
 using LibraNET.Data;
 using LibraNET.Services.Data.Contracts;
-using LibraNET.Web.ViewModels;
+using LibraNET.Web.ViewModels.Author;
 using Microsoft.EntityFrameworkCore;
 
 namespace LibraNET.Services.Data
 {
-	public class AuthorService : IAuthorService
+    public class AuthorService : IAuthorService
 	{
 		private readonly LibraNetDbContext context;
 		private readonly IMapper mapper;

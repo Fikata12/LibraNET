@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using LibraNET.Data.Models;
-using LibraNET.Web.ViewModels;
+using LibraNET.Web.ViewModels.Author;
+using LibraNET.Web.ViewModels.Book;
+using LibraNET.Web.ViewModels.Category;
 
 namespace LibraNET.Services.Mapping
 {
