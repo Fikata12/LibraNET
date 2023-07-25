@@ -59,9 +59,9 @@
                 <span asp-validation-for="PublisherName" class="text-danger"></span>
             </div>
             <div class="mb-3">
-                <label asp-for="@Model.SelectedCategoriesIds" class="form-label">Category</label>
-                <select asp-for="@Model.SelectedCategoriesIds" class="form-control">
-                    <option value=""></option>
+                <label asp-for="@Model.SelectedCategoriesIds" class="form-label">Categories</label>
+                <select asp-for="@Model.SelectedCategoriesIds" class="form-select" id="multiple-select-field-categories" data-placeholder="Choose categories" multiple>
+                    =
                     @foreach (var category in @Model.Categories)
                     {
                         <option value="@category.Id">@category.Name</option>
@@ -70,53 +70,8 @@
                 <span asp-validation-for="@Model.SelectedCategoriesIds" class="text-danger"></span>
             </div>
             <div class="mb-3">
-                <label asp-for="@Model.SelectedCategoriesIds" class="form-label">Category</label>
-                <select asp-for="@Model.SelectedCategoriesIds" class="form-control">
-                    <option value=""></option>
-                    @foreach (var category in @Model.Categories)
-                    {
-                        <option value="@category.Id">@category.Name</option>
-                    }
-                </select>
-                <span asp-validation-for="@Model.SelectedCategoriesIds" class="text-danger"></span>
-            </div>
-            <div class="mb-3">
-                <label asp-for="@Model.SelectedCategoriesIds" class="form-label">Category</label>
-                <select asp-for="@Model.SelectedCategoriesIds" class="form-control">
-                    <option value=""></option>
-                    @foreach (var category in @Model.Categories)
-                    {
-                        <option value="@category.Id">@category.Name</option>
-                    }
-                </select>
-                <span asp-validation-for="@Model.SelectedCategoriesIds" class="text-danger"></span>
-            </div>
-            <div class="mb-3">
-                <label asp-for="@Model.SelectedAuthorsIds" class="form-label">Author</label>
-                <select asp-for="@Model.SelectedAuthorsIds" class="form-control">
-                    <option value=""></option>
-                    @foreach (var author in @Model.Authors)
-                    {
-                        <option value="@author.Id">@author.Name</option>
-                    }
-                </select>
-                <span asp-validation-for="@Model.SelectedAuthorsIds" class="text-danger"></span>
-            </div>
-                        <div class="mb-3">
-                <label asp-for="@Model.SelectedAuthorsIds" class="form-label">Author</label>
-                <select asp-for="@Model.SelectedAuthorsIds" class="form-control">
-                    <option value=""></option>
-                    @foreach (var author in @Model.Authors)
-                    {
-                        <option value="@author.Id">@author.Name</option>
-                    }
-                </select>
-                <span asp-validation-for="@Model.SelectedAuthorsIds" class="text-danger"></span>
-            </div>
-            <div class="mb-3">
-                <label asp-for="@Model.SelectedAuthorsIds" class="form-label">Author</label>
-                <select asp-for="@Model.SelectedAuthorsIds" class="form-control">
-                    <option value=""></option>
+                <label asp-for="@Model.SelectedAuthorsIds" class="form-label">Authors</label>
+                <select asp-for="@Model.SelectedAuthorsIds" class="form-select" id="multiple-select-field-authors" data-placeholder="Choose authors" multiple>
                     @foreach (var author in @Model.Authors)
                     {
                         <option value="@author.Id">@author.Name</option>
@@ -134,4 +89,5 @@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+    <script src="~/js/Book/Add.js"></script>
 }

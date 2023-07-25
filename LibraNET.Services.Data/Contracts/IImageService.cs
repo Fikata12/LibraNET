@@ -6,7 +6,7 @@ namespace LibraNET.Services.Data.Contracts
 	{
 		Task<string> UploadBookImageAsync(IFormFile file);
 		Task<string> UploadAuthorImageAsync(IFormFile file);
-		string GetBookImageNameById(string bookImageId);
-		string GetAuthorImageNameById(string authorImageId);
+        string? GetBookImageNameById(string bookImageId);
+        string? GetAuthorImageNameById(string authorImageId);
 	}
 }
