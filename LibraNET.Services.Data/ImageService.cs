@@ -34,26 +34,26 @@ namespace LibraNET.Services.Data
 			return imageId;
 		}
 
-		public string GetBookImageNameById(Guid bookImageId)
+		public string GetBookImageNameById(string bookImageId)
 		{
 			var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Images", "Books");
 
 			var imageNames = Directory.GetFiles(filePath);
 
-			var imagePath = imageNames.First(n => n.Contains(bookImageId.ToString()));
+			var imagePath = imageNames.First(n => n.ToLower().Contains(bookImageId.ToLower()));
 
 			var imageName = Path.GetFileName(imagePath);
 
 			return imageName;
 		}
 
-		public string GetAuthorImageNameById(Guid bookImageId)
+		public string GetAuthorImageNameById(string authorImageId)
 		{
 			var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Images", "Authors");
 
 			var imageNames = Directory.GetFiles(filePath);
 
-			var imagePath = imageNames.First(n => n.Contains(bookImageId.ToString()));
+			var imagePath = imageNames.First(n => n.Contains(authorImageId));
 
 			var imageName = Path.GetFileName(imagePath);
 

@@ -1,8 +1,11 @@
-﻿@model BookViewModel
+﻿@using LibraNET.Services.Data.Contracts;
+@model BookViewModel
+@inject IImageService imageService
+
 <div class="my-3 col-md-8 col-lg-6 col-xl-4">
 	<div class="card text-black product-card">
 		<div class="text-center img-container">
-			<img class="p-3" src="~/Images/Books/@(Model.ImageId).jpg" alt="@Model.Title" />
+			<img class="p-3" src="~/Images/Books/@(imageService.GetBookImageNameById(Model.ImageId))" alt="@Model.Title" />
 		</div>
 		<div class="card-body text-center">
 			<h5 class="card-title">@Model.Title</h5>
