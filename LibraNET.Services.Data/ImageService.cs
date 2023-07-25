@@ -1,6 +1,5 @@
 ﻿using LibraNET.Services.Data.Contracts;
 using Microsoft.AspNetCore.Http;
-using System.Linq;
 
 namespace LibraNET.Services.Data
 {

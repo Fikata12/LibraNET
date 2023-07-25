@@ -66,5 +66,16 @@ namespace LibraNET.Controllers
 
 			return View(model);
 		}
+
+		[Authorize(Roles = "Admin")]
+		public async Task<IActionResult> Add()
+		{
+			BookFormModel model = new BookFormModel
+			{
+				Authors = await authorService.AllForDropdownAsync(),
+				Categories = await categoryService.AllForDropdownAsync()
+			};
+			return View(model);
+		}
 	}
 }

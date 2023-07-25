@@ -25,5 +25,13 @@ namespace LibraNET.Services.Data
 				.ProjectTo<FiltersCategoryViewModel>(mapper.ConfigurationProvider)
 				.ToListAsync();
 		}
+
+		public async Task<ICollection<BookCategoryViewModel>> AllForDropdownAsync()
+		{
+			return await context.Categories
+				.AsNoTracking()
+				.ProjectTo<BookCategoryViewModel>(mapper.ConfigurationProvider)
+				.ToListAsync();
+		}
 	}
 }

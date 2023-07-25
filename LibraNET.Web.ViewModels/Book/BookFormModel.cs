@@ -1,5 +1,6 @@
 ﻿using LibraNET.Web.ViewModels.Author;
 using LibraNET.Web.ViewModels.Category;
+using Microsoft.AspNetCore.Http;
 using System.ComponentModel.DataAnnotations;
 using static LibraNET.Common.ValidationConstants.Book;
 
@@ -39,7 +40,9 @@ namespace LibraNET.Web.ViewModels.Book
 		public string Language { get; set; } = null!;
 
 		[Required]
-		public Guid ImageId { get; set; }
+		public IFormFile Image { get; set; } = null!;
+
+		public string? ImageId { get; set; }
 
 		[Required]
 		[Range(typeof(decimal), PriceMinValue, PriceMaxValue)]

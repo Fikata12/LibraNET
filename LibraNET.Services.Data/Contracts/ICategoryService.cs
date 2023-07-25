@@ -5,5 +5,6 @@ namespace LibraNET.Services.Data.Contracts
     public interface ICategoryService
 	{
 		Task<ICollection<FiltersCategoryViewModel>> AllForFiltersAsync();
+		Task<ICollection<BookCategoryViewModel>> AllForDropdownAsync();
 	}
 }

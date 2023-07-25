@@ -41,6 +41,10 @@ namespace LibraNET.Services.Mapping
 				opt => opt.MapFrom(s => s.Id.ToString()));
 
 			CreateMap<BookFormModel, Book>();
-		}
+
+			CreateMap<Author, BookAuthorViewModel>();
+
+			CreateMap<Category, BookCategoryViewModel>();
+        }
     }
 }

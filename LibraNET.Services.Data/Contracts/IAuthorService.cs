@@ -5,5 +5,7 @@ namespace LibraNET.Services.Data.Contracts
     public interface IAuthorService
 	{
 		Task<ICollection<FiltersAuthorViewModel>> AllForFiltersAsync();
+
+		Task<ICollection<BookAuthorViewModel>> AllForDropdownAsync();
 	}
 }
