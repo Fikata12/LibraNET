@@ -6,67 +6,79 @@ using static LibraNET.Common.ValidationConstants.Book;
 
 namespace LibraNET.Web.ViewModels.Book
 {
-	public class BookFormModel
-	{
+    public class BookFormModel
+    {
         public BookFormModel()
         {
-			Authors = new List<BookAuthorViewModel>();
-			Categories = new List<BookCategoryViewModel>();
-			SelectedAuthorsIds = new List<string>();
-			SelectedCategoriesIds = new List<string>();
-		}
+            Authors = new List<BookAuthorViewModel>();
+            Categories = new List<BookCategoryViewModel>();
+            SelectedAuthorsIds = new List<string>();
+            SelectedCategoriesIds = new List<string>();
+        }
         [Required]
-		[MaxLength(TitleMaxLength)]
-		[MinLength(TitleMinLength)]
-		public string Title { get; set; } = null!;
+        [StringLength(TitleMaxLength,
+            MinimumLength = TitleMinLength,
+            ErrorMessage = "The field {0} must be at least {2} and at max {1} characters long.")]
+        public string Title { get; set; } = null!;
 
-		[MaxLength(ISBNLength)]
-		[MinLength(ISBNLength)]
-		public string? ISBN { get; set; }
-
-		[Required]
-		public DateTime PublicationDate { get; set; }
-
-		[Required]
-		[MaxLength(DescriptionMaxLength)]
-		[MinLength(DescriptionMinLength)]
-		public string Description { get; set; } = null!;
-
-		[Required]
-		[Range(PageCountMin, PageCountMax)]
-		public int PageCount { get; set; }
-
-		[Required]
-		[MaxLength(LanguageMaxLength)]
-		[MinLength(LanguageMinLength)]
-		public string Language { get; set; } = null!;
-
-		[Required]
-		public IFormFile Image { get; set; } = null!;
-
-		public string? ImageId { get; set; }
-
-		[Required]
-		[Range(typeof(decimal), PriceMinValue, PriceMaxValue)]
-		public decimal Price { get; set; }
-
-		[Required]
-		[Range(CountMinValue, CountMaxValue)]
-		public int AvailableCount { get; set; }
-
-		[Required]
-		[MaxLength(PublisherNameMaxLength)]
-		[MinLength(PublisherNameMinLength)]
-		public string PublisherName { get; set; } = null!;
-
-		[Required]
-		public ICollection<string> SelectedAuthorsIds { get; set; }
+        [RegularExpression(@"^[0-9]*$", ErrorMessage = "Please enter a valid ISBN.")]
+        [StringLength(ISBNLength,
+            MinimumLength = ISBNLength,
+            ErrorMessage = "The field {0} must be at least {2} and at max {1} characters long.")]
+        public string? ISBN { get; set; }
 
         [Required]
+        [Display(Name = "Publication Date")]
+        public DateTime PublicationDate { get; set; }
+
+        [Required]
+        [StringLength(DescriptionMaxLength,
+            MinimumLength = DescriptionMinLength,
+            ErrorMessage = "The field {0} must be at least {2} and at max {1} characters long.")]
+        public string Description { get; set; } = null!;
+
+        [Required]
+        [Display(Name = "Page Count")]
+        [Range(PageCountMin, PageCountMax)]
+        public int PageCount { get; set; }
+
+        [Required]
+        [StringLength(LanguageMaxLength,
+            MinimumLength = LanguageMinLength,
+            ErrorMessage = "The field {0} must be at least {2} and at max {1} characters long.")]
+        public string Language { get; set; } = null!;
+
+        [Required]
+        public IFormFile Image { get; set; } = null!;
+
+        public string? ImageId { get; set; }
+
+        [Required]
+        [Range(typeof(decimal), PriceMinValue, PriceMaxValue)]
+        public decimal Price { get; set; }
+
+        [Required]
+        [Display(Name = "Available Count")]
+        [Range(CountMinValue, CountMaxValue)]
+        public int AvailableCount { get; set; }
+
+        [Required]
+        [Display(Name = "Publisher")]
+        [StringLength(PublisherNameMaxLength,
+            MinimumLength = PublisherNameMinLength,
+            ErrorMessage = "The field {0} must be at least {2} and at max {1} characters long.")]
+        public string PublisherName { get; set; } = null!;
+
+        [Required]
+        [Display(Name = "Authors")]
+        public ICollection<string> SelectedAuthorsIds { get; set; }
+
+        [Required]
+        [Display(Name = "Categories")]
         public ICollection<string> SelectedCategoriesIds { get; set; }
 
         public ICollection<BookAuthorViewModel> Authors { get; set; }
 
-		public ICollection<BookCategoryViewModel> Categories { get; set; }
-	}
+        public ICollection<BookCategoryViewModel> Categories { get; set; }
+    }
 }
