@@ -10,5 +10,9 @@ namespace LibraNET.Services.Data.Contracts
 		Task<decimal> MinPriceAsync();
 		Task<decimal> MaxPriceAsync();
 		Task<string> AddAndReturnIdAsync(BookFormModel model);
-    }
+		Task<BookFormModel> GetByIdAsync(string id);
+		Task<string> EditAndReturnIdAsync(BookFormModel model, string id);
+		Task<string?> GetImageIdAsync(string bookId);
+
+	}
 }

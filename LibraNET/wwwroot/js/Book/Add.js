@@ -10,3 +10,27 @@ $('#multiple-select-field-categories').select2({
     placeholder: $(this).data('placeholder'),
     closeOnSelect: false,
 });
+
+var lastValidAuthor = null;
+
+$('#multiple-select-field-categories').change(function (event) {
+
+    if ($(this).val().length >= 5) {
+
+        $(this).val(lastValidAuthor);
+    } else {
+        lastValidAuthor = $(this).val();
+    }
+});
+
+var lastValidAuthor = null;
+
+$('#multiple-select-field-authors').change(function (event) {
+
+    if ($(this).val().length >= 5) {
+
+        $(this).val(lastValidAuthor);
+    } else {
+        lastValidAuthor = $(this).val();
+    }
+});

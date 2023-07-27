@@ -24,7 +24,7 @@ namespace LibraNET.Web.ViewModels.Book
         [RegularExpression(@"^[0-9]*$", ErrorMessage = "Please enter a valid ISBN.")]
         [StringLength(ISBNLength,
             MinimumLength = ISBNLength,
-            ErrorMessage = "The field {0} must be at least {2} and at max {1} characters long.")]
+            ErrorMessage = "The field {0} must be {2} characters long.")]
         public string? ISBN { get; set; }
 
         [Required]
@@ -48,8 +48,7 @@ namespace LibraNET.Web.ViewModels.Book
             ErrorMessage = "The field {0} must be at least {2} and at max {1} characters long.")]
         public string Language { get; set; } = null!;
 
-        [Required]
-        public IFormFile Image { get; set; } = null!;
+        public IFormFile? Image { get; set; } = null!;
 
         public string? ImageId { get; set; }
 

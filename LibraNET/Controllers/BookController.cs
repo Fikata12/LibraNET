@@ -101,13 +101,30 @@ namespace LibraNET.Controllers
                 ModelState.AddModelError(nameof(model.SelectedAuthorsIds), "Selected author does not exist!");
             }
 
-            if (!ModelState.IsValid)
+            if (model.SelectedAuthorsIds.Count > 5)
+            {
+				ModelState.AddModelError(nameof(model.SelectedAuthorsIds), "Too much selected authors!");
+			}
+
+			if (model.SelectedCategoriesIds.Count > 5)
+			{
+				ModelState.AddModelError(nameof(model.SelectedCategoriesIds), "Too much selected categories!");
+			}
+
+			string[] supportedTypes = new[] { "image/jpeg", "image/jpg", "image/png" };
+			if (!supportedTypes.Contains(model.Image.ContentType))
+			{
+				ModelState.AddModelError(nameof(model.Image), "Invalid content type!");
+			}
+
+			if (!ModelState.IsValid)
             {
                 model.Authors = await authorService.AllForDropdownAsync();
                 model.Categories = await categoryService.AllForDropdownAsync();
 
                 return View(model);
             }
+
             try
             {
                 var imageId = await imageService.UploadBookImageAsync(model.Image);
@@ -120,13 +137,102 @@ namespace LibraNET.Controllers
             }
             catch (Exception)
             {
-                ModelState.AddModelError(string.Empty, UnsuccessfulBookCreation);
+				TempData["Error"] = UnsuccessfulBookCreation;
 
-                model.Authors = await authorService.AllForDropdownAsync();
+				model.Authors = await authorService.AllForDropdownAsync();
                 model.Categories = await categoryService.AllForDropdownAsync();
 
                 return View(model);
             }
         }
-    }
+
+		[Authorize(Roles = "Admin")]
+		public async Task<IActionResult> Edit(string id)
+		{
+			try
+			{
+                var model = await bookService.GetByIdAsync(id);
+				model.Authors = await authorService.AllForDropdownAsync();
+				model.Categories = await categoryService.AllForDropdownAsync();
+				return View(model);
+			}
+			catch (Exception)
+			{
+				return GeneralError();
+			}
+		}
+
+		[HttpPost]
+		[Authorize(Roles = "Admin")]
+		public async Task<IActionResult> Edit(BookFormModel model, string id)
+		{
+			if (!await categoryService.ExistsByIdAsync(model.SelectedCategoriesIds))
+			{
+				ModelState.AddModelError(nameof(model.SelectedCategoriesIds), "Selected category does not exist!");
+			}
+
+			if (!await authorService.ExistsByIdAsync(model.SelectedAuthorsIds))
+			{
+				ModelState.AddModelError(nameof(model.SelectedAuthorsIds), "Selected author does not exist!");
+			}
+
+			if (model.SelectedAuthorsIds.Count > 5)
+			{
+				ModelState.AddModelError(nameof(model.SelectedAuthorsIds), "Too much selected authors!");
+			}
+
+			if (model.SelectedCategoriesIds.Count > 5)
+			{
+				ModelState.AddModelError(nameof(model.SelectedCategoriesIds), "Too much selected categories!");
+			}
+
+			string[] supportedTypes = new[] { "image/jpeg", "image/jpg", "image/png" };
+			if (!supportedTypes.Contains(model.Image.ContentType))
+			{
+				ModelState.AddModelError(nameof(model.Image), "Invalid content type!");
+			}
+
+			if (!ModelState.IsValid)
+			{
+				model.Authors = await authorService.AllForDropdownAsync();
+				model.Categories = await categoryService.AllForDropdownAsync();
+
+				return View(model);
+			}
+
+			try
+			{
+				var imageId = await bookService.GetImageIdAsync(id);
+				model.ImageId = imageId;
+
+				await imageService.EditBookImageAsync(model.Image, model.ImageId!);
+
+				var bookId = await bookService.EditAndReturnIdAsync(model, id);
+
+				TempData["Success"] = SuccessfulBookEdit;
+				return RedirectToAction("Details", "Book", new { id = bookId });
+			}
+			catch (Exception)
+			{
+				TempData["Error"] = UnsuccessfulBookEdit;
+
+				model.Authors = await authorService.AllForDropdownAsync();
+				model.Categories = await categoryService.AllForDropdownAsync();
+
+				return View(model);
+			}
+		}
+
+		[Authorize(Roles = "Admin")]
+		public async Task<IActionResult> Image(string id)
+        {
+            var imageId = await bookService.GetImageIdAsync(id);
+            if (imageId == null)
+            {
+                return NotFound();
+            }
+            var imageName = imageService.GetBookImageNameById(imageId);
+            return Json(imageName);
+        }
+	}
 }

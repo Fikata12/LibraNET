@@ -57,6 +57,20 @@ namespace LibraNET.Services.Mapping
 			CreateMap<Author, BookAuthorViewModel>();
 
 			CreateMap<Category, BookCategoryViewModel>();
+
+			CreateMap<Book, BookFormModel>()
+				.ForMember(d => d.SelectedAuthorsIds,
+				opt => opt.MapFrom(s => s.BooksAuthors))
+				.ForMember(d => d.SelectedCategoriesIds,
+				opt => opt.MapFrom(s => s.BooksCategories))
+				.ForMember(d => d.ImageId,
+				opt => opt.MapFrom(s => s.ImageId.ToString()));
+
+			CreateMap<BookAuthor, string>()
+				.ConvertUsing(s => s.AuthorId.ToString());
+
+			CreateMap<BookCategory, string>()
+				.ConvertUsing(s => s.CategoryId.ToString());
 		}
 	}
 }

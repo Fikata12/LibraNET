@@ -111,5 +111,59 @@ namespace LibraNET.Services.Data
 
 			return book.Id.ToString();
 		}
+
+		public async Task<BookFormModel> GetByIdAsync(string id)
+		{
+			return mapper
+				.Map<BookFormModel>(await context.Books
+                .Include(b => b.BooksAuthors)
+                .Include(b => b.BooksCategories)
+                .FirstOrDefaultAsync(b => b.Id.Equals(Guid.Parse(id))));
+		}
+
+		public async Task<string> EditAndReturnIdAsync(BookFormModel model, string id)
+		{
+			var book = await context.Books
+				.FirstAsync(b => b.Id.Equals(Guid.Parse(id)));
+
+			book!.Title = model.Title;
+			book.Description = model.Description;
+			book.ISBN = model.ISBN;
+			book.Price = model.Price;
+			book.Language = model.Language;
+			book.PublicationDate = model.PublicationDate;
+			book.PageCount = model.PageCount;
+			book.ImageId = Guid.Parse(model.ImageId!);
+            book.AvailableCount = model.AvailableCount;
+			book.PublisherName = model.PublisherName;
+
+			book.BooksAuthors.Clear();
+			book.BooksCategories.Clear();
+
+			foreach (var authorId in model.SelectedAuthorsIds)
+			{
+				book.BooksAuthors.Add(new BookAuthor
+				{
+					AuthorId = Guid.Parse(authorId)
+				});
+			}
+
+            foreach (var categoryId in model.SelectedCategoriesIds)
+            {
+                book.BooksCategories.Add(new BookCategory
+                {
+                    CategoryId = Guid.Parse(categoryId)
+                });
+            }
+
+			return book.Id.ToString();
+        }
+
+		public async Task<string?> GetImageIdAsync(string bookId)
+		{
+			return (await context.Books
+				.FirstOrDefaultAsync(b => b.Id.Equals(Guid.Parse(bookId))))?
+				.ImageId.ToString();
+		}
 	}
 }
