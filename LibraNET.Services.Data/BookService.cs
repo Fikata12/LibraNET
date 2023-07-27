@@ -124,6 +124,8 @@ namespace LibraNET.Services.Data
 		public async Task<string> EditAndReturnIdAsync(BookFormModel model, string id)
 		{
 			var book = await context.Books
+				.Include(b => b.BooksAuthors)
+				.Include(b => b.BooksCategories)
 				.FirstAsync(b => b.Id.Equals(Guid.Parse(id)));
 
 			book!.Title = model.Title;
@@ -140,6 +142,7 @@ namespace LibraNET.Services.Data
 			book.BooksAuthors.Clear();
 			book.BooksCategories.Clear();
 
+
 			foreach (var authorId in model.SelectedAuthorsIds)
 			{
 				book.BooksAuthors.Add(new BookAuthor
@@ -155,6 +158,8 @@ namespace LibraNET.Services.Data
                     CategoryId = Guid.Parse(categoryId)
                 });
             }
+
+			await context.SaveChangesAsync();
 
 			return book.Id.ToString();
         }

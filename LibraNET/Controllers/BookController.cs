@@ -91,43 +91,43 @@ namespace LibraNET.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Add(BookFormModel model)
         {
-            if (!await categoryService.ExistsByIdAsync(model.SelectedCategoriesIds))
-            {
-                ModelState.AddModelError(nameof(model.SelectedCategoriesIds), "Selected category does not exist!");
-            }
-
-            if (!await authorService.ExistsByIdAsync(model.SelectedAuthorsIds))
-            {
-                ModelState.AddModelError(nameof(model.SelectedAuthorsIds), "Selected author does not exist!");
-            }
-
-            if (model.SelectedAuthorsIds.Count > 5)
-            {
-				ModelState.AddModelError(nameof(model.SelectedAuthorsIds), "Too much selected authors!");
-			}
-
-			if (model.SelectedCategoriesIds.Count > 5)
-			{
-				ModelState.AddModelError(nameof(model.SelectedCategoriesIds), "Too much selected categories!");
-			}
-
-			string[] supportedTypes = new[] { "image/jpeg", "image/jpg", "image/png" };
-			if (!supportedTypes.Contains(model.Image.ContentType))
-			{
-				ModelState.AddModelError(nameof(model.Image), "Invalid content type!");
-			}
-
-			if (!ModelState.IsValid)
-            {
-                model.Authors = await authorService.AllForDropdownAsync();
-                model.Categories = await categoryService.AllForDropdownAsync();
-
-                return View(model);
-            }
-
             try
             {
-                var imageId = await imageService.UploadBookImageAsync(model.Image);
+				if (!await categoryService.ExistsByIdAsync(model.SelectedCategoriesIds))
+				{
+					ModelState.AddModelError(nameof(model.SelectedCategoriesIds), "Selected category does not exist!");
+				}
+
+				if (!await authorService.ExistsByIdAsync(model.SelectedAuthorsIds))
+				{
+					ModelState.AddModelError(nameof(model.SelectedAuthorsIds), "Selected author does not exist!");
+				}
+
+				if (model.SelectedAuthorsIds.Count > 5)
+				{
+					ModelState.AddModelError(nameof(model.SelectedAuthorsIds), "Too much selected authors!");
+				}
+
+				if (model.SelectedCategoriesIds.Count > 5)
+				{
+					ModelState.AddModelError(nameof(model.SelectedCategoriesIds), "Too much selected categories!");
+				}
+
+				string[] supportedTypes = new[] { "image/jpeg", "image/jpg", "image/png" };
+				if (!supportedTypes.Contains(model.Image.ContentType))
+				{
+					ModelState.AddModelError(nameof(model.Image), "Invalid content type!");
+				}
+
+				if (!ModelState.IsValid)
+				{
+					model.Authors = await authorService.AllForDropdownAsync();
+					model.Categories = await categoryService.AllForDropdownAsync();
+
+					return View(model);
+				}
+
+				var imageId = await imageService.UploadBookImageAsync(model.Image);
 
                 model.ImageId = imageId;
                 var bookId = await bookService.AddAndReturnIdAsync(model);
@@ -166,42 +166,42 @@ namespace LibraNET.Controllers
 		[Authorize(Roles = "Admin")]
 		public async Task<IActionResult> Edit(BookFormModel model, string id)
 		{
-			if (!await categoryService.ExistsByIdAsync(model.SelectedCategoriesIds))
-			{
-				ModelState.AddModelError(nameof(model.SelectedCategoriesIds), "Selected category does not exist!");
-			}
-
-			if (!await authorService.ExistsByIdAsync(model.SelectedAuthorsIds))
-			{
-				ModelState.AddModelError(nameof(model.SelectedAuthorsIds), "Selected author does not exist!");
-			}
-
-			if (model.SelectedAuthorsIds.Count > 5)
-			{
-				ModelState.AddModelError(nameof(model.SelectedAuthorsIds), "Too much selected authors!");
-			}
-
-			if (model.SelectedCategoriesIds.Count > 5)
-			{
-				ModelState.AddModelError(nameof(model.SelectedCategoriesIds), "Too much selected categories!");
-			}
-
-			string[] supportedTypes = new[] { "image/jpeg", "image/jpg", "image/png" };
-			if (!supportedTypes.Contains(model.Image.ContentType))
-			{
-				ModelState.AddModelError(nameof(model.Image), "Invalid content type!");
-			}
-
-			if (!ModelState.IsValid)
-			{
-				model.Authors = await authorService.AllForDropdownAsync();
-				model.Categories = await categoryService.AllForDropdownAsync();
-
-				return View(model);
-			}
-
 			try
 			{
+				if (!await categoryService.ExistsByIdAsync(model.SelectedCategoriesIds))
+				{
+					ModelState.AddModelError(nameof(model.SelectedCategoriesIds), "Selected category does not exist!");
+				}
+
+				if (!await authorService.ExistsByIdAsync(model.SelectedAuthorsIds))
+				{
+					ModelState.AddModelError(nameof(model.SelectedAuthorsIds), "Selected author does not exist!");
+				}
+
+				if (model.SelectedAuthorsIds.Count > 5)
+				{
+					ModelState.AddModelError(nameof(model.SelectedAuthorsIds), "Too much selected authors!");
+				}
+
+				if (model.SelectedCategoriesIds.Count > 5)
+				{
+					ModelState.AddModelError(nameof(model.SelectedCategoriesIds), "Too much selected categories!");
+				}
+
+				string[] supportedTypes = new[] { "image/jpeg", "image/jpg", "image/png" };
+				if (!supportedTypes.Contains(model.Image.ContentType))
+				{
+					ModelState.AddModelError(nameof(model.Image), "Invalid content type!");
+				}
+
+				if (!ModelState.IsValid)
+				{
+					model.Authors = await authorService.AllForDropdownAsync();
+					model.Categories = await categoryService.AllForDropdownAsync();
+
+					return View(model);
+				}
+
 				var imageId = await bookService.GetImageIdAsync(id);
 				model.ImageId = imageId;
 
