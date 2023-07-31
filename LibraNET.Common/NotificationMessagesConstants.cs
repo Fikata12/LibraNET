@@ -11,5 +11,7 @@
 
         public const string SuccessfulAuthorCreation = "Author was added successfully!";
 		public const string UnsuccessfulAuthorCreation = "Unexpected error occurred while trying to add new author!";
-	}
+        public const string SuccessfulAuthorEdit = "Author was edited successfully!";
+        public const string UnsuccessfulAuthorEdit = "Unexpected error occurred while trying to edit an author!";
+    }
 }

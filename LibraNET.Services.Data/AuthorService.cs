@@ -53,5 +53,33 @@ namespace LibraNET.Services.Data
 
 			return author.Id.ToString();
 		}
-	}
+
+        public async Task<AuthorFormModel> GetByIdAsync(string id)
+        {
+            return mapper
+                .Map<AuthorFormModel>(await context.Authors
+                .FirstAsync(a => a.Id.Equals(Guid.Parse(id))));
+        }
+
+        public async Task<string> EditAndReturnIdAsync(AuthorFormModel model, string id)
+        {
+            var author = await context.Authors
+                .FirstOrDefaultAsync(a => a.Id.Equals(Guid.Parse(id)));
+
+            author!.Name = model.Name;
+            author.ImageId = Guid.Parse(model.ImageId!);
+            author.Description = model.Description;
+
+            await context.SaveChangesAsync();
+
+            return author.Id.ToString();
+        }
+
+        public async Task<string?> GetImageIdAsync(string id)
+        {
+            return (await context.Authors
+                .FirstOrDefaultAsync(a => a.Id.Equals(Guid.Parse(id))))?
+                .ImageId.ToString();
+        }
+    }
 }

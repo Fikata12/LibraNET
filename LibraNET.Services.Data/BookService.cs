@@ -118,7 +118,7 @@ namespace LibraNET.Services.Data
 				.Map<BookFormModel>(await context.Books
                 .Include(b => b.BooksAuthors)
                 .Include(b => b.BooksCategories)
-                .FirstOrDefaultAsync(b => b.Id.Equals(Guid.Parse(id))));
+                .FirstAsync(b => b.Id.Equals(Guid.Parse(id))));
 		}
 
 		public async Task<string> EditAndReturnIdAsync(BookFormModel model, string id)
