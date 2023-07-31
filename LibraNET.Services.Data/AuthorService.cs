@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using LibraNET.Data;
+using LibraNET.Data.Models;
 using LibraNET.Services.Data.Contracts;
 using LibraNET.Web.ViewModels.Author;
 using Microsoft.EntityFrameworkCore;
@@ -41,6 +42,16 @@ namespace LibraNET.Services.Data
 			bool result = ids.All(id => existingIds.Any(eid => eid == id));
 
 			return result;
+		}
+
+		public async Task<string> AddAndReturnIdAsync(AuthorFormModel model)
+		{
+			var author = mapper.Map<Author>(model);
+
+			await context.Authors.AddAsync(author);
+			await context.SaveChangesAsync();
+
+			return author.Id.ToString();
 		}
 	}
 }

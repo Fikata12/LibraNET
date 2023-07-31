@@ -71,6 +71,8 @@ namespace LibraNET.Services.Mapping
 
 			CreateMap<BookCategory, string>()
 				.ConvertUsing(s => s.CategoryId.ToString());
+
+			CreateMap<AuthorFormModel, Author>();
 		}
 	}
 }

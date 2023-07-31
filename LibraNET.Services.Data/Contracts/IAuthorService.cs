@@ -7,5 +7,6 @@ namespace LibraNET.Services.Data.Contracts
 		Task<ICollection<FiltersAuthorViewModel>> AllForFiltersAsync();
 		Task<ICollection<BookAuthorViewModel>> AllForDropdownAsync();
         Task<bool> ExistsByIdAsync(ICollection<string> ids);
-    }
+		Task<string> AddAndReturnIdAsync(AuthorFormModel model);
+	}
 }

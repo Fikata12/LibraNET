@@ -6,8 +6,10 @@
 
         public const string SuccessfulBookCreation = "Book was added successfully!";
         public const string UnsuccessfulBookCreation = "Unexpected error occurred while trying to add new book!";
-
         public const string SuccessfulBookEdit = "Book was edited successfully!";
         public const string UnsuccessfulBookEdit = "Unexpected error occurred while trying to edit a book!";
-    }
+
+        public const string SuccessfulAuthorCreation = "Author was added successfully!";
+		public const string UnsuccessfulAuthorCreation = "Unexpected error occurred while trying to add new author!";
+	}
 }
