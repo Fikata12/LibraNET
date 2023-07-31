@@ -74,6 +74,9 @@ namespace LibraNET.Services.Mapping
 
 			CreateMap<AuthorFormModel, Author>();
 			CreateMap<Author, AuthorFormModel>();
-        }
+
+			CreateMap<CategoryFormModel, Category>();
+			CreateMap<Category, CategoryFormModel>();
+		}
 	}
 }
