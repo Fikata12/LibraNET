@@ -50,7 +50,7 @@ namespace LibraNET.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Addresses");
+                    b.ToTable("Addresses", (string)null);
                 });
 
             modelBuilder.Entity("LibraNET.Data.Models.ApplicationUser", b =>
@@ -159,7 +159,7 @@ namespace LibraNET.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Authors");
+                    b.ToTable("Authors", (string)null);
 
                     b.HasData(
                         new
@@ -337,7 +337,7 @@ namespace LibraNET.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Books");
+                    b.ToTable("Books", (string)null);
 
                     b.HasData(
                         new
@@ -562,7 +562,7 @@ namespace LibraNET.Data.Migrations
 
                     b.HasIndex("AuthorId");
 
-                    b.ToTable("BooksAuthors");
+                    b.ToTable("BooksAuthors", (string)null);
 
                     b.HasData(
                         new
@@ -664,7 +664,7 @@ namespace LibraNET.Data.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("BooksCategories");
+                    b.ToTable("BooksCategories", (string)null);
 
                     b.HasData(
                         new
@@ -755,7 +755,7 @@ namespace LibraNET.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Carts");
+                    b.ToTable("Carts", (string)null);
                 });
 
             modelBuilder.Entity("LibraNET.Data.Models.CartBook", b =>
@@ -773,7 +773,7 @@ namespace LibraNET.Data.Migrations
 
                     b.HasIndex("BookId");
 
-                    b.ToTable("CartsBooks");
+                    b.ToTable("CartsBooks", (string)null);
                 });
 
             modelBuilder.Entity("LibraNET.Data.Models.Category", b =>
@@ -792,7 +792,7 @@ namespace LibraNET.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
 
                     b.HasData(
                         new
@@ -886,7 +886,7 @@ namespace LibraNET.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Comments");
+                    b.ToTable("Comments", (string)null);
                 });
 
             modelBuilder.Entity("LibraNET.Data.Models.Order", b =>
@@ -923,7 +923,7 @@ namespace LibraNET.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Orders");
+                    b.ToTable("Orders", (string)null);
                 });
 
             modelBuilder.Entity("LibraNET.Data.Models.OrderBook", b =>
@@ -941,7 +941,7 @@ namespace LibraNET.Data.Migrations
 
                     b.HasIndex("BookId");
 
-                    b.ToTable("OrdersBooks");
+                    b.ToTable("OrdersBooks", (string)null);
                 });
 
             modelBuilder.Entity("LibraNET.Data.Models.Rating", b =>
@@ -959,7 +959,7 @@ namespace LibraNET.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Ratings");
+                    b.ToTable("Ratings", (string)null);
                 });
 
             modelBuilder.Entity("LibraNET.Data.Models.UserFavouriteBook", b =>
@@ -974,7 +974,7 @@ namespace LibraNET.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UsersFavouriteBooks");
+                    b.ToTable("UsersFavouriteBooks", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", b =>

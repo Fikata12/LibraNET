@@ -49,8 +49,9 @@ namespace LibraNET
             builder.Services.AddScoped<ICategoryService, CategoryService>();
             builder.Services.AddScoped<IAuthorService, AuthorService>();
             builder.Services.AddScoped<IImageService, ImageService>();
+            builder.Services.AddScoped<IUserService, UserService>();
 
-			var app = builder.Build();
+            var app = builder.Build();
 
             if (app.Environment.IsDevelopment())
             {
