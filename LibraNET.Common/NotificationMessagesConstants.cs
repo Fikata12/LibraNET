@@ -16,5 +16,7 @@
 
 		public const string SuccessfulCategoryCreation = "Category was added successfully!";
 		public const string UnsuccessfulCategoryCreation = "Unexpected error occurred while trying to add new category!";
-	}
+        public const string SuccessfulCategoryEdit = "Category was edited successfully!";
+        public const string UnsuccessfulCategoryEdit = "Unexpected error occurred while trying to edit a category!";
+    }
 }

@@ -8,5 +8,8 @@ namespace LibraNET.Services.Data.Contracts
 		Task<ICollection<BookCategoryViewModel>> AllForDropdownAsync();
         Task<bool> ExistsByIdAsync(ICollection<string> ids);
 		Task AddAsync(CategoryFormModel model);
-	}
+        Task<CategoryFormModel> GetByIdAsync(string id);
+        Task EditAsync(CategoryFormModel model, string id);
+
+    }
 }

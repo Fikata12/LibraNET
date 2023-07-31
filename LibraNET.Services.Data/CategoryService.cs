@@ -3,6 +3,7 @@ using AutoMapper.QueryableExtensions;
 using LibraNET.Data;
 using LibraNET.Data.Models;
 using LibraNET.Services.Data.Contracts;
+using LibraNET.Web.ViewModels.Author;
 using LibraNET.Web.ViewModels.Category;
 using Microsoft.EntityFrameworkCore;
 
@@ -49,5 +50,22 @@ namespace LibraNET.Services.Data
 			await context.Categories.AddAsync(mapper.Map<Category>(model));
 			await context.SaveChangesAsync();
 		}
-	}
+
+        public async Task<CategoryFormModel> GetByIdAsync(string id)
+        {
+            return mapper
+                .Map<CategoryFormModel>(await context.Categories
+                .FirstAsync(a => a.Id.Equals(Guid.Parse(id))));
+        }
+
+        public async Task EditAsync(CategoryFormModel model, string id)
+        {
+            var category = await context.Categories
+                .FirstAsync(b => b.Id.Equals(Guid.Parse(id)));
+
+            category.Name = model.Name;
+
+            await context.SaveChangesAsync();
+        }
+    }
 }
