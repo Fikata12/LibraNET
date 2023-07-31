@@ -89,28 +89,6 @@
 
 @section Scripts {
 	<partial name="_ValidationScriptsPartial" />
-	<script src="~/js/Book/Add.js"></script>
-	<script type="module">
-		const fileInput = document.querySelector('input[type="file"]');
-
-		const urlParts = window.location.href.split('/');
-		let bookId = urlParts[urlParts.length - 1];
-
-		$.get("https://localhost:7219/book/image/" + bookId, async function (data, status) {
-
-			let imageName = data;
-			if (imageName) {
-				let urlr = "https://localhost:7219/Images/Books/" + imageName;
-
-				const response = await fetch(urlr);
-				const blob = await response.blob();
-
-				const file = new File([blob], imageName, { type: blob.type });
-
-				const dataTransfer = new DataTransfer();
-				dataTransfer.items.add(file);
-				fileInput.files = dataTransfer.files;
-			}
-		});
-	</script>
+	<script src="~/js/Shared/AuthorAndCategoryMultipleSelects.js"></script>
+	<script src="~/js//Book/Edit.js"></script>
 }
