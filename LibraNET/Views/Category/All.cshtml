@@ -1,0 +1,62 @@
+﻿@model AllCategoriesViewModel
+@{
+	ViewData["Title"] = "All Categories";
+}
+<h2 class="text-center">@ViewData["Title"]</h2>
+<hr />
+<form asp-controller="Category" asp-action="All" method="get">
+	<div id="search" class="my-4 d-flex justify-content-center">
+		<div class="input-group w-25">
+			<input asp-for="SearchString" type="search" class="form-control rounded-left" placeholder="Search by Id or Name">
+			<button type="submit" class="btn btn-outline-success rounded-left">
+				<i class="bi bi-search"></i>
+			</button>
+		</div>
+	</div>
+</form>
+<div class="table-responsive">
+	<table class="table align-middle border">
+		<thead class="table-dark">
+			<tr>
+				<th scope="col">Id</th>
+				<th scope="col">Name</th>
+				<th scope="col">Edit/Delete</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var category in Model.Categories)
+			{
+				<tr class="align-content-center">
+					<th scope="row">@category.Id</th>
+					<td>@category.Name</td>
+					<td>
+						<a asp-controller="Category" asp-action="Edit" asp-route-id="@category.Id" class="btn btn-sm btn-success d-inline-flex" type="submit">
+							Edit
+						</a>
+						<form class="d-inline-flex" asp-controller="Category" asp-action="Delete" asp-route-id="@category.Id" method="post">
+							<button class="btn btn-sm btn-dark" type="submit" onclick="return confirm('Are you sure you want to delete this category: @category.Name?')">
+								Delete
+							</button>
+						</form>
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+</div>
+
+@if (Model.Categories.Any())
+{
+	@Html.PagedListPager(Model.Categories,
+		CurrentPage => Url.Action("All", "Category", new {
+		CurrentPage,
+		SearchString = Model.SearchString
+		}),
+		new PagedListRenderOptions {
+			LiElementClasses = new string[] { "page-item"},
+			PageClasses = new string[] { "page-link", "text-success" },
+			MaximumPageNumbersToDisplay = 3,
+			UlElementClasses = new string[] { "pagination", "justify-content-center"},
+			ContainerDivClasses = new string[] { "pagination-container", "py-5" }
+		})
+}

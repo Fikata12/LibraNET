@@ -23,5 +23,8 @@
         public const string TheUserIsAdmin = "The user you are trying to make Admin is already Admin!";
 		public const string UnsuccessfulUserAdminify = "Failed to make the user an Admin.";
 		public const string SuccessfulUserAdminify = "Successfully adminified user!";
+
+		public const string SuccessfulCategoryDeletion = "Successfully deleted category!";
+		public const string UnsuccessfulCategoryDeletion = "The category you are trying to delete doesnt exist!";
 	}
 }

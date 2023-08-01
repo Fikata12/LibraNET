@@ -1,10 +1,10 @@
-﻿using LibraNET.Services.Data;
-using LibraNET.Services.Data.Contracts;
-using LibraNET.Web.ViewModels.Author;
+﻿using LibraNET.Services.Data.Contracts;
 using LibraNET.Web.ViewModels.Category;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using X.PagedList;
 using static LibraNET.Common.NotificationMessagesConstants;
+using static LibraNET.Common.GeneralApplicationConstants;
 
 namespace LibraNET.Controllers
 {
@@ -36,7 +36,7 @@ namespace LibraNET.Controllers
 				await categoryService.AddAsync(model);
 
 				TempData["Success"] = SuccessfulCategoryCreation;
-				return RedirectToAction("Index", "Home");
+				return RedirectToAction("All", "Category");
 			}
 			catch (Exception)
 			{
@@ -74,7 +74,7 @@ namespace LibraNET.Controllers
                 await categoryService.EditAsync(model, id);
 
                 TempData["Success"] = SuccessfulCategoryEdit;
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("All", "Category");
             }
             catch (Exception)
             {
@@ -83,5 +83,38 @@ namespace LibraNET.Controllers
                 return View(model);
             }
         }
-    }
+
+		[Authorize(Roles = "Admin")]
+		public async Task<IActionResult> All([FromQuery] AllCategoriesViewModel model)
+		{
+			var allCategories = await categoryService.AllAsync(model);
+
+			model.Categories = await allCategories.ToPagedListAsync(model.CurrentPage, CategoriesPerPage);
+			model.AllCategoriesCount = allCategories.Count;
+
+			return View(model);
+		}
+
+		[HttpPost]
+		[Authorize(Roles = "Admin")]
+		public async Task<IActionResult> Delete(string id)
+		{
+			try
+			{
+				if (!await categoryService.ExistsByIdAsync(id))
+				{
+					TempData["Error"] = UnsuccessfulCategoryDeletion;
+					return RedirectToAction("All", "Category");
+				}
+				await categoryService.DeleteAsync(id);
+
+				TempData["Success"] = SuccessfulCategoryDeletion;
+				return RedirectToAction("All", "Category");
+			}
+			catch (Exception)
+			{
+				return GeneralError();
+			}
+		}
+	}
 }

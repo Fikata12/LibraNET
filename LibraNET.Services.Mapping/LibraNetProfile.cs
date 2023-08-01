@@ -80,6 +80,8 @@ namespace LibraNET.Services.Mapping
 			CreateMap<Category, CategoryFormModel>();
 
 			CreateMap<ApplicationUser, UserViewModel>();
-        }
+
+			CreateMap<Category, CategoryViewModel>();
+		}
 	}
 }

@@ -5,6 +5,7 @@ using LibraNET.Data.Models;
 using LibraNET.Services.Data.Contracts;
 using LibraNET.Web.ViewModels.Author;
 using LibraNET.Web.ViewModels.Category;
+using LibraNET.Web.ViewModels.User;
 using Microsoft.EntityFrameworkCore;
 
 namespace LibraNET.Services.Data
@@ -45,6 +46,13 @@ namespace LibraNET.Services.Data
 			return result;
 		}
 
+		public async Task<bool> ExistsByIdAsync(string id)
+		{
+			return await context.Categories
+				.AsNoTracking()
+				.AnyAsync(c => c.Id.Equals(Guid.Parse(id)));
+		}
+
 		public async Task AddAsync(CategoryFormModel model)
 		{
 			await context.Categories.AddAsync(mapper.Map<Category>(model));
@@ -67,5 +75,34 @@ namespace LibraNET.Services.Data
 
             await context.SaveChangesAsync();
         }
-    }
+
+		public async Task<ICollection<CategoryViewModel>> AllAsync(AllCategoriesViewModel model)
+		{
+			var categoriesQuery = context.Categories.AsNoTracking();
+
+			if (!string.IsNullOrWhiteSpace(model.SearchString))
+			{
+				string wildCard = $"%{model.SearchString}%";
+
+				categoriesQuery = categoriesQuery.Where(c => EF.Functions.Like(c.Name, wildCard) ||
+												   EF.Functions.Like(c.Id.ToString(), wildCard));
+			}
+
+			ICollection<CategoryViewModel> categories = await categoriesQuery
+				.Where(c => !c.IsDeleted)
+				.ProjectTo<CategoryViewModel>(mapper.ConfigurationProvider)
+				.ToListAsync();
+
+			return categories;
+		}
+
+		public async Task DeleteAsync(string id)
+		{
+			var category = context.Categories
+				.First(c => c.Id.Equals(Guid.Parse(id)));
+
+			category.IsDeleted = true;
+			await context.SaveChangesAsync();
+		}
+	}
 }
