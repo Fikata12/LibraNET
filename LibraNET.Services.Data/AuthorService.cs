@@ -38,18 +38,26 @@ namespace LibraNET.Services.Data
 
 		public async Task<bool> ExistsByIdAsync(ICollection<string> ids)
 		{
-			var existingIds = await context.Authors.Select(c => c.Id.ToString()).ToListAsync();
+			foreach (var id in ids)
+			{
+				var doesExist = await context.Authors
+					.AsNoTracking()
+					.AnyAsync(a => a.Id.Equals(Guid.Parse(id)) && !a.IsDeleted);
 
-			bool result = ids.All(id => existingIds.Any(eid => eid == id));
+				if (!doesExist)
+				{
+					return false;
+				}
+			}
 
-			return result;
+			return true;
 		}
 
 		public async Task<bool> ExistsByIdAsync(string id)
 		{
 			return await context.Authors
 				.AsNoTracking()
-				.AnyAsync(a => a.Id.Equals(Guid.Parse(id)));
+				.AnyAsync(a => a.Id.Equals(Guid.Parse(id)) && !a.IsDeleted);
 		}
 
 		public async Task<string> AddAndReturnIdAsync(AuthorFormModel model)

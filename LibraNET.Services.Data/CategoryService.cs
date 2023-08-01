@@ -39,18 +39,26 @@ namespace LibraNET.Services.Data
 
         public async Task<bool> ExistsByIdAsync(ICollection<string> ids)
 		{
-			var existingIds = await context.Categories.Select(c => c.Id.ToString()).ToListAsync();
+			foreach (var id in ids)
+			{
+				var doesExist = await context.Categories
+					.AsNoTracking()
+					.AnyAsync(c => c.Id.Equals(Guid.Parse(id)) && !c.IsDeleted);
 
-			bool result = ids.All(id => existingIds.Any(eid => eid == id));
+				if (!doesExist)
+				{
+					return false;
+				}
+			}
 
-			return result;
+			return true;
 		}
 
 		public async Task<bool> ExistsByIdAsync(string id)
 		{
 			return await context.Categories
 				.AsNoTracking()
-				.AnyAsync(c => c.Id.Equals(Guid.Parse(id)));
+				.AnyAsync(c => c.Id.Equals(Guid.Parse(id)) && !c.IsDeleted);
 		}
 
 		public async Task AddAsync(CategoryFormModel model)
