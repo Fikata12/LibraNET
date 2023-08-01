@@ -19,10 +19,10 @@ namespace LibraNET.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> All([FromQuery] AllUsersViewModel model)
         {
-            var serviceModel = await userService.AllAsync(model);
+            var allUsers = await userService.AllAsync(model);
 
-            model.Users = await serviceModel.Users.ToPagedListAsync(model.CurrentPage, EntitiesPerPage);
-            model.AllUsersCount = serviceModel.AllUsersCount;
+            model.Users = await allUsers.ToPagedListAsync(model.CurrentPage, EntitiesPerPage);
+            model.AllUsersCount = allUsers.Count;
 
             return View(model);
         }

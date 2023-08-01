@@ -2,8 +2,6 @@
 using AutoMapper.QueryableExtensions;
 using LibraNET.Data;
 using LibraNET.Services.Data.Contracts;
-using LibraNET.Services.Data.Models;
-using LibraNET.Web.ViewModels.Book;
 using LibraNET.Web.ViewModels.User;
 using Microsoft.EntityFrameworkCore;
 
@@ -19,7 +17,7 @@ namespace LibraNET.Services.Data
             this.context = context;
             this.mapper = mapper;
         }
-        public async Task<CurrentUsersServiceModel> AllAsync(AllUsersViewModel model)
+        public async Task<ICollection<UserViewModel>> AllAsync(AllUsersViewModel model)
         {
             var usersQuery = context.Users.AsNoTracking();
 
@@ -36,13 +34,7 @@ namespace LibraNET.Services.Data
                 .ProjectTo<UserViewModel>(mapper.ConfigurationProvider)
                 .ToListAsync();
 
-            int allUsersCount = usersQuery.Count();
-
-            return new CurrentUsersServiceModel
-            {
-                Users = users,
-                AllUsersCount = allUsersCount
-            };
+            return users;
         }
     }
 }

@@ -3,11 +3,9 @@ using AutoMapper.QueryableExtensions;
 using LibraNET.Data;
 using LibraNET.Data.Models;
 using LibraNET.Services.Data.Contracts;
-using LibraNET.Services.Data.Models;
 using LibraNET.Web.ViewModels.Book;
 using LibraNET.Web.ViewModels.Enums;
 using Microsoft.EntityFrameworkCore;
-using static LibraNET.Common.GeneralApplicationConstants;
 
 namespace LibraNET.Services.Data
 {
@@ -33,7 +31,7 @@ namespace LibraNET.Services.Data
 				.ToListAsync();
 		}
 
-		public async Task<CurrentBooksServiceModel> AllAsync(AllBooksViewModel model)
+		public async Task<ICollection<BookViewModel>> AllAsync(AllBooksViewModel model)
 		{
 			var booksQuery = context.Books.AsNoTracking();
 
@@ -83,13 +81,7 @@ namespace LibraNET.Services.Data
 				.ProjectTo<BookViewModel>(mapper.ConfigurationProvider)
 				.ToListAsync();
 
-			int allBooksCount = booksQuery.Count();
-
-			return new CurrentBooksServiceModel
-			{
-				Books = books,
-				AllBooksCount = allBooksCount
-			};
+			return books;
 		}
 
 		public async Task<decimal> MinPriceAsync()

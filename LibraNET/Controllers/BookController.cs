@@ -61,10 +61,10 @@ namespace LibraNET.Controllers
                 }
             }
 
-            var serviceModel = await bookService.AllAsync(model);
+            var allBooks = await bookService.AllAsync(model);
 
-            model.Books = await serviceModel.Books.ToPagedListAsync(model.CurrentPage, EntitiesPerPage);
-            model.AllBooksCount = serviceModel.AllBooksCount;
+            model.Books = await allBooks.ToPagedListAsync(model.CurrentPage, EntitiesPerPage);
+            model.AllBooksCount = allBooks.Count;
 
             return View(model);
         }

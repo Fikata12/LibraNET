@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\LibraNET.Data\LibraNET.Data.csproj" />
-    <ProjectReference Include="..\LibraNET.Services.Data.Models\LibraNET.Services.Data.Models.csproj" />
     <ProjectReference Include="..\LibraNET.Services.Mapping\LibraNET.Services.Mapping.csproj" />
   </ItemGroup>
 
