@@ -4,10 +4,10 @@
 }
 <h2 class="text-center">@ViewData["Title"]</h2>
 <hr />
-<form asp-controller="Category" asp-action="All" method="get">
-	<div id="search" class="my-4 d-flex justify-content-center">
-		<div class="input-group w-25">
-			<input asp-for="SearchString" type="search" class="form-control rounded-left" placeholder="Search by Id or Name">
+<form class="justify-content-center d-flex my-4" asp-controller="Category" asp-action="All" method="get">
+	<div id="search" class="w-50">
+		<div class="input-group">
+			<input asp-for="SearchString" type="search" class="form-control rounded-left" placeholder="Search by Id or Name" aria-label="Search" aria-describedby="search-addon" />
 			<button type="submit" class="btn btn-outline-success rounded-left">
 				<i class="bi bi-search"></i>
 			</button>

@@ -3,6 +3,7 @@
 	ViewData["Title"] = "All Books";
 }
 <div class="container">
+	<h2 class="text-center my-4">@ViewData["Title"]</h2>
 	<form asp-controller="Book" asp-action="All" id="filterForm" method="get">
 		<div class="rounded d-flex align-items-center border" id="header">
 			<button class="btn text-uppercase text-center btn-success text-white h-100 w-25"
@@ -85,7 +86,7 @@
 					</div>
 				</div>
 			</div>
-			<div id="products">
+			<div id="entities">
 				<div class="row justify-content-center">
 					@if (!Model.Books.Any())
 					{

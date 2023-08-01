@@ -1,10 +1,11 @@
-﻿using LibraNET.Services.Data;
-using LibraNET.Services.Data.Contracts;
+﻿using LibraNET.Services.Data.Contracts;
 using LibraNET.Web.ViewModels.Author;
-using LibraNET.Web.ViewModels.Book;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using X.PagedList;
 using static LibraNET.Common.NotificationMessagesConstants;
+using static LibraNET.Common.GeneralApplicationConstants;
+using LibraNET.Services.Data;
 
 namespace LibraNET.Controllers
 {
@@ -97,7 +98,7 @@ namespace LibraNET.Controllers
                 var authorId = await authorService.EditAndReturnIdAsync(model, id);
 
                 TempData["Success"] = SuccessfulAuthorEdit;
-                return RedirectToAction("Details", "Book", new { id = authorId });
+                return RedirectToAction("Details", "Author", new { id = authorId });
             }
             catch (Exception)
             {
@@ -107,7 +108,39 @@ namespace LibraNET.Controllers
             }
         }
 
-        [Authorize(Roles = "Admin")]
+		public async Task<IActionResult> All([FromQuery] AllAuthorsViewModel model)
+		{
+			var allAuthors = await authorService.AllAsync(model);
+
+			model.Authors = await allAuthors.ToPagedListAsync(model.CurrentPage, AuthorsPerPage);
+			model.AllAuthorsCount = allAuthors.Count;
+
+			return View(model);
+		}
+
+		[HttpPost]
+		[Authorize(Roles = "Admin")]
+		public async Task<IActionResult> Delete(string id)
+		{
+			try
+			{
+				if (!await authorService.ExistsByIdAsync(id))
+				{
+					TempData["Error"] = UnsuccessfulAuthorDeletion;
+					return RedirectToAction("All", "Author");
+				}
+				await authorService.DeleteAsync(id);
+
+				TempData["Success"] = SuccessfulAuthorDeletion;
+				return RedirectToAction("All", "Author");
+			}
+			catch (Exception)
+			{
+				return GeneralError();
+			}
+		}
+
+		[Authorize(Roles = "Admin")]
         public async Task<IActionResult> Image(string id)
         {
             var imageId = await authorService.GetImageIdAsync(id);

@@ -4,6 +4,7 @@ using LibraNET.Data;
 using LibraNET.Data.Models;
 using LibraNET.Services.Data.Contracts;
 using LibraNET.Web.ViewModels.Author;
+using LibraNET.Web.ViewModels.Category;
 using Microsoft.EntityFrameworkCore;
 
 namespace LibraNET.Services.Data
@@ -44,6 +45,13 @@ namespace LibraNET.Services.Data
 			return result;
 		}
 
+		public async Task<bool> ExistsByIdAsync(string id)
+		{
+			return await context.Authors
+				.AsNoTracking()
+				.AnyAsync(a => a.Id.Equals(Guid.Parse(id)));
+		}
+
 		public async Task<string> AddAndReturnIdAsync(AuthorFormModel model)
 		{
 			var author = mapper.Map<Author>(model);
@@ -81,5 +89,33 @@ namespace LibraNET.Services.Data
                 .FirstOrDefaultAsync(a => a.Id.Equals(Guid.Parse(id))))?
                 .ImageId.ToString();
         }
-    }
+
+		public async Task<ICollection<AuthorViewModel>> AllAsync(AllAuthorsViewModel model)
+		{
+			var authorsQuery = context.Authors.AsNoTracking();
+
+			if (!string.IsNullOrWhiteSpace(model.SearchString))
+			{
+				string wildCard = $"%{model.SearchString}%";
+
+				authorsQuery = authorsQuery.Where(a => EF.Functions.Like(a.Name, wildCard));
+			}
+
+			ICollection<AuthorViewModel> authors = await authorsQuery
+				.Where(a => !a.IsDeleted)
+				.ProjectTo<AuthorViewModel>(mapper.ConfigurationProvider)
+				.ToListAsync();
+
+			return authors;
+		}
+
+		public async Task DeleteAsync(string id)
+		{
+			var author = context.Authors
+				.First(c => c.Id.Equals(Guid.Parse(id)));
+
+			author.IsDeleted = true;
+			await context.SaveChangesAsync();
+		}
+	}
 }

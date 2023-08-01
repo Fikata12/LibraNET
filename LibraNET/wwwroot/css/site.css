@@ -276,7 +276,7 @@ input[type=range] {
 }
 
 @media(min-width: 992px) {
-    #products .row {
+    #entities .row {
         justify-content: normal !important;
     }
 }
@@ -292,13 +292,14 @@ input[type=range] {
 
 
 /*_BookPartial*/
-.product-card {
+/*_AuthorPartial*/
+.entity-card {
     cursor: pointer;
     transition: .3s all ease-in-out;
     border: hidden !important;
 }
 
-    .product-card p, .card-title {
+    .entity-card p, .card-title {
         overflow: hidden;
         text-overflow: ellipsis;
         display: -webkit-box;
@@ -309,10 +310,6 @@ input[type=range] {
         height: 2em;
     }
 
-    .product-card:hover {
+    .entity-card:hover {
         box-shadow: 2px 2px 15px #b7b7b7;
-    }
-
-    .product-card .product-name {
-        font-weight: 600
     }

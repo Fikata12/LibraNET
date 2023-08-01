@@ -13,18 +13,19 @@
 		public const string UnsuccessfulAuthorCreation = "Unexpected error occurred while trying to add new author!";
         public const string SuccessfulAuthorEdit = "Author was edited successfully!";
         public const string UnsuccessfulAuthorEdit = "Unexpected error occurred while trying to edit an author!";
+		public const string SuccessfulAuthorDeletion = "Successfully deleted author!";
+		public const string UnsuccessfulAuthorDeletion = "The author you are trying to delete doesn't exist!";
 
 		public const string SuccessfulCategoryCreation = "Category was added successfully!";
 		public const string UnsuccessfulCategoryCreation = "Unexpected error occurred while trying to add new category!";
         public const string SuccessfulCategoryEdit = "Category was edited successfully!";
         public const string UnsuccessfulCategoryEdit = "Unexpected error occurred while trying to edit a category!";
+		public const string SuccessfulCategoryDeletion = "Successfully deleted category!";
+		public const string UnsuccessfulCategoryDeletion = "The category you are trying to delete doesn't exist!";
 
         public const string UserNotFound = "User not found!";
         public const string TheUserIsAdmin = "The user you are trying to make Admin is already Admin!";
 		public const string UnsuccessfulUserAdminify = "Failed to make the user an Admin.";
 		public const string SuccessfulUserAdminify = "Successfully adminified user!";
-
-		public const string SuccessfulCategoryDeletion = "Successfully deleted category!";
-		public const string UnsuccessfulCategoryDeletion = "The category you are trying to delete doesnt exist!";
 	}
 }

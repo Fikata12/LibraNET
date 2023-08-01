@@ -27,19 +27,26 @@
 						<li class="nav-item">
 							<a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
 						</li>
-						<li class="nav-item">
-							<a class="nav-link text-white" asp-area="" asp-controller="Book" asp-action="All">All Books</a>
-						</li>
 						@if (User.IsInRole("Admin"))
 						{
-							<li class="nav-item">
-								<a class="nav-link text-white" asp-area="" asp-controller="Author" asp-action="All">All Authors</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link text-white" asp-area="" asp-controller="Category" asp-action="All">All Categories</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link text-white" asp-area="" asp-controller="User" asp-action="All">All Users</a>
+							<li class="nav-item dropdown">
+								<a class="nav-link text-white dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+									All
+								</a>
+								<ul class="dropdown-menu">
+									<li>
+										<a class="dropdown-item" asp-area="" asp-controller="Book" asp-action="All">Books</a>
+									</li>
+									<li>
+										<a class="dropdown-item" asp-area="" asp-controller="Author" asp-action="All">Authors</a>
+									</li>
+									<li>
+										<a class="dropdown-item" asp-area="" asp-controller="Category" asp-action="All">Categories</a>
+									</li>
+									<li>
+										<a class="dropdown-item" asp-area="" asp-controller="User" asp-action="All">Users</a>
+									</li>
+								</ul>
 							</li>
 							<li class="nav-item dropdown">
 								<a class="nav-link text-white dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -47,15 +54,21 @@
 								</a>
 								<ul class="dropdown-menu">
 									<li>
-										<a class="dropdown-item" asp-area="" asp-controller="Book" asp-action="Add">Add Book</a>
+										<a class="dropdown-item" asp-area="" asp-controller="Book" asp-action="Add">Book</a>
 									</li>
 									<li>
-										<a class="dropdown-item" asp-area="" asp-controller="Author" asp-action="Add">Add Author</a>
+										<a class="dropdown-item" asp-area="" asp-controller="Author" asp-action="Add">Author</a>
 									</li>
 									<li>
-										<a class="dropdown-item" asp-area="" asp-controller="Category" asp-action="Add">Add Category</a>
+										<a class="dropdown-item" asp-area="" asp-controller="Category" asp-action="Add">Category</a>
 									</li>
 								</ul>
+							</li>
+						}
+						else
+						{
+							<li class="nav-item">
+								<a class="nav-link text-white" asp-area="" asp-controller="Book" asp-action="All">All Books</a>
 							</li>
 						}
 					</ul>

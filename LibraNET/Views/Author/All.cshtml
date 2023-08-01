@@ -1,0 +1,43 @@
+﻿@model AllAuthorsViewModel
+@{
+	ViewData["Title"] = "All Authors";
+}
+<h2 class="text-center">@ViewData["Title"]</h2>
+<hr />
+<form class="justify-content-center d-flex" asp-controller="Author" asp-action="All" method="get">
+	<div id="search" class="my-2 w-50">
+		<div class="input-group">
+			<input asp-for="SearchString" type="search" class="form-control rounded-left" placeholder="Search by Name" aria-label="Search" aria-describedby="search-addon" />
+			<button type="submit" class="btn btn-outline-success rounded-left">
+				<i class="bi bi-search"></i>
+			</button>
+		</div>
+	</div>
+</form>
+<div id="entities">
+	<div class="row justify-content-center">
+		@if (!Model.Authors.Any())
+		{
+			<h2 class="text-center py-5 text-muted">No books found by the given criteria!</h2>
+		}
+		@foreach (var author in Model.Authors)
+		{
+			<partial name="_AuthorPartial" model="@author"></partial>
+		}
+	</div>
+</div>
+@if (Model.Authors.Any())
+{
+	@Html.PagedListPager(Model.Authors,
+		CurrentPage => Url.Action("All", "Author", new {
+		CurrentPage,
+		SearchString = Model.SearchString
+		}),
+		new PagedListRenderOptions {
+			LiElementClasses = new string[] { "page-item"},
+			PageClasses = new string[] { "page-link", "text-success" },
+			MaximumPageNumbersToDisplay = 3,
+			UlElementClasses = new string[] { "pagination", "justify-content-center"},
+			ContainerDivClasses = new string[] { "pagination-container", "py-5" }
+		})
+}

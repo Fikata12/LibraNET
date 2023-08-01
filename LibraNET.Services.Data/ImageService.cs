@@ -39,7 +39,7 @@ namespace LibraNET.Services.Data
 
 			var imagePaths = Directory.GetFiles(filePath);
 
-			var imagePath = imagePaths.FirstOrDefault(n => n.ToLower().Contains(bookImageId.ToLower()));
+			var imagePath = imagePaths.FirstOrDefault(p => p.ToLower().Contains(bookImageId.ToLower()));
 
 			var imageName = Path.GetFileName(imagePath);
 
@@ -52,7 +52,7 @@ namespace LibraNET.Services.Data
 
 			var imagePaths = Directory.GetFiles(filePath);
 
-			var imagePath = imagePaths.FirstOrDefault(n => n.Contains(authorImageId));
+			var imagePath = imagePaths.FirstOrDefault(p => p.ToLower().Contains(authorImageId.ToLower()));
 
 			var imageName = Path.GetFileName(imagePath);
 
