@@ -8,7 +8,7 @@ namespace LibraNET.Web.ViewModels.Book
         public BookViewModel()
         {
             Authors = new List<BookAuthorViewModel>();
-            Categories = new List<BookCategoryViewModel>();
+            Categories = new List<CategoryViewModel>();
         }
         public string Id { get; set; } = null!;
 
@@ -22,6 +22,6 @@ namespace LibraNET.Web.ViewModels.Book
 
         public IList<BookAuthorViewModel> Authors { get; set; }
 
-        public IList<BookCategoryViewModel> Categories { get; set; }
+        public IList<CategoryViewModel> Categories { get; set; }
     }
 }

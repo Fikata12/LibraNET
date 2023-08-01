@@ -11,7 +11,7 @@ namespace LibraNET.Web.ViewModels.Book
         public BookFormModel()
         {
             Authors = new List<BookAuthorViewModel>();
-            Categories = new List<BookCategoryViewModel>();
+            Categories = new List<CategoryViewModel>();
             SelectedAuthorsIds = new List<string>();
             SelectedCategoriesIds = new List<string>();
         }
@@ -79,6 +79,6 @@ namespace LibraNET.Web.ViewModels.Book
 
         public ICollection<BookAuthorViewModel> Authors { get; set; }
 
-        public ICollection<BookCategoryViewModel> Categories { get; set; }
+        public ICollection<CategoryViewModel> Categories { get; set; }
     }
 }
