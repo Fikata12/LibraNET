@@ -8,8 +8,10 @@
         public const string UnsuccessfulBookCreation = "Unexpected error occurred while trying to add new book!";
         public const string SuccessfulBookEdit = "Book was edited successfully!";
         public const string UnsuccessfulBookEdit = "Unexpected error occurred while trying to edit a book!";
+		public const string SuccessfulBookDeletion = "Successfully deleted book!";
+		public const string UnsuccessfulBookDeletion = "The book you are trying to delete doesn't exist!";
 
-        public const string SuccessfulAuthorCreation = "Author was added successfully!";
+		public const string SuccessfulAuthorCreation = "Author was added successfully!";
 		public const string UnsuccessfulAuthorCreation = "Unexpected error occurred while trying to add new author!";
         public const string SuccessfulAuthorEdit = "Author was edited successfully!";
         public const string UnsuccessfulAuthorEdit = "Unexpected error occurred while trying to edit an author!";

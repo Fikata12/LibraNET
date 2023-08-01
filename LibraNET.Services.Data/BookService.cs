@@ -162,5 +162,21 @@ namespace LibraNET.Services.Data
 				.FirstOrDefaultAsync(b => b.Id.Equals(Guid.Parse(bookId))))?
 				.ImageId.ToString();
 		}
+
+		public async Task DeleteAsync(string id)
+		{
+			var book = context.Books
+				.First(c => c.Id.Equals(Guid.Parse(id)));
+
+			book.IsDeleted = true;
+			await context.SaveChangesAsync();
+		}
+
+		public async Task<bool> ExistsByIdAsync(string id)
+		{
+			return await context.Books
+				.AsNoTracking()
+				.AnyAsync(b => b.Id.Equals(Guid.Parse(id)) && !b.IsDeleted);
+		}
 	}
 }

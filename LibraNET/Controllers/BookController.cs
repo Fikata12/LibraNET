@@ -223,6 +223,28 @@ namespace LibraNET.Controllers
 			}
 		}
 
+		[HttpPost]
+		[Authorize(Roles = "Admin")]
+		public async Task<IActionResult> Delete(string id)
+		{
+			try
+			{
+				if (!await bookService.ExistsByIdAsync(id))
+				{
+					TempData["Error"] = UnsuccessfulBookDeletion;
+					return RedirectToAction("All", "Book");
+				}
+				await bookService.DeleteAsync(id);
+
+				TempData["Success"] = SuccessfulBookDeletion;
+				return RedirectToAction("All", "Book");
+			}
+			catch (Exception)
+			{
+				return GeneralError();
+			}
+		}
+
 		[Authorize(Roles = "Admin")]
 		public async Task<IActionResult> Image(string id)
         {

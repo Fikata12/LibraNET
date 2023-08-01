@@ -12,6 +12,7 @@ namespace LibraNET.Services.Data.Contracts
 		Task<BookFormModel> GetByIdAsync(string id);
 		Task<string> EditAndReturnIdAsync(BookFormModel model, string id);
 		Task<string?> GetImageIdAsync(string bookId);
-
+		Task DeleteAsync(string id);
+		Task<bool> ExistsByIdAsync(string id);
 	}
 }
