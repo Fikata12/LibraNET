@@ -101,11 +101,6 @@ namespace LibraNET.Controllers
 		{
 			try
 			{
-				if (!await categoryService.ExistsByIdAsync(id))
-				{
-					TempData["Error"] = UnsuccessfulCategoryDeletion;
-					return RedirectToAction("All", "Category");
-				}
 				await categoryService.DeleteAsync(id);
 
 				TempData["Success"] = SuccessfulCategoryDeletion;
@@ -113,7 +108,8 @@ namespace LibraNET.Controllers
 			}
 			catch (Exception)
 			{
-				return GeneralError();
+				TempData["Error"] = UnsuccessfulCategoryDeletion;
+				return RedirectToAction("All", "Category");
 			}
 		}
 	}

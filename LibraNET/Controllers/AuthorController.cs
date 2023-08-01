@@ -59,54 +59,54 @@ namespace LibraNET.Controllers
 			}
 		}
 
-        [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Edit(string id)
-        {
-            try
-            {
-                var model = await authorService.GetByIdAsync(id);
-                return View(model);
-            }
-            catch (Exception)
-            {
-                return GeneralError();
-            }
-        }
+		[Authorize(Roles = "Admin")]
+		public async Task<IActionResult> Edit(string id)
+		{
+			try
+			{
+				var model = await authorService.GetByIdAsync(id);
+				return View(model);
+			}
+			catch (Exception)
+			{
+				return GeneralError();
+			}
+		}
 
-        [HttpPost]
-        [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Edit(AuthorFormModel model, string id)
-        {
-            try
-            {
-                string[] supportedTypes = new[] { "image/jpeg", "image/jpg", "image/png" };
-                if (!supportedTypes.Contains(model.Image.ContentType))
-                {
-                    ModelState.AddModelError(nameof(model.Image), "Invalid content type!");
-                }
+		[HttpPost]
+		[Authorize(Roles = "Admin")]
+		public async Task<IActionResult> Edit(AuthorFormModel model, string id)
+		{
+			try
+			{
+				string[] supportedTypes = new[] { "image/jpeg", "image/jpg", "image/png" };
+				if (!supportedTypes.Contains(model.Image.ContentType))
+				{
+					ModelState.AddModelError(nameof(model.Image), "Invalid content type!");
+				}
 
-                if (!ModelState.IsValid)
-                {
-                    return View(model);
-                }
+				if (!ModelState.IsValid)
+				{
+					return View(model);
+				}
 
-                var imageId = await authorService.GetImageIdAsync(id);
-                model.ImageId = imageId;
+				var imageId = await authorService.GetImageIdAsync(id);
+				model.ImageId = imageId;
 
-                await imageService.EditAuthorImageAsync(model.Image, model.ImageId!);
+				await imageService.EditAuthorImageAsync(model.Image, model.ImageId!);
 
-                var authorId = await authorService.EditAndReturnIdAsync(model, id);
+				var authorId = await authorService.EditAndReturnIdAsync(model, id);
 
-                TempData["Success"] = SuccessfulAuthorEdit;
-                return RedirectToAction("Details", "Author", new { id = authorId });
-            }
-            catch (Exception)
-            {
-                TempData["Error"] = UnsuccessfulAuthorEdit;
+				TempData["Success"] = SuccessfulAuthorEdit;
+				return RedirectToAction("Details", "Author", new { id = authorId });
+			}
+			catch (Exception)
+			{
+				TempData["Error"] = UnsuccessfulAuthorEdit;
 
-                return View(model);
-            }
-        }
+				return View(model);
+			}
+		}
 
 		public async Task<IActionResult> All([FromQuery] AllAuthorsViewModel model)
 		{
@@ -124,11 +124,6 @@ namespace LibraNET.Controllers
 		{
 			try
 			{
-				if (!await authorService.ExistsByIdAsync(id))
-				{
-					TempData["Error"] = UnsuccessfulAuthorDeletion;
-					return RedirectToAction("All", "Author");
-				}
 				await authorService.DeleteAsync(id);
 
 				TempData["Success"] = SuccessfulAuthorDeletion;
@@ -136,20 +131,21 @@ namespace LibraNET.Controllers
 			}
 			catch (Exception)
 			{
-				return GeneralError();
+				TempData["Error"] = UnsuccessfulAuthorDeletion;
+				return RedirectToAction("All", "Author");
 			}
 		}
 
 		[Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Image(string id)
-        {
-            var imageId = await authorService.GetImageIdAsync(id);
-            if (imageId == null)
-            {
-                return NotFound();
-            }
-            var imageName = imageService.GetAuthorImageNameById(imageId);
-            return Json(imageName);
-        }
-    }
+		public async Task<IActionResult> Image(string id)
+		{
+			var imageId = await authorService.GetImageIdAsync(id);
+			if (imageId == null)
+			{
+				return NotFound();
+			}
+			var imageName = imageService.GetAuthorImageNameById(imageId);
+			return Json(imageName);
+		}
+	}
 }

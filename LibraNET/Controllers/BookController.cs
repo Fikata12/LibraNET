@@ -229,11 +229,6 @@ namespace LibraNET.Controllers
 		{
 			try
 			{
-				if (!await bookService.ExistsByIdAsync(id))
-				{
-					TempData["Error"] = UnsuccessfulBookDeletion;
-					return RedirectToAction("All", "Book");
-				}
 				await bookService.DeleteAsync(id);
 
 				TempData["Success"] = SuccessfulBookDeletion;
@@ -241,7 +236,8 @@ namespace LibraNET.Controllers
 			}
 			catch (Exception)
 			{
-				return GeneralError();
+				TempData["Error"] = UnsuccessfulBookDeletion;
+				return RedirectToAction("All", "Book");
 			}
 		}
 
