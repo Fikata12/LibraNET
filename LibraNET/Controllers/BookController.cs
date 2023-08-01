@@ -63,7 +63,7 @@ namespace LibraNET.Controllers
 
             var allBooks = await bookService.AllAsync(model);
 
-            model.Books = await allBooks.ToPagedListAsync(model.CurrentPage, EntitiesPerPage);
+            model.Books = await allBooks.ToPagedListAsync(model.CurrentPage, BooksPerPage);
             model.AllBooksCount = allBooks.Count;
 
             return View(model);

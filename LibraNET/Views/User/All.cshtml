@@ -1,0 +1,67 @@
+﻿@model AllUsersViewModel
+@inject UserManager<ApplicationUser> UserManager
+@{
+	ViewData["Title"] = "All Users";
+}
+<h2 class="text-center">@ViewData["Title"]</h2>
+<hr />
+<form asp-controller="User" asp-action="All" method="get">
+	<div id="search" class="my-4 d-flex justify-content-center">
+		<div class="input-group w-25">
+			<input asp-for="SearchString" type="search" class="form-control rounded-left" placeholder="Search by Id or Email">
+			<button type="submit" class="btn btn-outline-success rounded-left">
+				<i class="bi bi-search"></i>
+			</button>
+		</div>
+	</div>
+</form>
+<div class="table-responsive">
+	<table class="table align-middle border">
+		<thead class="table-dark">
+			<tr>
+				<th scope="col">Id</th>
+				<th scope="col">Email</th>
+				<th scope="col">Make Admin</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var user in Model.Users)
+			{
+				<tr class="align-content-center">
+					<th scope="row">@user.Id</th>
+					<td>@user.Email</td>
+					<td>
+						@if (await UserManager.IsInRoleAsync(await UserManager.FindByIdAsync(user.Id), "Admin"))
+						{
+							<span class="text-muted">Already Admin</span>
+						}
+						else
+						{
+							<form asp-controller="User" asp-action="MakeAdmin" asp-route-id="@user.Id" method="post">
+								<button class="btn btn-sm btn-success" type="submit" onclick="return confirm('Are you sure you want to make Admin the user with email: @user.Email')">
+									Make Admin
+								</button>
+							</form>
+						}
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+</div>
+
+@if (Model.Users.Any())
+{
+	@Html.PagedListPager(Model.Users,
+		CurrentPage => Url.Action("All", "User", new {
+		CurrentPage,
+		SearchString = Model.SearchString
+		}),
+		new PagedListRenderOptions {
+			LiElementClasses = new string[] { "page-item"},
+			PageClasses = new string[] { "page-link", "text-success" },
+			MaximumPageNumbersToDisplay = 3,
+			UlElementClasses = new string[] { "pagination", "justify-content-center"},
+			ContainerDivClasses = new string[] { "pagination-container", "py-5" }
+		})
+}

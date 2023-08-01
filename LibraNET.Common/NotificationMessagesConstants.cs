@@ -18,5 +18,10 @@
 		public const string UnsuccessfulCategoryCreation = "Unexpected error occurred while trying to add new category!";
         public const string SuccessfulCategoryEdit = "Category was edited successfully!";
         public const string UnsuccessfulCategoryEdit = "Unexpected error occurred while trying to edit a category!";
-    }
+
+        public const string UserNotFound = "User not found!";
+        public const string TheUserIsAdmin = "The user you are trying to make Admin is already Admin!";
+		public const string UnsuccessfulUserAdminify = "Failed to make the user an Admin.";
+		public const string SuccessfulUserAdminify = "Successfully adminified user!";
+	}
 }

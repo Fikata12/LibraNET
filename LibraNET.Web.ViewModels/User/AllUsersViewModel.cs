@@ -4,6 +4,10 @@ namespace LibraNET.Web.ViewModels.User
 {
     public class AllUsersViewModel
     {
+        public AllUsersViewModel()
+        {
+            CurrentPage = 1;
+        }
         public string? SearchString { get; set; }
 
         public int CurrentPage { get; set; }
