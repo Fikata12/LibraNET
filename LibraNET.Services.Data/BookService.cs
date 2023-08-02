@@ -178,5 +178,12 @@ namespace LibraNET.Services.Data
 				.AsNoTracking()
 				.AnyAsync(b => b.Id.Equals(Guid.Parse(id)) && !b.IsDeleted);
 		}
+
+		public async Task<bool> ExistsByIsbnAsync(string ISBN)
+		{
+			return await context.Books
+				.AsNoTracking()
+				.AnyAsync(c => c.ISBN == ISBN && !c.IsDeleted);
+		}
 	}
 }

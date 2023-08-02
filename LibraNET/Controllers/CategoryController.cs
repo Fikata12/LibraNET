@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using X.PagedList;
 using static LibraNET.Common.NotificationMessagesConstants;
 using static LibraNET.Common.GeneralApplicationConstants;
+using LibraNET.Services.Data;
 
 namespace LibraNET.Controllers
 {
@@ -29,6 +30,11 @@ namespace LibraNET.Controllers
 		{
 			try
 			{
+				if (await categoryService.ExistsByNameAsync(model.Name))
+				{
+					ModelState.AddModelError(nameof(model.Name), "Already exists category with the same name!");
+				}
+
 				if (!ModelState.IsValid)
 				{
 					return View(model);
@@ -66,7 +72,12 @@ namespace LibraNET.Controllers
         {
             try
             {
-                if (!ModelState.IsValid)
+				if (await categoryService.ExistsByNameAsync(model.Name))
+				{
+					ModelState.AddModelError(nameof(model.Name), "Already exists category with the same name!");
+				}
+
+				if (!ModelState.IsValid)
                 {
                     return View(model);
                 }

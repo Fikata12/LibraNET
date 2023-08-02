@@ -61,6 +61,13 @@ namespace LibraNET.Services.Data
 				.AnyAsync(c => c.Id.Equals(Guid.Parse(id)) && !c.IsDeleted);
 		}
 
+		public async Task<bool> ExistsByNameAsync(string name)
+		{
+			return await context.Categories
+				.AsNoTracking()
+				.AnyAsync(c => c.Name == name && !c.IsDeleted);
+		}
+
 		public async Task AddAsync(CategoryFormModel model)
 		{
 			await context.Categories.AddAsync(mapper.Map<Category>(model));

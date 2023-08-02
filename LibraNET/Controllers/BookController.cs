@@ -113,6 +113,11 @@ namespace LibraNET.Controllers
 					ModelState.AddModelError(nameof(model.SelectedCategoriesIds), "Too much selected categories!");
 				}
 
+				if (model.ISBN != null && await bookService.ExistsByIsbnAsync(model.ISBN))
+				{
+					ModelState.AddModelError(nameof(model.ISBN), "Already exists book with the same ISBN!");
+				}
+
 				string[] supportedTypes = new[] { "image/jpeg", "image/jpg", "image/png" };
 				if (!supportedTypes.Contains(model.Image.ContentType))
 				{
@@ -186,6 +191,11 @@ namespace LibraNET.Controllers
 				if (model.SelectedCategoriesIds.Count > 5)
 				{
 					ModelState.AddModelError(nameof(model.SelectedCategoriesIds), "Too much selected categories!");
+				}
+
+				if (model.ISBN != null && await bookService.ExistsByIsbnAsync(model.ISBN))
+				{
+					ModelState.AddModelError(nameof(model.ISBN), "Already exists book with the same ISBN!");
 				}
 
 				string[] supportedTypes = new[] { "image/jpeg", "image/jpg", "image/png" };

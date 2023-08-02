@@ -32,6 +32,11 @@ namespace LibraNET.Controllers
 		{
 			try
 			{
+				if (await authorService.ExistsByNameAsync(model.Name))
+				{
+					ModelState.AddModelError(nameof(model.Name), "Already exists author with the same name!");
+				}
+
 				string[] supportedTypes = new[] { "image/jpeg", "image/jpg", "image/png" };
 				if (!supportedTypes.Contains(model.Image.ContentType))
 				{
@@ -79,6 +84,11 @@ namespace LibraNET.Controllers
 		{
 			try
 			{
+				if (await authorService.ExistsByNameAsync(model.Name))
+				{
+					ModelState.AddModelError(nameof(model.Name), "Already exists author with the same name!");
+				}
+
 				string[] supportedTypes = new[] { "image/jpeg", "image/jpg", "image/png" };
 				if (!supportedTypes.Contains(model.Image.ContentType))
 				{

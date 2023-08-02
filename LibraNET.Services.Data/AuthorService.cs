@@ -60,6 +60,13 @@ namespace LibraNET.Services.Data
 				.AnyAsync(a => a.Id.Equals(Guid.Parse(id)) && !a.IsDeleted);
 		}
 
+		public async Task<bool> ExistsByNameAsync(string name)
+		{
+			return await context.Authors
+				.AsNoTracking()
+				.AnyAsync(c => c.Name == name && !c.IsDeleted);
+		}
+
 		public async Task<string> AddAndReturnIdAsync(AuthorFormModel model)
 		{
 			var author = mapper.Map<Author>(model);

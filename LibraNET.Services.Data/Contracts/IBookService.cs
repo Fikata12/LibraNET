@@ -14,5 +14,6 @@ namespace LibraNET.Services.Data.Contracts
 		Task<string?> GetImageIdAsync(string bookId);
 		Task DeleteAsync(string id);
 		Task<bool> ExistsByIdAsync(string id);
+		Task<bool> ExistsByIsbnAsync(string ISBN);
 	}
 }
