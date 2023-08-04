@@ -2,6 +2,7 @@
 using LibraNET.Web.ViewModels.Book;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 using X.PagedList;
 using static LibraNET.Common.GeneralApplicationConstants;
 using static LibraNET.Common.NotificationMessagesConstants;
@@ -251,7 +252,22 @@ namespace LibraNET.Controllers
 			}
 		}
 
-		[Authorize(Roles = "Admin")]
+		[AllowAnonymous]
+        public async Task<IActionResult> Details(string id)
+        {
+			try
+			{
+				var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+				var model = await bookService.GetByIdAsync(id, userId);
+				return View(model);
+			}
+			catch (Exception)
+			{
+				return GeneralError();
+			}
+        }
+
+        [Authorize(Roles = "Admin")]
 		public async Task<IActionResult> Image(string id)
         {
             var imageId = await bookService.GetImageIdAsync(id);
@@ -262,5 +278,11 @@ namespace LibraNET.Controllers
             var imageName = imageService.GetBookImageNameById(imageId);
             return Json(imageName);
         }
+
+		[HttpPost]
+		public async Task<IActionResult> Rate(string id, int rate)
+		{
+			return NoContent();
+		}
 	}
 }

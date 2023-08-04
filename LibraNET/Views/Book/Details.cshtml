@@ -1,0 +1,79 @@
+﻿@model BookDetailsViewModel
+@inject IImageService imageService
+@{
+	ViewData["Title"] = "Book Details";
+}
+<div class="py-5 d-flex justify-content-center">
+	<div class="row col-10 justify-content-center">
+		<div class="col-lg-5">
+			<div class=" mb-3 d-flex justify-content-center">
+				<a class="rounded-4" data-type="image" href="~/Images/Books/@(imageService.GetBookImageNameById(Model.ImageId))">
+					<img style="max-width: 100%; max-height: 50vh; margin: auto;" class="rounded-4 fit" src="~/Images/Books/@(imageService.GetBookImageNameById(Model.ImageId))" />
+				</a>
+			</div>
+		</div>
+		<div class="col-lg-5">
+			<div class="ps-lg-3">
+				<h4 class="title text-dark">@Model.Title</h4>
+				<div class="d-inline-block flex-row my-3">
+					<div class="d-inline-flex">
+						<div class="full-star-ratings" data-rateyo-full-star="true" data-rateyo-star-width="20px"></div>
+						<form id="rating-form" asp-controller="Book" asp-action="Rate" asp-route-id="@Model.Id" method="post">
+							<input asp-for="Rate" type="hidden" oninput="submitForm()" />
+						</form>
+					</div>
+					<span class="text-warning mb-1 me-2 d-inline-flex">
+						@((((double)Model.Ratings.Sum() / (Model.Ratings.Count == 0 ? 1 : Model.Ratings.Count)) * 2).ToString("f1", CultureInfo.InvariantCulture))/10
+					</span>
+					<span class="text-muted d-inline-flex"><i class="bi bi-bag-fill"></i>&nbsp;@(Model.OrdersCount) orders</span>
+					@if (Model.AvailableCount > 0)
+					{
+						<span class="text-success ms-2 d-inline-flex">In stock</span>
+					}
+					else
+					{
+						<span class="text-danger ms-2 d-inline-flex">Out of stock</span>
+					}
+				</div>
+				<h5 class="my-3">$@Model.Price.ToString("f2")</h5>
+				@if (Model.AvailableCount > 0)
+				{
+					<div class="row mb-3">
+						<div class="col-md-4 col-6 mb-3">
+							<label class="mb-2 d-block">Quantity</label>
+							<div class="input-group mb-3" style="width: 170px;">
+								<button class="btn btn-white border border-secondary px-3" type="button" id="button-minus" onclick="DecreaseQuantity()">
+									<i class="bi bi-dash-lg"></i>
+								</button>
+								<input asp-for="Quantity" type="text" class="form-control text-center border border-secondary bg-white" value="1" min="1" max="@Model.AvailableCount" disabled />
+								<button class="btn btn-white border border-secondary px-3" type="button" id="button-plus" onclick="IncreaseQuantity()">
+									<i class="bi bi-plus-lg"></i>
+								</button>
+							</div>
+						</div>
+					</div>
+				}
+				<div>
+					<a asp-controller="Book" asp-action="AddToCart" asp-route-id="@Model.Id" class="btn btn-success my-1 @(Model.AvailableCount > 0 ? "" : "disabled")"> <i class="bi bi-bag-fill"></i> Add to cart </a>
+					<a asp-controller="Book" asp-action="AddToFavorite" asp-route-id="@Model.Id" class="btn btn-dark my-1 @(Model.AvailableCount > 0 ? "" : "disabled")"> <i class="bi bi-heart-fill"></i> Favorite </a>
+				</div>
+			</div>
+		</div>
+		<div class="my-4 card p-4">
+			<h5>Description</h5>
+			<hr />
+			<p>@Model.Description</p>
+
+			<h5>More Info</h5>
+			<hr />
+			<div class="row">
+				<div><span class="fw-bold">ISBN:</span>&nbsp;&nbsp;@Model.ISBN</div>
+				<div><span class="fw-bold">Publisher:</span>&nbsp;&nbsp;@Model.PublisherName</div>
+				<div><span class="fw-bold">Publication date:</span>&nbsp;&nbsp;@Model.PublicationDate.ToShortDateString()</div>
+			</div>
+		</div>
+	</div>
+</div>
+@section Scripts {
+	<script src="~/js/Book/Details.js"></script>
+}

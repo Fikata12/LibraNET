@@ -185,5 +185,20 @@ namespace LibraNET.Services.Data
 				.AsNoTracking()
 				.AnyAsync(c => c.ISBN == ISBN && !c.IsDeleted);
 		}
+
+		public async Task<BookDetailsViewModel> GetByIdAsync(string bookId, string userId)
+		{
+			var book = await context.Books
+				.Include(b => b.BooksAuthors)
+				.Include(b => b.BooksCategories)
+				.Include(b => b.OrdersBooks)
+				.Include(b => b.UsersFavouriteBooks)
+				.Include(b => b.Ratings)
+				.Include(b => b.Comments)
+				.Where(b => !b.IsDeleted)
+				.FirstAsync(b => b.Id.Equals(Guid.Parse(bookId)));
+
+			return mapper.Map<BookDetailsViewModel>(book, opt => opt.Items["UserId"] = userId);
+		}
 	}
 }
