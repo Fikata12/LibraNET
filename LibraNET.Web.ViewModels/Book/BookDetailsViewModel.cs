@@ -2,6 +2,7 @@
 using LibraNET.Web.ViewModels.Category;
 using LibraNET.Web.ViewModels.Comment;
 using System.ComponentModel.DataAnnotations;
+using static LibraNET.Common.ValidationConstants.Comment;
 
 namespace LibraNET.Web.ViewModels.Book
 {
@@ -46,6 +47,11 @@ namespace LibraNET.Web.ViewModels.Book
 		public int Quantity { get; set; } = 1;
 
 		public bool IsFavorite { get; set; }
+
+		[StringLength(TextMaxLength,
+			MinimumLength = TextMinLength,
+			ErrorMessage = "The field {0} must be at least {2} and at max {1} characters long.")]
+		public string Comment { get; set; } = null!;
 
 		public IList<BookAuthorViewModel> Authors { get; set; }
 

@@ -54,7 +54,7 @@
 					</div>
 				}
 				<div>
-					<a asp-controller="Book" asp-action="AddToCart" asp-route-id="@Model.Id" class="btn btn-success my-1 @(Model.AvailableCount > 0 ? "" : "disabled")"> <i class="bi bi-bag-fill"></i> Add to cart </a>
+					<a asp-controller="Book" asp-action="AddToCart" asp-route-id="@Model.Id" asp-route-quantity="@Model.Quantity" class="btn btn-success my-1 @(Model.AvailableCount > 0 ? "" : "disabled")"> <i class="bi bi-bag-fill"></i> Add to cart </a>
 					<a asp-controller="Book" asp-action="AddToFavorite" asp-route-id="@Model.Id" class="btn btn-dark my-1 @(Model.AvailableCount > 0 ? "" : "disabled")"> <i class="bi bi-heart-fill"></i> Favorite </a>
 				</div>
 			</div>
@@ -72,8 +72,30 @@
 				<div><span class="fw-bold">Publication date:</span>&nbsp;&nbsp;@Model.PublicationDate.ToShortDateString()</div>
 			</div>
 		</div>
+
+		<div class="mt-5">
+			<h2 class="text-center">Comments</h2>
+			<hr />
+			@if (Model.Comments.Count >= 0)
+			{
+				<h5 class="text-muted my-5 text-center">There are no comments for this book.</h5>
+			}
+			else
+			{
+				foreach (var comment in Model.Comments)
+				{
+					<partial name="_CommentPartial" model="@comment"></partial>
+				}
+			}
+			<form asp-controller="Book" asp-action="Comment" asp-route-id="@Model.Id" method="post">
+				<span asp-validation-for="@Model.Comment" class="text-danger"></span>
+				<textarea asp-for="Comment" class="form-control bg-white rounded-top" rows="4" placeholder="Comment..."></textarea>
+				<button type="submit" class="btn btn-success w-100">Add Comment</button>
+			</form>
+		</div>
 	</div>
 </div>
 @section Scripts {
+	<partial name="_ValidationScriptsPartial" />
 	<script src="~/js/Book/Details.js"></script>
 }

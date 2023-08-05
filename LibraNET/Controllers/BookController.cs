@@ -284,5 +284,22 @@ namespace LibraNET.Controllers
 		{
 			return NoContent();
 		}
+
+		public async Task<IActionResult> Comment(string id, string Comment)
+		{
+			return NoContent();
+		}
+
+		[HttpPost]
+		public async Task<IActionResult> AddToCart(string id, int quantity)
+		{
+			return NoContent();
+		}
+
+		[HttpPost]
+		public async Task<IActionResult> AddToFavorite(string id)
+		{
+			return NoContent();
+		}
 	}
 }
