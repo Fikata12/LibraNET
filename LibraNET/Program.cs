@@ -1,5 +1,6 @@
 using LibraNET.Data;
 using LibraNET.Data.Models;
+using LibraNET.Hubs;
 using LibraNET.Services.Data;
 using LibraNET.Services.Data.Contracts;
 using LibraNET.Services.Mapping;
@@ -50,10 +51,15 @@ namespace LibraNET
             builder.Services.AddScoped<IAuthorService, AuthorService>();
             builder.Services.AddScoped<IImageService, ImageService>();
             builder.Services.AddScoped<IUserService, UserService>();
+            builder.Services.AddScoped<IRatingService, RatingService>();
+            builder.Services.AddScoped<ICommentService, CommentService>();
+			builder.Services.AddSignalR();
 
-            var app = builder.Build();
+			var app = builder.Build();
 
-            if (app.Environment.IsDevelopment())
+			app.MapHub<CommentsHub>("/commentsHub");
+
+			if (app.Environment.IsDevelopment())
             {
                 app.UseMigrationsEndPoint();
             }

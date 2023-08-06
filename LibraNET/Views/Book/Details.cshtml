@@ -19,11 +19,11 @@
 					<div class="d-inline-flex">
 						<div class="full-star-ratings" data-rateyo-full-star="true" data-rateyo-star-width="20px"></div>
 						<form id="rating-form" asp-controller="Book" asp-action="Rate" asp-route-id="@Model.Id" method="post">
-							<input asp-for="Rate" type="hidden" oninput="submitForm()" />
+							<input asp-for="Rating" type="hidden" />
 						</form>
 					</div>
 					<span class="text-warning mb-1 me-2 d-inline-flex">
-						@((((double)Model.Ratings.Sum() / (Model.Ratings.Count == 0 ? 1 : Model.Ratings.Count)) * 2).ToString("f1", CultureInfo.InvariantCulture))/10
+						@((((double)Model.Ratings.Sum() / (Model.Ratings.Count == 0 ? 1 : Model.Ratings.Count)) * 2).ToString("f1", CultureInfo.InvariantCulture))/10 (@Model.Ratings.Count)
 					</span>
 					<span class="text-muted d-inline-flex"><i class="bi bi-bag-fill"></i>&nbsp;@(Model.OrdersCount) orders</span>
 					@if (Model.AvailableCount > 0)
@@ -76,21 +76,23 @@
 		<div class="mt-5">
 			<h2 class="text-center">Comments</h2>
 			<hr />
-			@if (Model.Comments.Count >= 0)
-			{
-				<h5 class="text-muted my-5 text-center">There are no comments for this book.</h5>
-			}
-			else
-			{
-				foreach (var comment in Model.Comments)
+			<div id="comments">
+				@if (Model.Comments.Count <= 0)
 				{
-					<partial name="_CommentPartial" model="@comment"></partial>
+					<h5 class="text-muted my-5 text-center">There are no comments for this book.</h5>
 				}
-			}
-			<form asp-controller="Book" asp-action="Comment" asp-route-id="@Model.Id" method="post">
-				<span asp-validation-for="@Model.Comment" class="text-danger"></span>
-				<textarea asp-for="Comment" class="form-control bg-white rounded-top" rows="4" placeholder="Comment..."></textarea>
-				<button type="submit" class="btn btn-success w-100">Add Comment</button>
+				else
+				{
+					@foreach (var comment in Model.Comments)
+					{
+						<partial name="_CommentPartial" model="@comment"></partial>
+					}
+				}
+			</div>
+			<form id="commentForm" asp-controller="Book" asp-action="Comment" asp-route-id="@Model.Id" method="post">
+				<span asp-validation-for="Comment" class="text-danger"></span>
+				<textarea id="comment" asp-for="Comment" class="form-control bg-white rounded-top" rows="4" placeholder="Comment..."></textarea>
+				<button id="sendButton" type="submit" class="btn btn-success w-100">Add Comment</button>
 			</form>
 		</div>
 	</div>
@@ -98,4 +100,7 @@
 @section Scripts {
 	<partial name="_ValidationScriptsPartial" />
 	<script src="~/js/Book/Details.js"></script>
+	<script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
+	<script src="~/lib/dompurify/dist/purify.js"></script>
+	<script type="module" src="~/js/comments.js" asp-append-version="true"></script>
 }

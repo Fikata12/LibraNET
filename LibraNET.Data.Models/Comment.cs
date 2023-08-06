@@ -16,7 +16,7 @@ namespace LibraNET.Data.Models
         public Guid Id { get; set; }
 
         [Required]
-        [MaxLength(TextMaxLength)]
+        [MaxLength(CommentMaxLength)]
         public string Text { get; set; } = null!;
 
         [Required]

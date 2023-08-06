@@ -45,9 +45,15 @@
 
         public static class Comment
         {
-            public const int TextMaxLength = 300;
-            public const int TextMinLength = 1;
+            public const int CommentMaxLength = 300;
+            public const int CommentMinLength = 1;
         }
+
+		public static class Rating
+		{
+			public const int RatingMinValue = 1;
+			public const int RatingMaxValue = 5;
+		}
 
 		public static class Order
 		{

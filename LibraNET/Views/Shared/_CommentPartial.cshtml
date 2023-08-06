@@ -1,0 +1,9 @@
+﻿@model CommentViewModel
+<div class="my-2">
+	<div>
+		<p class="h6 fw-bold d-inline-flex">@Model.Name</p>
+		<span class="text-muted">@Model.SubmissionTime.ToString("f")</span>
+	</div>
+	<p>@Model.Text</p>
+	<hr />
+</div>

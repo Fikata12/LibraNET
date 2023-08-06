@@ -6,13 +6,13 @@ using static LibraNET.Common.ValidationConstants.Comment;
 
 namespace LibraNET.Web.ViewModels.Book
 {
-    public class BookDetailsViewModel
+	public class BookDetailsViewModel
 	{
-        public BookDetailsViewModel()
-        {
-            Authors = new List<BookAuthorViewModel>();
+		public BookDetailsViewModel()
+		{
+			Authors = new List<BookAuthorViewModel>();
 			Categories = new List<CategoryViewModel>();
-            Comments = new List<CommentViewModel>();
+			Comments = new List<CommentViewModel>();
 			Ratings = new List<int>();
 		}
 		public string Id { get; set; } = null!;
@@ -41,17 +41,17 @@ namespace LibraNET.Web.ViewModels.Book
 
 		public int OrdersCount { get; set; }
 
-		[Range(1, 5)]
-		public int Rate { get; set; }
-
 		public int Quantity { get; set; } = 1;
 
 		public bool IsFavorite { get; set; }
+		
+		[Range(1, 5)]
+		public int? Rating { get; set; }
 
-		[StringLength(TextMaxLength,
-			MinimumLength = TextMinLength,
+		[StringLength(CommentMaxLength, 
+			MinimumLength = CommentMinLength, 
 			ErrorMessage = "The field {0} must be at least {2} and at max {1} characters long.")]
-		public string Comment { get; set; } = null!;
+		public string Comment { get; set; }
 
 		public IList<BookAuthorViewModel> Authors { get; set; }
 

@@ -29,5 +29,18 @@
         public const string TheUserIsAdmin = "The user you are trying to make Admin is already Admin!";
 		public const string UnsuccessfulUserAdminify = "Failed to make the user an Admin.";
 		public const string SuccessfulUserAdminify = "Successfully adminified user!";
+
+		public const string InvalidRating = "The rating must be between 1 and 5 stars!";
+		public const string UnsuccessfulBookRate = "Unexpected error occurred while trying to rate a book!";
+
+		public const string InvalidComment = "The field comment must be between 1 and 300 characters long!";
+		public const string UnsuccessfulBookComment = "Unexpected error occurred while trying to comment a book!";
+
+		public const string InvalidQuantity = "Invalid quantity!";
+		public const string UnsuccessfulAddToCart = "Unexpected error occurred while trying to add a book to your cart!";
+		public const string SuccessfulAddToCart = "Successfully added book to your cart!";
+
+		public const string SuccessfulAddToFavorite = "Successfully added book to your favorite books!";
+		public const string UnsuccessfulAddToFavorite = "Unexpected error occurred while trying to add a book to your favorite books!";
 	}
 }

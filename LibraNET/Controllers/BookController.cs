@@ -6,94 +6,102 @@ using System.Security.Claims;
 using X.PagedList;
 using static LibraNET.Common.GeneralApplicationConstants;
 using static LibraNET.Common.NotificationMessagesConstants;
+using static LibraNET.Common.ValidationConstants.Rating;
+using static LibraNET.Common.ValidationConstants.Comment;
+
 namespace LibraNET.Controllers
 {
-    public class BookController : BaseController
-    {
-        private readonly IBookService bookService;
-        private readonly IAuthorService authorService;
-        private readonly ICategoryService categoryService;
-        private readonly IImageService imageService;
+	public class BookController : BaseController
+	{
+		private readonly IBookService bookService;
+		private readonly IAuthorService authorService;
+		private readonly ICategoryService categoryService;
+		private readonly IImageService imageService;
+		private readonly IRatingService ratingService;
+		private readonly ICommentService commentService;
 
-        public BookController(IBookService bookService, IAuthorService authorService, ICategoryService categoryService, IImageService imageService)
-        {
-            this.bookService = bookService;
-            this.authorService = authorService;
-            this.categoryService = categoryService;
-            this.imageService = imageService;
-        }
+		public BookController(IBookService bookService, IAuthorService authorService, ICategoryService categoryService,
+			IImageService imageService, IRatingService ratingService, ICommentService commentService)
+		{
+			this.bookService = bookService;
+			this.authorService = authorService;
+			this.categoryService = categoryService;
+			this.imageService = imageService;
+			this.ratingService = ratingService;
+			this.commentService = commentService;
+		}
 
-        [AllowAnonymous]
-        public async Task<IActionResult> All([FromQuery] AllBooksViewModel model)
-        {
-            model.MinPrice = Convert.ToInt32(Math.Floor(await bookService.MinPriceAsync()));
-            model.MaxPrice = Convert.ToInt32(Math.Ceiling(await bookService.MaxPriceAsync()));
+		[AllowAnonymous]
+		public async Task<IActionResult> All([FromQuery] AllBooksViewModel model)
+		{
+			model.MinPrice = Convert.ToInt32(Math.Floor(await bookService.MinPriceAsync()));
+			model.MaxPrice = Convert.ToInt32(Math.Ceiling(await bookService.MaxPriceAsync()));
 
-            if (model.SelectedMinPrice == 0)
-            {
-                model.SelectedMinPrice = model.MinPrice;
-            }
+			if (model.SelectedMinPrice == 0)
+			{
+				model.SelectedMinPrice = model.MinPrice;
+			}
 
-            if (model.SelectedMaxPrice == 0)
-            {
-                model.SelectedMaxPrice = model.MaxPrice;
-            }
+			if (model.SelectedMaxPrice == 0)
+			{
+				model.SelectedMaxPrice = model.MaxPrice;
+			}
 
 
-            model.Authors = await authorService.AllForFiltersAsync();
+			model.Authors = await authorService.AllForFiltersAsync();
 
-            foreach (var id in model.SelectedAuthorsIds)
-            {
-                var author = model.Authors.FirstOrDefault(a => a.Id == id);
-                if (author != null)
-                {
-                    author.IsSelected = true;
-                }
-            }
+			foreach (var id in model.SelectedAuthorsIds)
+			{
+				var author = model.Authors.FirstOrDefault(a => a.Id == id);
+				if (author != null)
+				{
+					author.IsSelected = true;
+				}
+			}
 
-            model.Categories = await categoryService.AllForFiltersAsync();
+			model.Categories = await categoryService.AllForFiltersAsync();
 
-            foreach (var id in model.SelectedCategoriesIds)
-            {
-                var category = model.Categories.FirstOrDefault(a => a.Id == id);
-                if (category != null)
-                {
-                    category.IsSelected = true;
-                }
-            }
+			foreach (var id in model.SelectedCategoriesIds)
+			{
+				var category = model.Categories.FirstOrDefault(a => a.Id == id);
+				if (category != null)
+				{
+					category.IsSelected = true;
+				}
+			}
 
-            var allBooks = await bookService.AllAsync(model);
+			var allBooks = await bookService.AllAsync(model);
 
-            model.Books = await allBooks.ToPagedListAsync(model.CurrentPage, BooksPerPage);
-            model.AllBooksCount = allBooks.Count;
+			model.Books = await allBooks.ToPagedListAsync(model.CurrentPage, BooksPerPage);
+			model.AllBooksCount = allBooks.Count;
 
-            return View(model);
-        }
+			return View(model);
+		}
 
-        [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Add()
-        {
-            try
-            {
-                BookFormModel model = new BookFormModel
-                {
-                    Authors = await authorService.AllForDropdownAsync(),
-                    Categories = await categoryService.AllForDropdownAsync()
-                };
-                return View(model);
-            }
-            catch (Exception)
-            {
-                return GeneralError();
-            }
-        }
+		[Authorize(Roles = "Admin")]
+		public async Task<IActionResult> Add()
+		{
+			try
+			{
+				BookFormModel model = new BookFormModel
+				{
+					Authors = await authorService.AllForDropdownAsync(),
+					Categories = await categoryService.AllForDropdownAsync()
+				};
+				return View(model);
+			}
+			catch (Exception)
+			{
+				return GeneralError();
+			}
+		}
 
-        [HttpPost]
-        [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Add(BookFormModel model)
-        {
-            try
-            {
+		[HttpPost]
+		[Authorize(Roles = "Admin")]
+		public async Task<IActionResult> Add(BookFormModel model)
+		{
+			try
+			{
 				if (!await categoryService.ExistsByIdAsync(model.SelectedCategoriesIds))
 				{
 					ModelState.AddModelError(nameof(model.SelectedCategoriesIds), "Selected category does not exist!");
@@ -135,29 +143,29 @@ namespace LibraNET.Controllers
 
 				var imageId = await imageService.UploadBookImageAsync(model.Image);
 
-                model.ImageId = imageId;
-                var bookId = await bookService.AddAndReturnIdAsync(model);
+				model.ImageId = imageId;
+				var bookId = await bookService.AddAndReturnIdAsync(model);
 
-                TempData["Success"] = SuccessfulBookCreation;
-                return RedirectToAction("Details", "Book", new { id = bookId });
-            }
-            catch (Exception)
-            {
+				TempData["Success"] = SuccessfulBookCreation;
+				return RedirectToAction("Details", "Book", new { id = bookId });
+			}
+			catch (Exception)
+			{
 				TempData["Error"] = UnsuccessfulBookCreation;
 
 				model.Authors = await authorService.AllForDropdownAsync();
-                model.Categories = await categoryService.AllForDropdownAsync();
+				model.Categories = await categoryService.AllForDropdownAsync();
 
-                return View(model);
-            }
-        }
+				return View(model);
+			}
+		}
 
 		[Authorize(Roles = "Admin")]
 		public async Task<IActionResult> Edit(string id)
 		{
 			try
 			{
-                var model = await bookService.GetByIdAsync(id);
+				var model = await bookService.GetByIdAsync(id);
 				model.Authors = await authorService.AllForDropdownAsync();
 				model.Categories = await categoryService.AllForDropdownAsync();
 				return View(model);
@@ -240,6 +248,7 @@ namespace LibraNET.Controllers
 		{
 			try
 			{
+
 				await bookService.DeleteAsync(id);
 
 				TempData["Success"] = SuccessfulBookDeletion;
@@ -253,8 +262,8 @@ namespace LibraNET.Controllers
 		}
 
 		[AllowAnonymous]
-        public async Task<IActionResult> Details(string id)
-        {
+		public async Task<IActionResult> Details(string id)
+		{
 			try
 			{
 				var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -265,41 +274,126 @@ namespace LibraNET.Controllers
 			{
 				return GeneralError();
 			}
-        }
-
-        [Authorize(Roles = "Admin")]
-		public async Task<IActionResult> Image(string id)
-        {
-            var imageId = await bookService.GetImageIdAsync(id);
-            if (imageId == null)
-            {
-                return NotFound();
-            }
-            var imageName = imageService.GetBookImageNameById(imageId);
-            return Json(imageName);
-        }
-
-		[HttpPost]
-		public async Task<IActionResult> Rate(string id, int rate)
-		{
-			return NoContent();
 		}
 
+		[Authorize(Roles = "Admin")]
+		public async Task<IActionResult> Image(string id)
+		{
+			var imageId = await bookService.GetImageIdAsync(id);
+			if (imageId == null)
+			{
+				return NotFound();
+			}
+			var imageName = imageService.GetBookImageNameById(imageId);
+			return Json(imageName);
+		}
+
+		[HttpPost]
+		[AllowAnonymous]
+		public async Task<IActionResult> Rate(string id, int rating)
+		{
+			try
+			{
+				if (!User!.Identity!.IsAuthenticated)
+				{
+					return Redirect("https://localhost:7219/Identity/Account/Login");
+				}
+
+				if (rating < RatingMinValue || rating > RatingMaxValue)
+				{
+					TempData["Error"] = InvalidRating;
+				}
+
+				if (!await bookService.ExistsByIdAsync(id))
+				{
+					throw new Exception();
+				}
+
+				var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+				await ratingService.RateBookAsync(id, userId, rating);
+			}
+			catch (Exception)
+			{
+				TempData["Error"] = UnsuccessfulBookRate;
+			}
+
+			return RedirectToAction("Details", "Book", new { id });
+		}
+
+		[HttpPost]
 		public async Task<IActionResult> Comment(string id, string Comment)
 		{
-			return NoContent();
+			try
+			{
+				Comment = Comment.Trim();
+
+				if (Comment.Length < CommentMinLength || Comment.Length > CommentMaxLength)
+				{
+					TempData["Error"] = InvalidComment;
+				}
+
+				if (!await bookService.ExistsByIdAsync(id))
+				{
+					throw new Exception();
+				}
+
+				var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+				await commentService.AddComment(id, userId, Comment);
+			}
+			catch (Exception)
+			{
+				TempData["Error"] = UnsuccessfulBookComment;
+			}
+			return RedirectToAction("Details", "Book", new { id });
 		}
 
 		[HttpPost]
 		public async Task<IActionResult> AddToCart(string id, int quantity)
 		{
-			return NoContent();
+			try
+			{
+				if (quantity < 1 || quantity > (await bookService.AvailableCountAsync(id)))
+				{
+					TempData["Error"] = InvalidQuantity;
+				}
+
+				if (!await bookService.ExistsByIdAsync(id))
+				{
+					throw new Exception();
+				}
+
+				var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+				await bookService.AddToCartAsync(id, userId, quantity);
+
+				TempData["Error"] = SuccessfulAddToCart;
+			}
+			catch (Exception)
+			{
+				TempData["Error"] = UnsuccessfulAddToCart;
+			}
+			return RedirectToAction("Details", "Book", new { id });
 		}
 
 		[HttpPost]
 		public async Task<IActionResult> AddToFavorite(string id)
 		{
-			return NoContent();
+			try
+			{
+				if (!await bookService.ExistsByIdAsync(id))
+				{
+					throw new Exception();
+				}
+
+				var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+				await bookService.AddToFavoriteAsync(id, userId);
+
+				TempData["Error"] = SuccessfulAddToFavorite;
+			}
+			catch (Exception)
+			{
+				TempData["Error"] = UnsuccessfulAddToFavorite;
+			}
+			return RedirectToAction("Details", "Book", new { id });
 		}
 	}
 }

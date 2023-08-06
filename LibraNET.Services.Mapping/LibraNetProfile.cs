@@ -40,14 +40,16 @@ namespace LibraNET.Services.Mapping
 			CreateMap<Book, BookDetailsViewModel>()
 				.ForMember(d => d.OrdersCount,
 				opt => opt.MapFrom(s => s.OrdersBooks.Count))
-				.ForMember(d => d.Rate,
-				opt => opt.MapFrom((s, d, _, context) => s.Ratings.FirstOrDefault(r => r.UserId.ToString() == context.Items["UserId"].ToString())?.Value))
-				.ForMember(d => d.Rate,
+				.ForMember(d => d.Rating,
+				opt => opt.MapFrom((s, d, _, context) => s.Ratings.FirstOrDefault(r => r.UserId.ToString() == context.Items["UserId"]?.ToString())?.Value))
+				.ForMember(d => d.IsFavorite,
 				opt => opt.MapFrom((s, d, _, context) => s.UsersFavouriteBooks.FirstOrDefault(r => r.UserId.ToString() == context.Items["UserId"].ToString() && r.BookId.ToString() == d.Id) != null))
 				.ForMember(d => d.Authors,
 				opt => opt.MapFrom(s => s.BooksAuthors))
 				.ForMember(d => d.Categories,
-				opt => opt.MapFrom(s => s.BooksCategories));
+				opt => opt.MapFrom(s => s.BooksCategories))
+				.ForMember(d => d.Comments,
+				opt => opt.MapFrom(s => s.Comments.OrderByDescending(c => c.SubmissionTime)));
 
 			// BookAuthor
 			CreateMap<BookAuthor, BookAuthorViewModel>()
@@ -108,7 +110,7 @@ namespace LibraNET.Services.Mapping
 
 			// Comment
 			CreateMap<Comment, CommentViewModel>()
-				.ForMember(d => d.Username,
+				.ForMember(d => d.Name,
 				opt => opt.MapFrom(s => $"{s.User.FirstName} {s.User.LastName}"));
 
 			// Rating

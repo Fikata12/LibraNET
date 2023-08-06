@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using LibraNET.Data;
+using LibraNET.Data.Models;
 using LibraNET.Services.Data.Contracts;
 using LibraNET.Web.ViewModels.User;
 using Microsoft.EntityFrameworkCore;

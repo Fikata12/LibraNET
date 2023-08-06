@@ -1,5 +1,5 @@
 ﻿$(document).ready(function () {
-    let inputRate = document.querySelector("input[name=Rate]")
+    let inputRate = document.querySelector("input[name=Rating]")
     let rating = 0;
 
     if (inputRate.value == 0) {
@@ -16,7 +16,7 @@
 
 $(".full-star-ratings").on("rateyo.set", function (e, data) {
 
-    let input = document.querySelector("input[name=Rate]")
+    let input = document.querySelector("input[name=Rating]")
     input.value = data.rating;
     document.querySelector("#rating-form").submit();
 });

@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace LibraNET.Services.Data
 {
-    public class BookService : IBookService
+	public class BookService : IBookService
 	{
 		private readonly LibraNetDbContext context;
 		private readonly IMapper mapper;
@@ -77,7 +77,7 @@ namespace LibraNET.Services.Data
 			}
 
 			ICollection<BookViewModel> books = await booksQuery
-				.Where(b =>  !b.IsDeleted)
+				.Where(b => !b.IsDeleted)
 				.ProjectTo<BookViewModel>(mapper.ConfigurationProvider)
 				.ToListAsync();
 
@@ -98,7 +98,7 @@ namespace LibraNET.Services.Data
 		{
 			var book = mapper.Map<Book>(model);
 
-            await context.Books.AddAsync(book);
+			await context.Books.AddAsync(book);
 			await context.SaveChangesAsync();
 
 			return book.Id.ToString();
@@ -108,9 +108,9 @@ namespace LibraNET.Services.Data
 		{
 			return mapper
 				.Map<BookFormModel>(await context.Books
-                .Include(b => b.BooksAuthors)
-                .Include(b => b.BooksCategories)
-                .FirstAsync(b => b.Id.Equals(Guid.Parse(id))));
+				.Include(b => b.BooksAuthors)
+				.Include(b => b.BooksCategories)
+				.FirstAsync(b => b.Id.Equals(Guid.Parse(id))));
 		}
 
 		public async Task<string> EditAndReturnIdAsync(BookFormModel model, string id)
@@ -128,7 +128,7 @@ namespace LibraNET.Services.Data
 			book.PublicationDate = model.PublicationDate;
 			book.PageCount = model.PageCount;
 			book.ImageId = Guid.Parse(model.ImageId!);
-            book.AvailableCount = model.AvailableCount;
+			book.AvailableCount = model.AvailableCount;
 			book.PublisherName = model.PublisherName;
 
 			book.BooksAuthors.Clear();
@@ -143,18 +143,18 @@ namespace LibraNET.Services.Data
 				});
 			}
 
-            foreach (var categoryId in model.SelectedCategoriesIds)
-            {
-                book.BooksCategories.Add(new BookCategory
-                {
-                    CategoryId = Guid.Parse(categoryId)
-                });
-            }
+			foreach (var categoryId in model.SelectedCategoriesIds)
+			{
+				book.BooksCategories.Add(new BookCategory
+				{
+					CategoryId = Guid.Parse(categoryId)
+				});
+			}
 
 			await context.SaveChangesAsync();
 
 			return book.Id.ToString();
-        }
+		}
 
 		public async Task<string?> GetImageIdAsync(string bookId)
 		{
@@ -195,10 +195,58 @@ namespace LibraNET.Services.Data
 				.Include(b => b.UsersFavouriteBooks)
 				.Include(b => b.Ratings)
 				.Include(b => b.Comments)
+				.ThenInclude(c => c.User)
 				.Where(b => !b.IsDeleted)
 				.FirstAsync(b => b.Id.Equals(Guid.Parse(bookId)));
 
 			return mapper.Map<BookDetailsViewModel>(book, opt => opt.Items["UserId"] = userId);
+		}
+
+		public async Task<int> AvailableCountAsync(string id)
+		{
+			return (await context.Books
+				.FirstAsync(b => b.Id.Equals(Guid.Parse(id)))).AvailableCount;
+		}
+
+		public async Task AddToCartAsync(string bookId, string userId, int quantity)
+		{
+			var cart = await context.Carts
+				.Include(c => c.CartsBooks)
+				.FirstAsync(c => c.UserId.Equals(Guid.Parse(userId)));
+
+			var cartBook = cart.CartsBooks
+				.FirstOrDefault(cb => cb.BookId.Equals(Guid.Parse(bookId)));
+
+			if (cartBook == null)
+			{
+				await context.CartsBooks.AddAsync(new CartBook
+				{
+					CartId = cart.Id,
+					BookId = Guid.Parse(bookId),
+					BookCount = quantity
+				});
+
+				await context.SaveChangesAsync();
+				return;
+			}
+
+			cartBook.BookCount = quantity;
+			await context.SaveChangesAsync();
+		}
+
+		public async Task AddToFavoriteAsync(string bookId, string userId)
+		{
+			var favoriteBook = await context.UsersFavouriteBooks
+				.FirstOrDefaultAsync(ufb => ufb.UserId.Equals(Guid.Parse(userId)) && ufb.BookId.Equals(Guid.Parse(bookId)));
+
+			if (favoriteBook == null)
+			{
+				await context.UsersFavouriteBooks.AddAsync(new UserFavouriteBook
+				{
+					UserId = Guid.Parse(userId),
+					BookId = Guid.Parse(bookId)
+				});
+			}
 		}
 	}
 }
