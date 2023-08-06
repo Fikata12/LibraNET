@@ -6,6 +6,7 @@ using X.PagedList;
 using static LibraNET.Common.NotificationMessagesConstants;
 using static LibraNET.Common.GeneralApplicationConstants;
 using LibraNET.Services.Data;
+using System.Security.Claims;
 
 namespace LibraNET.Controllers
 {
@@ -156,6 +157,20 @@ namespace LibraNET.Controllers
 			}
 			var imageName = imageService.GetAuthorImageNameById(imageId);
 			return Json(imageName);
+		}
+
+		[AllowAnonymous]
+		public async Task<IActionResult> Details(string id)
+		{
+			try
+			{
+				var model = await authorService.GetDetailsAsync(id);
+				return View(model);
+			}
+			catch (Exception)
+			{
+				return GeneralError();
+			}
 		}
 	}
 }

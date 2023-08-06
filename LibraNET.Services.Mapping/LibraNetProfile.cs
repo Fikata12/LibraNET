@@ -96,6 +96,8 @@ namespace LibraNET.Services.Mapping
 
 			CreateMap<Author, AuthorViewModel>();
 
+			CreateMap<Author, AuthorDetailsViewModel>();
+
 			// Category
 			CreateMap<Category, CategoryViewModel>();
 

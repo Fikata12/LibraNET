@@ -24,6 +24,7 @@ namespace LibraNET.Services.Data
 		{
 			return await context.Authors
 				.AsNoTracking()
+				.Where(a => !a.IsDeleted)
 				.ProjectTo<FiltersAuthorViewModel>(mapper.ConfigurationProvider)
 				.ToListAsync();
 		}
@@ -32,6 +33,7 @@ namespace LibraNET.Services.Data
 		{
 			return await context.Authors
 				.AsNoTracking()
+				.Where(a => !a.IsDeleted)
 				.ProjectTo<BookAuthorViewModel>(mapper.ConfigurationProvider)
 				.ToListAsync();
 		}
@@ -81,13 +83,15 @@ namespace LibraNET.Services.Data
         {
             return mapper
                 .Map<AuthorFormModel>(await context.Authors
-                .FirstAsync(a => a.Id.Equals(Guid.Parse(id))));
+				.Where(a => !a.IsDeleted)
+				.FirstAsync(a => a.Id.Equals(Guid.Parse(id))));
         }
 
         public async Task<string> EditAndReturnIdAsync(AuthorFormModel model, string id)
         {
             var author = await context.Authors
-                .FirstOrDefaultAsync(a => a.Id.Equals(Guid.Parse(id)));
+				.Where(a => !a.IsDeleted)
+				.FirstAsync(a => a.Id.Equals(Guid.Parse(id)));
 
             author!.Name = model.Name;
             author.ImageId = Guid.Parse(model.ImageId!);
@@ -101,7 +105,8 @@ namespace LibraNET.Services.Data
         public async Task<string?> GetImageIdAsync(string id)
         {
             return (await context.Authors
-                .FirstOrDefaultAsync(a => a.Id.Equals(Guid.Parse(id))))?
+				.Where(a => !a.IsDeleted)
+				.FirstOrDefaultAsync(a => a.Id.Equals(Guid.Parse(id))))?
                 .ImageId.ToString();
         }
 
@@ -127,10 +132,19 @@ namespace LibraNET.Services.Data
 		public async Task DeleteAsync(string id)
 		{
 			var author = context.Authors
+				.Where(a => !a.IsDeleted)
 				.First(c => c.Id.Equals(Guid.Parse(id)));
 
 			author.IsDeleted = true;
 			await context.SaveChangesAsync();
+		}
+
+		public async Task<AuthorDetailsViewModel> GetDetailsAsync(string id) 
+		{
+			return mapper
+				.Map<AuthorDetailsViewModel>(await context.Authors
+				.Where(a => !a.IsDeleted)
+				.FirstAsync(a => a.Id.Equals(Guid.Parse(id))));
 		}
 	}
 }

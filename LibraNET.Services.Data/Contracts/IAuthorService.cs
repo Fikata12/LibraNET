@@ -15,5 +15,6 @@ namespace LibraNET.Services.Data.Contracts
         Task<string?> GetImageIdAsync(string id);
 		Task<ICollection<AuthorViewModel>> AllAsync(AllAuthorsViewModel model);
 		Task DeleteAsync(string id);
+		Task<AuthorDetailsViewModel> GetDetailsAsync(string id);
 	}
 }

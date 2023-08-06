@@ -1,0 +1,20 @@
+﻿@model AuthorDetailsViewModel
+@inject IImageService imageService
+@{
+	ViewData["Title"] = "Author Details";
+}
+<div class="py-5 d-flex justify-content-center">
+	<div class="row col-10 justify-content-center">
+		<div class="col-lg-5 mb-3 d-flex justify-content-center">
+			<a class="rounded-4" data-type="image" href="~/Images/Books/@(imageService.GetBookImageNameById(Model.ImageId))">
+				<img style="max-width: 100%; max-height: 50vh; margin: auto;" class="rounded-4 fit" src="~/Images/Authors/@(imageService.GetAuthorImageNameById(Model.ImageId))" />
+			</a>
+		</div>
+		<h3 class="text-center">@Model.Name</h3>
+		<div class="my-4 card p-4">
+			<h5>Description</h5>
+			<hr />
+			<p>@Model.Description</p>
+		</div>
+	</div>
+</div>
