@@ -36,8 +36,6 @@ namespace LibraNET.Data
 
 		public DbSet<OrderBook> OrdersBooks { get; set; } = null!;
 
-		public DbSet<Address> Addresses { get; set; } = null!;
-
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
 			modelBuilder.Entity<ApplicationUser>()

@@ -12,7 +12,6 @@ namespace LibraNET.Data.Models
 			UsersFavouriteBooks = new List<UserFavouriteBook>();
 			Comments = new List<Comment>();
 			Ratings = new List<Rating>();
-			Addresses = new List<Address>();
         }
 
 		[MaxLength(FirstNameMaxLength)]
@@ -30,7 +29,6 @@ namespace LibraNET.Data.Models
 		public virtual Cart Cart { get; set; } = null!;
 		public virtual ICollection<UserFavouriteBook> UsersFavouriteBooks { get; set; }
 		public virtual ICollection<Comment> Comments { get; set; }
-		public virtual ICollection<Rating> Ratings { get; set; }
-		public virtual ICollection<Address> Addresses { get; set; }
+		public virtual ICollection<Rating> Ratings { get; set; }	
 	}
 }

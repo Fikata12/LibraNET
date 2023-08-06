@@ -25,15 +25,23 @@ namespace LibraNET.Data.Models
 		[MaxLength(PhoneNumberMaxLength)]
 		public string PhoneNumber { get; set; } = null!;
 
-        [Required]
+		[Required]
+		[MaxLength(TownNameMaxLength)]
+		public string Town { get; set; } = null!;
+
+		[Required]
+		[MaxLength(PostCodeLength)]
+		public string PostCode { get; set; } = null!;
+
+		[Required]
+		[MaxLength(AddressMaxLength)]
+		public string Address { get; set; } = null!;
+
+		[Required]
         public DateTime Date { get; set; }
 
 		[Required]
 		public OrderStatus Status { get; set; }
-
-		[Required]
-        [MaxLength(AddressMaxLength)]
-        public string Address { get; set; } = null!;
 
 		[Required]
 		[ForeignKey(nameof(User))]

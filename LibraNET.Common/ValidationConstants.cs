@@ -63,15 +63,10 @@
             public const int PhoneNumberMaxLength = 13;
             public const int PhoneNumberMinLength = 10;
 
-            public const int AddressMaxLength = 150;
-		}
-
-		public static class Address
-		{
 			public const int TownNameMaxLength = 30;
 			public const int TownNameMinLength = 3;
 
-            public const int PostCodeLength = 4;
+			public const int PostCodeLength = 4;
 
 			public const int AddressMaxLength = 50;
 			public const int AddressMinLength = 5;
