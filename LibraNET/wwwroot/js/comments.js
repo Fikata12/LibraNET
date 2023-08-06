@@ -29,7 +29,7 @@ document.getElementById("commentForm").addEventListener("submit", function (e) {
 
     if (commentValue.trim() !== "" && commentValue.trim().length > 0 && commentValue.trim().length <= 300) {
 
-        commentValue = DOMPurify.sanitize(commentValue);
+        commentValue = DOMPurify.sanitize(commentValue.trim());
         connection.invoke("SendComment", commentValue).catch(function (err) {
             console.error(err.toString());
         });
