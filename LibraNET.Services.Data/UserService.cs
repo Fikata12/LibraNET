@@ -37,5 +37,16 @@ namespace LibraNET.Services.Data
 
             return users;
         }
-    }
+
+		public async Task AddCartToUserAsync(string userId)
+		{
+			var user = await context.Users
+				.FirstAsync(u => u.Id.Equals(Guid.Parse(userId)));
+
+			user.CartId = (await context.Carts
+				.FirstAsync(c => c.UserId.Equals(Guid.Parse(userId)))).Id;
+
+			await context.SaveChangesAsync();
+		}
+	}
 }

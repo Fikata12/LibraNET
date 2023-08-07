@@ -17,7 +17,6 @@ namespace LibraNET.Services.Data.Contracts
 		Task<bool> ExistsByIsbnAsync(string ISBN);
 		Task<BookDetailsViewModel> GetByIdAsync(string bookId, string userId);
 		Task<int> AvailableCountAsync(string id);
-		Task AddToCartAsync(string bookId, string userId, int quantity);
 		Task AddToFavoriteAsync(string bookId, string userId);
 	}
 }

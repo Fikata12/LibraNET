@@ -5,6 +5,8 @@ document.getElementById("sendButton").disabled = true;
 connection.on("ReceiveComment", function (username, comment, dateTime) {
     const newComment = document.createElement("div");
 
+    document.getElementById("comments").innerHTML = "";
+
     newComment.innerHTML =
         `<div class="my-2">
 		    <div>

@@ -194,6 +194,7 @@ namespace LibraNET.Services.Data
 				.Include(b => b.OrdersBooks)
 				.Include(b => b.UsersFavouriteBooks)
 				.Include(b => b.Ratings)
+				.Include(b => b.CartsBooks)
 				.Include(b => b.Comments)
 				.ThenInclude(c => c.User)
 				.Where(b => !b.IsDeleted)
@@ -206,32 +207,6 @@ namespace LibraNET.Services.Data
 		{
 			return (await context.Books
 				.FirstAsync(b => b.Id.Equals(Guid.Parse(id)))).AvailableCount;
-		}
-
-		public async Task AddToCartAsync(string bookId, string userId, int quantity)
-		{
-			var cart = await context.Carts
-				.Include(c => c.CartsBooks)
-				.FirstAsync(c => c.UserId.Equals(Guid.Parse(userId)));
-
-			var cartBook = cart.CartsBooks
-				.FirstOrDefault(cb => cb.BookId.Equals(Guid.Parse(bookId)));
-
-			if (cartBook == null)
-			{
-				await context.CartsBooks.AddAsync(new CartBook
-				{
-					CartId = cart.Id,
-					BookId = Guid.Parse(bookId),
-					BookCount = quantity
-				});
-
-				await context.SaveChangesAsync();
-				return;
-			}
-
-			cartBook.BookCount = quantity;
-			await context.SaveChangesAsync();
 		}
 
 		public async Task AddToFavoriteAsync(string bookId, string userId)

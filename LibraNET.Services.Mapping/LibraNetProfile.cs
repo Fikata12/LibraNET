@@ -49,7 +49,9 @@ namespace LibraNET.Services.Mapping
 				.ForMember(d => d.Categories,
 				opt => opt.MapFrom(s => s.BooksCategories))
 				.ForMember(d => d.Comments,
-				opt => opt.MapFrom(s => s.Comments.OrderByDescending(c => c.SubmissionTime)));
+				opt => opt.MapFrom(s => s.Comments.OrderByDescending(c => c.SubmissionTime)))
+				.ForMember(d => d.Quantity,
+				opt => opt.MapFrom(s => s.CartsBooks.FirstOrDefault(cb => cb.BookId.Equals(s.Id))!.BookCount));
 
 			// BookAuthor
 			CreateMap<BookAuthor, BookAuthorViewModel>()
@@ -118,6 +120,21 @@ namespace LibraNET.Services.Mapping
 			// Rating
 			CreateMap<Rating, int>()
 				.ConvertUsing(s => s.Value);
+
+			// CartBook
+			CreateMap<CartBook, BookCartViewModel>()
+				.ForMember(d => d.TotalPrice,
+				opt => opt.MapFrom(s => s.Book.Price * s.BookCount))
+				.ForMember(d => d.Title,
+				opt => opt.MapFrom(s => s.Book.Title))
+				.ForMember(d => d.Id,
+				opt => opt.MapFrom(s => s.Book.Id))
+				.ForMember(d => d.ImageId,
+				opt => opt.MapFrom(s => s.Book.ImageId))
+				.ForMember(d => d.Quantity,
+				opt => opt.MapFrom(s => s.BookCount))
+				.ForMember(d => d.AvailableCount,
+				opt => opt.MapFrom(s => s.Book.AvailableCount));
 		}
 	}
 }

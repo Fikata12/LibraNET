@@ -21,18 +21,6 @@ $(".full-star-ratings").on("rateyo.set", function (e, data) {
     document.querySelector("#rating-form").submit();
 });
 
-function DecreaseQuantity() {
-    let input = document.querySelector("input[name=Quantity]");
-    let futureValue = input.value - 1;
-    if (futureValue >= input.min) {
-        input.value--;
-    }
-}
-
-function IncreaseQuantity() {
-    let input = document.querySelector("input[name=Quantity]");
-    let futureValue = input.value + 1;
-    if (futureValue <= input.max) {
-        input.value++;
-    }
-}
+document.querySelector("#AddToCartBtn").addEventListener("click", function () {
+    document.querySelector("#AddToCartForm").submit();
+});

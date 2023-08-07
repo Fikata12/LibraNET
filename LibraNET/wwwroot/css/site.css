@@ -313,3 +313,9 @@ input[type=range] {
     .entity-card:hover {
         box-shadow: 2px 2px 15px #b7b7b7;
     }
+
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    opacity: 1;
+}

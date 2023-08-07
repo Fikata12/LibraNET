@@ -348,33 +348,6 @@ namespace LibraNET.Controllers
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> AddToCart(string id, int quantity)
-		{
-			try
-			{
-				if (quantity < 1 || quantity > (await bookService.AvailableCountAsync(id)))
-				{
-					TempData["Error"] = InvalidQuantity;
-				}
-
-				if (!await bookService.ExistsByIdAsync(id))
-				{
-					throw new Exception();
-				}
-
-				var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-				await bookService.AddToCartAsync(id, userId, quantity);
-
-				TempData["Error"] = SuccessfulAddToCart;
-			}
-			catch (Exception)
-			{
-				TempData["Error"] = UnsuccessfulAddToCart;
-			}
-			return RedirectToAction("Details", "Book", new { id });
-		}
-
-		[HttpPost]
 		public async Task<IActionResult> AddToFavorite(string id)
 		{
 			try

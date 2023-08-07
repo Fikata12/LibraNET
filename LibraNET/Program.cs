@@ -53,6 +53,7 @@ namespace LibraNET
             builder.Services.AddScoped<IUserService, UserService>();
             builder.Services.AddScoped<IRatingService, RatingService>();
             builder.Services.AddScoped<ICommentService, CommentService>();
+            builder.Services.AddScoped<ICartService, CartService>();
 			builder.Services.AddSignalR();
 
 			var app = builder.Build();
