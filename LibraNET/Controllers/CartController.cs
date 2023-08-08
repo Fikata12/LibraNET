@@ -1,5 +1,8 @@
-﻿using LibraNET.Services.Data.Contracts;
+﻿using LibraNET.Data.Models;
+using LibraNET.Services.Data.Contracts;
 using LibraNET.Web.ViewModels.Book;
+using LibraNET.Web.ViewModels.Cart;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using static LibraNET.Common.NotificationMessagesConstants;
@@ -10,10 +13,12 @@ namespace LibraNET.Controllers
 	{
 		private readonly IBookService bookService;
 		private readonly ICartService cartService;
-		public CartController(IBookService bookService, ICartService cartService)
+		private readonly UserManager<ApplicationUser> userManager;
+		public CartController(IBookService bookService, ICartService cartService, UserManager<ApplicationUser> userManager)
 		{
 			this.bookService = bookService;
 			this.cartService = cartService;
+			this.userManager = userManager;
 		}
 		public async Task<IActionResult> Index()
 		{
@@ -103,6 +108,32 @@ namespace LibraNET.Controllers
 			return RedirectToAction("Index", "Cart", new { }, id);
 		}
 
+		public async Task<IActionResult> Checkout()
+		{
+			try
+			{
+				var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
+				if (await cartService.CountAsync(userId) < 1)
+				{
+					return RedirectToAction("Index", "Cart");
+				}
+				var model = new CheckoutViewModel();
+
+				model.Books = await cartService.GetCartAsync(userId);
+
+				var user = await userManager.GetUserAsync(User);
+
+				model.FirstName = user.FirstName!;
+				model.LastName = user.LastName!;
+				model.PhoneNumber = user.PhoneNumber!;
+
+				return View(model);
+			}
+			catch (Exception)
+			{
+				return GeneralError();
+			}
+		}
 	}
 }

@@ -42,7 +42,8 @@ namespace LibraNET.Areas.Identity.Pages.Account
 			SignInManager<ApplicationUser> signInManager,
 			ILogger<RegisterModel> logger,
 			IEmailSender emailSender,
-			ICartService cartService)
+			ICartService cartService,
+			IUserService userService)
 		{
 			_userManager = userManager;
 			_userStore = userStore;
@@ -98,7 +99,7 @@ namespace LibraNET.Areas.Identity.Pages.Account
 			[StringLength(PhoneNumberMaxLength,
 				ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.",
 				MinimumLength = PhoneNumberMinLength)]
-			[RegularExpression(@"^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$",
+			[RegularExpression(PhoneNumberRegex,
 				ErrorMessage = "Enter a valid Phone Number.")]
 			public string PhoneNumber { get; set; }
 

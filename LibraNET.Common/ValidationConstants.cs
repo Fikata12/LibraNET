@@ -60,8 +60,8 @@
 			public const int RecipientNameMaxLength = 60;
 			public const int RecipientNameMinLength = 6;
 
-            public const int PhoneNumberMaxLength = 13;
-            public const int PhoneNumberMinLength = 10;
+            public const int RecipientPhoneNumberMaxLength = 13;
+            public const int RecipientPhoneNumberMinLength = 10;
 
 			public const int TownNameMaxLength = 30;
 			public const int TownNameMinLength = 3;
@@ -82,6 +82,8 @@
 
             public const int PhoneNumberMaxLength = 13;
             public const int PhoneNumberMinLength = 10;
-        }
+
+            public const string PhoneNumberRegex = @"^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$";
+		}
 	}
 }

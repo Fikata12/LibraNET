@@ -89,7 +89,7 @@ namespace LibraNET.Services.Data
 		{
 			return (await context.Carts
 				.Include(c => c.CartsBooks)
-				.FirstAsync(c => c.UserId.Equals(Guid.Parse(userId)))).CartsBooks.Count;
+				.FirstAsync(c => c.UserId.Equals(Guid.Parse(userId)))).CartsBooks.Sum(cb => cb.BookCount);
 		}
 	}
 }

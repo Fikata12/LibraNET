@@ -1,0 +1,60 @@
+﻿@model CheckoutViewModel
+<div class="row">
+	<div class="col-md-8 mb-4">
+		<section class="cart-items rounded-3 pb-2 p-4" style="background-color:#eee">
+			@foreach (var book in Model.Books)
+			{
+				<partial name="_BookCheckoutPartial" model="book"></partial>
+			}
+		</section>
+	</div>
+	<div class="col-md-4">
+		<section class="order-summary">
+			<h2>Order Summary</h2>
+			<p><span class="fw-bold">Subtotal: </span>$@(Model.Books.Sum(b => b.TotalPrice))</p>
+			<p><span class="fw-bold">Shipping: </span>Free</p>
+			<p><span class="fw-bold">Total: </span>$@(Model.Books.Sum(b => b.TotalPrice))</p>
+		</section>
+		<section class="customer-details mt-3">
+			<h2>Customer Details</h2>
+			<form asp-controller="Order" asp-action="Buy" method="post">
+				<div class="mb-3">
+					<label asp-for="@Model.FirstName" class="form-label"></label>
+					<input asp-for="@Model.FirstName" class="form-control" aria-required="true" />
+					<span asp-validation-for="@Model.FirstName" class="text-danger"></span>
+				</div>
+				<div class="mb-3">
+					<label asp-for="@Model.LastName" class="form-label"></label>
+					<input asp-for="@Model.LastName" class="form-control" aria-required="true" />
+					<span asp-validation-for="@Model.LastName" class="text-danger"></span>
+				</div>
+				<div class="mb-3">
+					<label asp-for="@Model.PhoneNumber" class="form-label"></label>
+					<input asp-for="@Model.PhoneNumber" class="form-control" aria-required="true" />
+					<span asp-validation-for="@Model.PhoneNumber" class="text-danger"></span>
+				</div>
+				<div class="mb-3">
+					<label asp-for="@Model.Town" class="form-label"></label>
+					<input asp-for="@Model.Town" class="form-control" aria-required="true" />
+					<span asp-validation-for="@Model.Town" class="text-danger"></span>
+				</div>
+				<div class="mb-3">
+					<label asp-for="@Model.PostCode" class="form-label"></label>
+					<input asp-for="@Model.PostCode" class="form-control" aria-required="true" />
+					<span asp-validation-for="@Model.PostCode" class="text-danger"></span>
+				</div>
+				<div class="mb-3">
+					<label asp-for="@Model.Address" class="form-label"></label>
+					<input asp-for="@Model.Address" class="form-control" aria-required="true" />
+					<span asp-validation-for="@Model.Address" class="text-danger"></span>
+				</div>
+				<div class="mb-3">
+					<input class="btn btn-success mb-2 w-100 p-3 fw-bold" type="submit" value="Buy" />
+				</div>
+			</form>
+		</section>
+	</div>
+</div>
+@section Scripts {
+	<partial name="_ValidationScriptsPartial" />
+}
