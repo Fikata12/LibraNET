@@ -58,5 +58,31 @@ namespace LibraNET.Services.Data
 				.Where(c => c.Cart.UserId.Equals(Guid.Parse(userId)))
 				.ToListAsync());
 		}
+
+		public async Task ChangeQuantityAsync(string bookId, string userId, int quantity)
+		{
+			var cart = await context.Carts
+				.Include(c => c.CartsBooks)
+				.FirstAsync(c => c.UserId.Equals(Guid.Parse(userId)));
+
+			var cartBook = cart.CartsBooks
+				.First(cb => cb.BookId.Equals(Guid.Parse(bookId)));
+
+			cartBook.BookCount = quantity;
+			await context.SaveChangesAsync();
+		}
+
+		public async Task RemoveAsync(string bookId, string userId)
+		{
+			var cart = await context.Carts
+				.Include(c => c.CartsBooks)
+				.FirstAsync(c => c.UserId.Equals(Guid.Parse(userId)));
+
+			var cartBook = cart.CartsBooks
+				.First(cb => cb.BookId.Equals(Guid.Parse(bookId)));
+
+			context.CartsBooks.Remove(cartBook);
+			await context.SaveChangesAsync();
+		}
 	}
 }

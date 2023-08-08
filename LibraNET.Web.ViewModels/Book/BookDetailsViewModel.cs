@@ -41,7 +41,7 @@ namespace LibraNET.Web.ViewModels.Book
 
 		public int OrdersCount { get; set; }
 
-		public int Quantity { get; set; } = 1;
+		public int Quantity { get; set; }
 
 		public bool IsFavorite { get; set; }
 		

@@ -51,7 +51,7 @@ namespace LibraNET.Services.Mapping
 				.ForMember(d => d.Comments,
 				opt => opt.MapFrom(s => s.Comments.OrderByDescending(c => c.SubmissionTime)))
 				.ForMember(d => d.Quantity,
-				opt => opt.MapFrom(s => s.CartsBooks.FirstOrDefault(cb => cb.BookId.Equals(s.Id))!.BookCount));
+				opt => opt.MapFrom(s => s.CartsBooks.FirstOrDefault(cb => cb.BookId.Equals(s.Id)) == null ? 1 : s.CartsBooks.FirstOrDefault(cb => cb.BookId.Equals(s.Id))!.BookCount));
 
 			// BookAuthor
 			CreateMap<BookAuthor, BookAuthorViewModel>()

@@ -30,13 +30,14 @@ namespace LibraNET.Controllers
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> Add(BookDetailsViewModel model, string id)
+		public async Task<IActionResult> Add(string id, int quantity)
 		{
 			try
 			{
-				if (model.Quantity < 1 || model.Quantity > (await bookService.AvailableCountAsync(id)))
+				if (quantity < 1 || quantity > (await bookService.AvailableCountAsync(id)))
 				{
 					TempData["Error"] = InvalidQuantity;
+					return RedirectToAction("Details", "Book", new { id });
 				}
 
 				if (!await bookService.ExistsByIdAsync(id))
@@ -45,7 +46,7 @@ namespace LibraNET.Controllers
 				}
 
 				var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-				await cartService.AddAsync(id, userId, model.Quantity);
+				await cartService.AddAsync(id, userId, quantity);
 
 				TempData["Success"] = SuccessfulAddToCart;
 			}
@@ -55,5 +56,53 @@ namespace LibraNET.Controllers
 			}
 			return RedirectToAction("Details", "Book", new { id });
 		}
+
+		[HttpPost]
+		public async Task<IActionResult> Remove(string id)
+		{
+			try
+			{
+				if (!await bookService.ExistsByIdAsync(id))
+				{
+					throw new Exception();
+				}
+
+				var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+				await cartService.RemoveAsync(id, userId);
+			}
+			catch (Exception)
+			{
+				TempData["Error"] = UnsuccessfulRemoveFromCart;
+			}
+			return RedirectToAction("Index", "Cart");
+		}
+
+		[HttpPost]
+		public async Task<IActionResult> ChangeQuantity(string id, int quantity)
+		{
+			try
+			{
+				if (quantity < 1 || quantity > (await bookService.AvailableCountAsync(id)))
+				{
+					TempData["Error"] = InvalidQuantity;
+					return RedirectToAction("Index", "Cart", new { }, id);
+				}
+
+				if (!await bookService.ExistsByIdAsync(id))
+				{
+					throw new Exception();
+				}
+
+				var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+				await cartService.ChangeQuantityAsync(id, userId, quantity);
+			}
+			catch (Exception)
+			{
+				TempData["Error"] = UnsuccessfulAddToCart;
+			}
+			return RedirectToAction("Index", "Cart", new { }, id);
+		}
+
+
 	}
 }

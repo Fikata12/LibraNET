@@ -39,6 +39,7 @@
 		public const string InvalidQuantity = "Invalid quantity!";
 		public const string UnsuccessfulAddToCart = "Unexpected error occurred while trying to add a book to your cart!";
 		public const string SuccessfulAddToCart = "Successfully added book to your cart!";
+		public const string UnsuccessfulRemoveFromCart = "Unexpected error occurred while trying to remove a book from your cart!";
 
 		public const string SuccessfulAddToFavorite = "Successfully added book to your favorite books!";
 		public const string UnsuccessfulAddToFavorite = "Unexpected error occurred while trying to add a book to your favorite books!";

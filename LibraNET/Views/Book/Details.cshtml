@@ -47,7 +47,7 @@
 					</form>
 				}
 				<div>
-					<button id="AddToCartBtn" class="btn btn-success my-1 @(Model.AvailableCount > 0 ? "" : "disabled")"> <i class="bi bi-bag-fill"></i> Add to cart </button>
+					<button id="AddToCartBtn" class="btn btn-success my-1 @(Model.AvailableCount > 0 ? "" : "disabled")"> <i class="bi bi-cart-fill"></i> Add to cart </button>
 					@if (!Model.IsFavorite)
 					{
 						<form class="d-inline-flex" asp-controller="Book" asp-action="AddToFavorite" asp-route-id="@Model.Id" method="post">

@@ -17,11 +17,6 @@ body {
     margin-bottom: 60px;
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
-
-* {
-    font-family: 'Poppins', sans-serif
-}
 /*/Home/Index*/
 .greeting-container {
     padding: 2rem 1rem;
@@ -299,7 +294,7 @@ input[type=range] {
     border: hidden !important;
 }
 
-    .entity-card p, .card-title {
+    .entity-card p, .card-title, .ellipsis {
         overflow: hidden;
         text-overflow: ellipsis;
         display: -webkit-box;
@@ -315,7 +310,15 @@ input[type=range] {
     }
 
 
+/*Cart*/
 input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {
     opacity: 1;
+}
+
+.reset-button-style {
+    background-color: transparent !important;
+    border: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
 }
