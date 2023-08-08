@@ -190,7 +190,9 @@ namespace LibraNET.Services.Data
 		{
 			var book = await context.Books
 				.Include(b => b.BooksAuthors)
+				.ThenInclude(ba => ba.Author)
 				.Include(b => b.BooksCategories)
+				.ThenInclude(bc => bc.Category)
 				.Include(b => b.OrdersBooks)
 				.Include(b => b.UsersFavouriteBooks)
 				.Include(b => b.Ratings)

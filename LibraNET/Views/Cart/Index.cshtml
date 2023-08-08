@@ -1,4 +1,5 @@
 ﻿@model ICollection<BookCartViewModel>
+@inject ICartService cartService
 @{
 	ViewData["Title"] = "Cart";
 }
@@ -7,7 +8,10 @@
 		<div class="row d-flex justify-content-center align-items-center h-100">
 			<div class="col-10">
 				<div class="d-flex justify-content-between align-items-center mb-4">
-					<h3 class="fw-normal text-dark fw-bold">Shopping Cart</h3>
+					@{
+						var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+					}
+					<h3 class="fw-normal text-dark fw-bold">Shopping Cart(@(await cartService.CountAsync(userId)))</h3>
 				</div>
 				@if (Model.Count > 0)
 				{
@@ -15,10 +19,15 @@
 					{
 						<partial name="_BookCartPartial" model="@book"></partial>
 					}
+					<div class="card mb-4">
+						<div class="card-body">
+							<h3>Total: $@(Model.Sum(b => b.TotalPrice))</h3>
+						</div>
+					</div>
 				}
 				else
 				{
-					<div class="card mb-3">
+					<div class="card mb-4">
 						<div class="card-body">
 							<h3 class="text-center">Your cart is empty!</h3>
 						</div>

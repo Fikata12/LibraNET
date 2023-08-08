@@ -84,5 +84,12 @@ namespace LibraNET.Services.Data
 			context.CartsBooks.Remove(cartBook);
 			await context.SaveChangesAsync();
 		}
+
+		public async Task<int> CountAsync(string userId)
+		{
+			return (await context.Carts
+				.Include(c => c.CartsBooks)
+				.FirstAsync(c => c.UserId.Equals(Guid.Parse(userId)))).CartsBooks.Count;
+		}
 	}
 }

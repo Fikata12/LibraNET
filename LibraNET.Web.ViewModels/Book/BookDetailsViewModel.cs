@@ -48,10 +48,10 @@ namespace LibraNET.Web.ViewModels.Book
 		[Range(1, 5)]
 		public int? Rating { get; set; }
 
-		[StringLength(CommentMaxLength, 
-			MinimumLength = CommentMinLength, 
+		[StringLength(CommentMaxLength,
+			MinimumLength = CommentMinLength,
 			ErrorMessage = "The field {0} must be at least {2} and at max {1} characters long.")]
-		public string Comment { get; set; }
+		public string Comment { get; set; } = null!;
 
 		public IList<BookAuthorViewModel> Authors { get; set; }
 

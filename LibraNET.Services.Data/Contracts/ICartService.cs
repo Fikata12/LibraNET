@@ -9,5 +9,6 @@ namespace LibraNET.Services.Data.Contracts
 		Task AddCartAsync(string userId);
 		Task ChangeQuantityAsync(string bookId, string userId, int quantity);
 		Task RemoveAsync(string bookId, string userId);
+		Task<int> CountAsync(string userId);
 	}
 }

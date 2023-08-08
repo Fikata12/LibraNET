@@ -65,9 +65,35 @@
 			<h5>More Info</h5>
 			<hr />
 			<div class="row">
-				<div><span class="fw-bold">ISBN:</span>&nbsp;&nbsp;@Model.ISBN</div>
-				<div><span class="fw-bold">Publisher:</span>&nbsp;&nbsp;@Model.PublisherName</div>
-				<div><span class="fw-bold">Publication date:</span>&nbsp;&nbsp;@Model.PublicationDate.ToShortDateString()</div>
+				<p><span class="fw-bold">ISBN:</span>&nbsp;&nbsp;@Model.ISBN</p>
+				<p><span class="fw-bold">Publisher:</span>&nbsp;&nbsp;@Model.PublisherName</p>
+				<p><span class="fw-bold">Publication date:</span>&nbsp;&nbsp;@Model.PublicationDate.ToShortDateString()</p>
+				<p>
+					<span class="fw-bold">@(Model.Authors.Count > 1 ? "Authors: " : "Author: ")</span>
+					@{
+						int authorCounter = 0;
+					}
+					@foreach (var author in Model.Authors)
+					{
+						authorCounter++;
+						<a asp-controller="Author" asp-action="Details" asp-route-id="@author.Id">@author.Name</a>
+
+						<span>@(Model.Authors.Count == authorCounter ? "" : ", ")</span>
+					}
+				</p>
+				<p>
+					<span class="fw-bold">@(Model.Categories.Count > 1 ? "Categories: " : "Category: ")</span>
+					@{
+						int categoryCounter = 0;
+					}
+					@foreach (var category in Model.Categories)
+					{
+						categoryCounter++;
+						<a asp-controller="Book" asp-action="All" asp-route-SelectedCategoriesIds="@category.Id.ToUpper()">@category.Name</a>
+
+						<span>@(Model.Categories.Count == categoryCounter ? "" : ", ")</span>
+					}
+				</p>
 			</div>
 		</div>
 
