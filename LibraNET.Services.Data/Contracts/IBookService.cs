@@ -19,5 +19,7 @@ namespace LibraNET.Services.Data.Contracts
 		Task<int> AvailableCountAsync(string id);
 		Task ToggleFavoriteAsync(string bookId, string userId);
 		Task<ICollection<BookViewModel>> AllFavoritesAsync(FavoriteViewModel model, string userId);
-    }
+		Task<int> CommentsCountAsync(string bookId);
+
+	}
 }

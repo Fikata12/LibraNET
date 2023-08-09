@@ -5,8 +5,20 @@ document.getElementById("sendButton").disabled = true;
 connection.on("ReceiveComment", function (username, comment, dateTime) {
     const newComment = document.createElement("div");
 
-    newComment.innerHTML =
-        `<div class="my-2">
+    const urlParts = window.location.href.split('/');
+    let bookId = urlParts[urlParts.length - 1];
+
+    let count = 0;
+    $.get("https://localhost:7219/Book/CommentsCount/" + bookId, async function (data, status) {
+
+        count = Number(data);
+        if (count == 0) {
+            document.getElementById("comments").innerHTML = "";
+        }
+
+
+        newComment.innerHTML =
+            `<div class="my-2">
 		    <div>
 			    <p class="h6 fw-bold d-inline-flex">${username}</p>
 		    	<span class="text-muted">${dateTime}</span>
@@ -15,7 +27,8 @@ connection.on("ReceiveComment", function (username, comment, dateTime) {
 		    <hr />
 	    </div>`;
 
-    document.getElementById("comments").prepend(newComment);
+        document.getElementById("comments").prepend(newComment);
+    });
 });
 connection.start().then(function () {
     document.getElementById("sendButton").disabled = false;

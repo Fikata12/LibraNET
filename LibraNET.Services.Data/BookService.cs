@@ -253,5 +253,12 @@ namespace LibraNET.Services.Data
 
             return favoriteBooks;
         }
-    }
+
+		public async Task<int> CommentsCountAsync(string bookId)
+        {
+            return (await context.Books
+                .Include(b => b.Comments)
+                .FirstAsync(b => b.Id.Equals(Guid.Parse(bookId)))).Comments.Count;
+        }
+	}
 }

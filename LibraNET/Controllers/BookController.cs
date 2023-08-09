@@ -8,6 +8,7 @@ using static LibraNET.Common.GeneralApplicationConstants;
 using static LibraNET.Common.NotificationMessagesConstants;
 using static LibraNET.Common.ValidationConstants.Rating;
 using static LibraNET.Common.ValidationConstants.Comment;
+using LibraNET.Services.Data;
 
 namespace LibraNET.Controllers
 {
@@ -188,5 +189,18 @@ namespace LibraNET.Controllers
                 return GeneralError();
             }
         }
-    }
+
+		public async Task<IActionResult> CommentsCount(string id)
+		{
+            try
+            {
+				var count = await bookService.CommentsCountAsync(id);
+                return Json(count);
+			}
+			catch (Exception)
+            {
+				return NotFound();
+			}
+		}
+	}
 }

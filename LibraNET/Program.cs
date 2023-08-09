@@ -7,6 +7,7 @@ using LibraNET.Services.Mapping;
 using LibraNET.Web.Infrastructure.Extensions;
 using LibraNET.Web.Infrastructure.ModelBinders;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace LibraNET
@@ -40,7 +41,8 @@ namespace LibraNET
                 .AddMvcOptions(options =>
                 {
                     options.ModelBinderProviders.Insert(0, new DecimalModelBinderProvider());
-                });
+                    options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+				});
 
             builder.Services.AddAutoMapper(cfg =>
             {
