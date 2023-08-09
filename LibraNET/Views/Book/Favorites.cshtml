@@ -1,0 +1,45 @@
+﻿@model FavoriteViewModel
+@{
+	ViewData["Title"] = "Favorites";
+}
+<h2 class="text-center">@ViewData["Title"]</h2>
+<hr />
+<form class="justify-content-center d-flex my-4" asp-controller="Book" asp-action="Favorites" method="get">
+	<div id="search" class="w-50">
+		<div class="input-group">
+			<input asp-for="SearchString" type="search" class="form-control rounded-left" placeholder="Search by Title or ISBN" aria-label="Search" aria-describedby="search-addon" />
+			<button type="submit" class="btn btn-outline-success rounded-left">
+				<i class="bi bi-search"></i>
+			</button>
+		</div>
+	</div>
+</form>
+<div id="entities">
+	<div class="row justify-content-center">
+		@if (!Model.Books.Any())
+		{
+			<h2 class="text-center py-5 text-muted">No books found!</h2>
+		}
+		@foreach (var book in Model.Books)
+		{
+			<partial name="_BookPartial" model="@book"></partial>
+		}
+	</div>
+</div>
+
+
+@if (Model.Books.Any())
+{
+	@Html.PagedListPager(Model.Books,
+		CurrentPage => Url.Action("Favorite", "Book", new {
+		CurrentPage,
+		SearchString = Model.SearchString
+		}),
+		new PagedListRenderOptions {
+			LiElementClasses = new string[] { "page-item"},
+			PageClasses = new string[] { "page-link", "text-success" },
+			MaximumPageNumbersToDisplay = 3,
+			UlElementClasses = new string[] { "pagination", "justify-content-center"},
+			ContainerDivClasses = new string[] { "pagination-container", "py-5" }
+		})
+}
