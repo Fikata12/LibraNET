@@ -42,11 +42,15 @@
 							<partial name="_BookOrderPartial" model="@book"></partial>
 						}
 						<div class="row border-top pt-2 mt-2 justify-content-between">
+							<p class="mb-0">Recipient: @order.RecipientName</p>
+							<p class="mb-0">Address: @order.Town, @order.PostCode, @order.Address</p>
+						</div>
+						<div class="row border-top pt-2 mt-2 justify-content-between">
 							<div class="col-6">
-								<p class="fw-bold mb-0">Shipping Price: Free</p>
+								<p class="mb-0">Shipping Price: Free</p>
 							</div>
 							<div class="col-6 text-end">
-								<p class="fw-bold mb-0">Total Price: $@order.Books.Sum(b => b.TotalPrice).ToString("f2")</p>
+								<p class="mb-0">Total Price: $@order.Books.Sum(b => b.TotalPrice).ToString("f2")</p>
 							</div>
 						</div>
 					</div>
