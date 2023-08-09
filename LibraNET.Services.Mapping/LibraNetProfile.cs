@@ -2,6 +2,7 @@
 using LibraNET.Data.Models;
 using LibraNET.Web.ViewModels.Author;
 using LibraNET.Web.ViewModels.Book;
+using LibraNET.Web.ViewModels.Cart;
 using LibraNET.Web.ViewModels.Category;
 using LibraNET.Web.ViewModels.Comment;
 using LibraNET.Web.ViewModels.User;
@@ -135,6 +136,15 @@ namespace LibraNET.Services.Mapping
 				opt => opt.MapFrom(s => s.BookCount))
 				.ForMember(d => d.AvailableCount,
 				opt => opt.MapFrom(s => s.Book.AvailableCount));
+
+			//Order
+			CreateMap<CheckoutViewModel, Order>()
+				.ForMember(d => d.RecipientName,
+				opt => opt.MapFrom(s => $"{s.FirstName} {s.LastName}"))
+				.ForMember(d => d.UserId,
+				opt => opt.MapFrom((s, d, _, context) => context.Items["UserId"]!.ToString()));
+
+			CreateMap<CartBook, OrderBook>();
 		}
 	}
 }

@@ -43,5 +43,7 @@
 
 		public const string SuccessfulAddToFavorite = "Successfully added book to your favorite books!";
 		public const string UnsuccessfulAddToFavorite = "Unexpected error occurred while trying to add a book to your favorite books!";
+
+		public const string SuccessfullyPlacedOrder = "Thank You for Your Order! Your order has been successfully placed. We appreciate your business!";
 	}
 }

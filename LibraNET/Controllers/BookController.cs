@@ -374,7 +374,7 @@ namespace LibraNET.Controllers
             {
                 var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-                var favoriteBooks = await bookService.FavoritesAsync(model, userId);
+                var favoriteBooks = await bookService.AllFavoritesAsync(model, userId);
 
                 model.Books = await favoriteBooks.ToPagedListAsync(model.CurrentPage, BooksPerPage);
                 model.AllBooksCount = favoriteBooks.Count;

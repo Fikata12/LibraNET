@@ -18,6 +18,6 @@ namespace LibraNET.Services.Data.Contracts
 		Task<BookDetailsViewModel> GetByIdAsync(string bookId, string userId);
 		Task<int> AvailableCountAsync(string id);
 		Task ToggleFavoriteAsync(string bookId, string userId);
-		Task<ICollection<BookViewModel>> FavoritesAsync(FavoriteViewModel model, string userId);
+		Task<ICollection<BookViewModel>> AllFavoritesAsync(FavoriteViewModel model, string userId);
     }
 }

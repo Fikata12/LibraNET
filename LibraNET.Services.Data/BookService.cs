@@ -233,7 +233,7 @@ namespace LibraNET.Services.Data
 			await context.SaveChangesAsync();
 		}
 
-		public async Task<ICollection<BookViewModel>> FavoritesAsync(FavoriteViewModel model, string userId)
+		public async Task<ICollection<BookViewModel>> AllFavoritesAsync(FavoriteViewModel model, string userId)
         {
             var favoriteBooksQuery = context.Books
                 .AsNoTracking()
