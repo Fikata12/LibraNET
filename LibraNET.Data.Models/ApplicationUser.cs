@@ -29,6 +29,7 @@ namespace LibraNET.Data.Models
 		public virtual Cart Cart { get; set; } = null!;
 		public virtual ICollection<UserFavouriteBook> UsersFavouriteBooks { get; set; }
 		public virtual ICollection<Comment> Comments { get; set; }
+		public virtual ICollection<Order> Orders { get; set; }
 		public virtual ICollection<Rating> Ratings { get; set; }	
 	}
 }

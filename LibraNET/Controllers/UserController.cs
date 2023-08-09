@@ -4,35 +4,36 @@ using LibraNET.Web.ViewModels.User;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 using X.PagedList;
 using static LibraNET.Common.GeneralApplicationConstants;
 using static LibraNET.Common.NotificationMessagesConstants;
 
 namespace LibraNET.Controllers
 {
-    public class UserController : Controller
-    {
-        private readonly IUserService userService;
-        private readonly UserManager<ApplicationUser> userManager;
+	public class UserController : BaseController
+	{
+		private readonly IUserService userService;
+		private readonly UserManager<ApplicationUser> userManager;
 
 		public UserController(IUserService userService, UserManager<ApplicationUser> userManager)
-        {
-            this.userService = userService;
-            this.userManager = userManager;
-        }
+		{
+			this.userService = userService;
+			this.userManager = userManager;
+		}
 
-        [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> All([FromQuery]AllUsersViewModel model)
-        {
-            var allUsers = await userService.AllAsync(model);
+		[Authorize(Roles = "Admin")]
+		public async Task<IActionResult> All([FromQuery] AllUsersViewModel model)
+		{
+			var allUsers = await userService.AllAsync(model);
 
-            model.Users = await allUsers.ToPagedListAsync(model.CurrentPage, UsersPerPage);
-            model.AllUsersCount = allUsers.Count;
+			model.Users = await allUsers.ToPagedListAsync(model.CurrentPage, UsersPerPage);
+			model.AllUsersCount = allUsers.Count;
 
-            return View(model);
-        }
+			return View(model);
+		}
 
-        [HttpPost]
+		[HttpPost]
 		[Authorize(Roles = "Admin")]
 		public async Task<IActionResult> MakeAdmin(string id)
 		{
@@ -59,6 +60,22 @@ namespace LibraNET.Controllers
 
 			TempData["Success"] = SuccessfulUserAdminify;
 			return RedirectToAction("All", "User");
+		}
+
+		public async Task<IActionResult> Account()
+		{
+			try
+			{
+				var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+				var model = await userService.GetByIdAsync(userId);
+
+				return View(model);
+			}
+			catch (Exception)
+			{
+				return GeneralError();
+			}
 		}
 	}
 }

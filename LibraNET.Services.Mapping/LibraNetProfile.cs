@@ -5,6 +5,7 @@ using LibraNET.Web.ViewModels.Book;
 using LibraNET.Web.ViewModels.Cart;
 using LibraNET.Web.ViewModels.Category;
 using LibraNET.Web.ViewModels.Comment;
+using LibraNET.Web.ViewModels.Order;
 using LibraNET.Web.ViewModels.User;
 
 namespace LibraNET.Services.Mapping
@@ -113,6 +114,10 @@ namespace LibraNET.Services.Mapping
 			// ApplicationUser
 			CreateMap<ApplicationUser, UserViewModel>();
 
+			CreateMap<ApplicationUser, AccountViewModel>()
+				.ForMember(d => d.Orders,
+				opt => opt.MapFrom(s => s.Orders.OrderByDescending(o => o.Date)));
+
 			// Comment
 			CreateMap<Comment, CommentViewModel>()
 				.ForMember(d => d.Name,
@@ -144,7 +149,24 @@ namespace LibraNET.Services.Mapping
 				.ForMember(d => d.UserId,
 				opt => opt.MapFrom((s, d, _, context) => context.Items["UserId"]!.ToString()));
 
+			CreateMap<Order, OrderViewModel>()
+				.ForMember(d => d.Books,
+				opt => opt.MapFrom(s => s.OrdersBooks));
+
+			// OrderBook
 			CreateMap<CartBook, OrderBook>();
+
+			CreateMap<OrderBook, BookOrderViewModel>()
+				.ForMember(d => d.Id,
+				opt => opt.MapFrom(s => s.BookId))
+				.ForMember(d => d.Title,
+				opt => opt.MapFrom(s => s.Book.Title))
+				.ForMember(d => d.ImageId,
+				opt => opt.MapFrom(s => s.Book.ImageId))
+				.ForMember(d => d.Quantity,
+				opt => opt.MapFrom(s => s.BookCount))
+				.ForMember(d => d.TotalPrice,
+				opt => opt.MapFrom(s => s.Book.Price * s.BookCount));
 		}
 	}
 }
