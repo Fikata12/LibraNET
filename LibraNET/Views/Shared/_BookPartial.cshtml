@@ -28,7 +28,7 @@
 					@categoriesText.ToString()
 				</p>
 				<h5 class="fw-bold">@($"${Model.Price:f2}")</h5>
-				@if (User.IsInRole("Admin"))
+				@if (User.IsInRole(AdminRoleName))
 				{
 					<form asp-area="Admin" asp-controller="Book" asp-action="Delete" asp-route-id="@Model.Id" method="post">
 						<div class="btn-group w-50" role="group">

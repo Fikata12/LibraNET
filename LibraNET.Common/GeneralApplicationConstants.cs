@@ -10,5 +10,7 @@
 		public const int BookCardTitleDisplayLength = 43;
 		public const int BookCardAuthorsDisplayLength = 55;
 		public const int BookCardCategoriesDisplayLength = 52;
+		public const string AdminRoleName = "Admin";
+		public const string UserRoleName = "User";
 	}
 }

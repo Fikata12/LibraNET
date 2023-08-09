@@ -4,6 +4,7 @@ using LibraNET.Hubs;
 using LibraNET.Services.Data;
 using LibraNET.Services.Data.Contracts;
 using LibraNET.Services.Mapping;
+using LibraNET.Web.Infrastructure.Extensions;
 using LibraNET.Web.Infrastructure.ModelBinders;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -58,6 +59,9 @@ namespace LibraNET
 			builder.Services.AddSignalR();
 
 			var app = builder.Build();
+
+            app.SeedAdminRole();
+            app.SeedUserRole();
 
 			app.MapHub<CommentsHub>("/commentsHub");
 

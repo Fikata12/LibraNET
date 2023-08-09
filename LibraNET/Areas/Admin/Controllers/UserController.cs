@@ -40,13 +40,13 @@ namespace LibraNET.Areas.Admin.Controllers
 				return RedirectToAction("All", "User");
 			}
 
-			if (await userManager.IsInRoleAsync(user, "Admin"))
+			if (await userManager.IsInRoleAsync(user, AdminRoleName))
 			{
 				TempData["Warning"] = TheUserIsAdmin;
 				return RedirectToAction("All", "User");
 			}
 
-			var addToAdminRoleResult = await userManager.AddToRoleAsync(user, "Admin");
+			var addToAdminRoleResult = await userManager.AddToRoleAsync(user, AdminRoleName);
 
 			if (!addToAdminRoleResult.Succeeded)
 			{
