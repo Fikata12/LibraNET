@@ -5,8 +5,6 @@ document.getElementById("sendButton").disabled = true;
 connection.on("ReceiveComment", function (username, comment, dateTime) {
     const newComment = document.createElement("div");
 
-    document.getElementById("comments").innerHTML = "";
-
     newComment.innerHTML =
         `<div class="my-2">
 		    <div>
@@ -28,10 +26,10 @@ connection.start().then(function () {
 document.getElementById("commentForm").addEventListener("submit", function (e) {
     let comment = document.getElementById("comment");
     let commentValue = comment.value;
+    commentValue = commentValue.trim();
 
-    if (commentValue.trim() !== "" && commentValue.trim().length > 0 && commentValue.trim().length <= 300) {
+    if (commentValue.length > 0 && commentValue.length <= 300) {
 
-        commentValue = DOMPurify.sanitize(commentValue.trim());
         connection.invoke("SendComment", commentValue).catch(function (err) {
             console.error(err.toString());
         });

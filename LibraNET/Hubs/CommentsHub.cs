@@ -1,6 +1,7 @@
 ﻿using LibraNET.Data.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SignalR;
+using System.Net;
 
 namespace LibraNET.Hubs
 {
@@ -17,6 +18,7 @@ namespace LibraNET.Hubs
 			var user = await userManager.GetUserAsync(Context.User);
 			var username = $"{user.FirstName} {user.LastName}";
 			var dateTime = DateTime.Now.ToString("f");
+			comment = WebUtility.HtmlEncode(comment);
 			await Clients.All.SendAsync("ReceiveComment", username, comment, dateTime);
 		}
 	}
