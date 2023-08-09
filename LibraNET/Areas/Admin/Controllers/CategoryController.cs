@@ -1,15 +1,13 @@
 ﻿using LibraNET.Services.Data.Contracts;
 using LibraNET.Web.ViewModels.Category;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using X.PagedList;
 using static LibraNET.Common.NotificationMessagesConstants;
 using static LibraNET.Common.GeneralApplicationConstants;
-using LibraNET.Services.Data;
 
-namespace LibraNET.Controllers
+namespace LibraNET.Areas.Admin.Controllers
 {
-	public class CategoryController : BaseController
+	public class CategoryController : BaseAdminController
 	{
 		private readonly ICategoryService categoryService;
 
@@ -18,14 +16,12 @@ namespace LibraNET.Controllers
 			this.categoryService = categoryService;
 		}
 
-		[Authorize(Roles = "Admin")]
 		public IActionResult Add()
 		{
 			return View();
 		}
 
 		[HttpPost]
-		[Authorize(Roles = "Admin")]
 		public async Task<IActionResult> Add(CategoryFormModel model)
 		{
 			try
@@ -52,50 +48,47 @@ namespace LibraNET.Controllers
 			}
 		}
 
-        [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Edit(string id)
-        {
-            try
-            {
-                var model = await categoryService.GetByIdAsync(id);
-                return View(model);
-            }
-            catch (Exception)
-            {
-                return GeneralError();
-            }
-        }
+		public async Task<IActionResult> Edit(string id)
+		{
+			try
+			{
+				var model = await categoryService.GetByIdAsync(id);
+				return View(model);
+			}
+			catch (Exception)
+			{
+				return GeneralError();
+			}
+		}
 
-        [HttpPost]
-        [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Edit(CategoryFormModel model, string id)
-        {
-            try
-            {
+		[HttpPost]
+		public async Task<IActionResult> Edit(CategoryFormModel model, string id)
+		{
+			try
+			{
 				if (await categoryService.ExistsByNameAsync(model.Name))
 				{
 					ModelState.AddModelError(nameof(model.Name), "Already exists category with the same name!");
 				}
 
 				if (!ModelState.IsValid)
-                {
-                    return View(model);
-                }
-                
-                await categoryService.EditAsync(model, id);
+				{
+					return View(model);
+				}
 
-                TempData["Success"] = SuccessfulCategoryEdit;
-                return RedirectToAction("All", "Category");
-            }
-            catch (Exception)
-            {
-                TempData["Error"] = UnsuccessfulCategoryEdit;
+				await categoryService.EditAsync(model, id);
 
-                return View(model);
-            }
-        }
+				TempData["Success"] = SuccessfulCategoryEdit;
+				return RedirectToAction("All", "Category");
+			}
+			catch (Exception)
+			{
+				TempData["Error"] = UnsuccessfulCategoryEdit;
 
-		[Authorize(Roles = "Admin")]
+				return View(model);
+			}
+		}
+
 		public async Task<IActionResult> All([FromQuery] AllCategoriesViewModel model)
 		{
 			var allCategories = await categoryService.AllAsync(model);
@@ -107,7 +100,6 @@ namespace LibraNET.Controllers
 		}
 
 		[HttpPost]
-		[Authorize(Roles = "Admin")]
 		public async Task<IActionResult> Delete(string id)
 		{
 			try

@@ -2,7 +2,7 @@
 
 namespace LibraNET.Services.Data.Contracts
 {
-    public interface IBookService
+	public interface IBookService
 	{
 		Task<ICollection<BookViewModel>> LastThreeBooksAsync();
 		Task<ICollection<BookViewModel>> AllAsync(AllBooksViewModel model);

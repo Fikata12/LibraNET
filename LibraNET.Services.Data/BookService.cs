@@ -4,13 +4,12 @@ using LibraNET.Data;
 using LibraNET.Data.Models;
 using LibraNET.Services.Data.Contracts;
 using LibraNET.Web.ViewModels.Book;
-using LibraNET.Web.ViewModels.Category;
 using LibraNET.Web.ViewModels.Enums;
 using Microsoft.EntityFrameworkCore;
 
 namespace LibraNET.Services.Data
 {
-    public class BookService : IBookService
+	public class BookService : IBookService
     {
         private readonly LibraNetDbContext context;
         private readonly IMapper mapper;

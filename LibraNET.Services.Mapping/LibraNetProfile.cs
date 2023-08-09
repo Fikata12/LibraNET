@@ -45,7 +45,7 @@ namespace LibraNET.Services.Mapping
 				.ForMember(d => d.Rating,
 				opt => opt.MapFrom((s, d, _, context) => s.Ratings.FirstOrDefault(r => r.UserId.ToString() == context.Items["UserId"]?.ToString())?.Value))
 				.ForMember(d => d.IsFavorite,
-				opt => opt.MapFrom((s, d, _, context) => s.UsersFavouriteBooks.FirstOrDefault(r => r.UserId.ToString() == context.Items["UserId"].ToString() && r.BookId.ToString() == d.Id) != null))
+				opt => opt.MapFrom((s, d, _, context) => s.UsersFavouriteBooks.FirstOrDefault(ufb => ufb.UserId.ToString().ToLower() == context.Items["UserId"]?.ToString() && ufb.BookId.ToString().ToLower() == d.Id) != null))
 				.ForMember(d => d.Authors,
 				opt => opt.MapFrom(s => s.BooksAuthors))
 				.ForMember(d => d.Categories,

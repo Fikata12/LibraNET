@@ -6,7 +6,7 @@ using static LibraNET.Common.ValidationConstants.Book;
 
 namespace LibraNET.Web.ViewModels.Book
 {
-    public class BookFormModel
+	public class BookFormModel
     {
         public BookFormModel()
         {

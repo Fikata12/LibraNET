@@ -3,7 +3,7 @@
 const urlParts = window.location.href.split('/');
 let bookId = urlParts[urlParts.length - 1];
 
-$.get("https://localhost:7219/Author/Image/" + bookId, async function (data, status) {
+$.get("https://localhost:7219/Admin/Author/Image/" + bookId, async function (data, status) {
 
 	let imageName = data;
 	if (imageName) {
