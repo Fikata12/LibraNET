@@ -7,5 +7,6 @@ namespace LibraNET.Services.Data.Contracts
         Task<ICollection<UserViewModel>> AllAsync(AllUsersViewModel model);
         Task AddCartToUserAsync(string userId);
 		Task<AccountViewModel> GetByIdAsync(string userId);
+        Task EditAsync(AccountViewModel model, string userId);
 	}
 }

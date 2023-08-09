@@ -1,4 +1,5 @@
 ﻿using LibraNET.Data.Models;
+using LibraNET.Services.Data;
 using LibraNET.Services.Data.Contracts;
 using LibraNET.Web.ViewModels.User;
 using Microsoft.AspNetCore.Authorization;
@@ -76,6 +77,30 @@ namespace LibraNET.Controllers
 			{
 				return GeneralError();
 			}
+		}
+
+		[HttpPost]
+		public async Task<IActionResult> Edit(AccountViewModel model)
+		{
+			try
+			{
+				if (!ModelState.IsValid)
+				{
+					return View("Account", model);
+				}
+
+				var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+				await userService.EditAsync(model, userId);
+			}
+			catch (Exception)
+			{
+				TempData["Error"] = GeneralErrorMessage;
+
+				return View("Account", model);
+			}
+
+			return RedirectToAction("Account");
 		}
 	}
 }

@@ -60,5 +60,17 @@ namespace LibraNET.Services.Data
 
 			return mapper.Map<AccountViewModel>(user);
 		}
+
+		public async Task EditAsync(AccountViewModel model, string userId)
+		{
+			var user = await context.Users
+				.FirstAsync(u => u.Id.Equals(Guid.Parse(userId)));
+
+			user.FirstName = model.FirstName;
+			user.LastName = model.LastName;
+			user.PhoneNumber = model.PhoneNumber;
+
+			await context.SaveChangesAsync();
+		}
 	}
 }
