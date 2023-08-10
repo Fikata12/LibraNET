@@ -41,7 +41,7 @@ namespace LibraNET.Services.Mapping
 
 			CreateMap<Book, BookDetailsViewModel>()
 				.ForMember(d => d.OrdersCount,
-				opt => opt.MapFrom(s => s.OrdersBooks.Count))
+				opt => opt.MapFrom(s => s.OrdersBooks.Sum(ob => ob.BookCount)))
 				.ForMember(d => d.Rating,
 				opt => opt.MapFrom((s, d, _, context) => s.Ratings.FirstOrDefault(r => r.UserId.ToString() == context.Items["UserId"]?.ToString())?.Value))
 				.ForMember(d => d.IsFavorite,

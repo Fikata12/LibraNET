@@ -1,9 +1,7 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using LibraNET.Data;
-using LibraNET.Data.Models;
 using LibraNET.Services.Data.Contracts;
-using LibraNET.Web.ViewModels.Book;
 using LibraNET.Web.ViewModels.User;
 using Microsoft.EntityFrameworkCore;
 
@@ -56,7 +54,7 @@ namespace LibraNET.Services.Data
 				.Include(u => u.Orders)
 				.ThenInclude(o => o.OrdersBooks)
 				.ThenInclude(ob => ob.Book)
-				.FirstAsync(b => b.Id.Equals(Guid.Parse(userId)));
+				.FirstAsync(u => u.Id.Equals(Guid.Parse(userId)));
 
 			return mapper.Map<AccountViewModel>(user);
 		}

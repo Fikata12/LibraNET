@@ -55,7 +55,7 @@ namespace LibraNET.Services.Data
 		{
 			return mapper.Map<ICollection<BookCartViewModel>>(await context.CartsBooks
 				.Include(c => c.Book)
-				.Where(c => c.Cart.UserId.Equals(Guid.Parse(userId)))
+				.Where(c => c.Cart.UserId.Equals(Guid.Parse(userId)) && !c.Book.IsDeleted)
 				.ToListAsync());
 		}
 
@@ -89,7 +89,11 @@ namespace LibraNET.Services.Data
 		{
 			return (await context.Carts
 				.Include(c => c.CartsBooks)
-				.FirstAsync(c => c.UserId.Equals(Guid.Parse(userId)))).CartsBooks.Sum(cb => cb.BookCount);
+				.ThenInclude(cb => cb.Book)
+				.FirstAsync(c => c.UserId.Equals(Guid.Parse(userId))))
+				.CartsBooks
+				.Where(cb => !cb.Book.IsDeleted)
+				.Sum(cb => cb.BookCount);
 		}
 	}
 }

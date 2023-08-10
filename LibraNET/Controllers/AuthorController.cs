@@ -3,10 +3,7 @@ using LibraNET.Web.ViewModels.Author;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using X.PagedList;
-using static LibraNET.Common.NotificationMessagesConstants;
 using static LibraNET.Common.GeneralApplicationConstants;
-using LibraNET.Services.Data;
-using System.Security.Claims;
 
 namespace LibraNET.Controllers
 {
@@ -40,7 +37,7 @@ namespace LibraNET.Controllers
 			}
 			catch (Exception)
 			{
-				return GeneralError();
+				return NotFound();
 			}
 		}
 	}

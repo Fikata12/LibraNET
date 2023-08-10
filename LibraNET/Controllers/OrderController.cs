@@ -36,7 +36,7 @@ namespace LibraNET.Controllers
 
 				TempData["Success"] = SuccessfullyPlacedOrder;
 
-				return RedirectToAction("Index", "Home");
+				return RedirectToAction("Account", "User");
 			}
 			catch (Exception)
 			{

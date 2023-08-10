@@ -67,7 +67,7 @@ namespace LibraNET.Areas.Admin.Controllers
 			}
 			catch (Exception)
 			{
-				return GeneralError();
+				return NotFound();
 			}
 		}
 
@@ -76,7 +76,7 @@ namespace LibraNET.Areas.Admin.Controllers
 		{
 			try
 			{
-				if (await authorService.ExistsByNameAsync(model.Name))
+				if (!await authorService.NameBelongsToIdAsync(model.Name, id))
 				{
 					ModelState.AddModelError(nameof(model.Name), "Already exists author with the same name!");
 				}
@@ -97,10 +97,10 @@ namespace LibraNET.Areas.Admin.Controllers
 
 				await imageService.EditAuthorImageAsync(model.Image, model.ImageId!);
 
-				var authorId = await authorService.EditAndReturnIdAsync(model, id);
+				await authorService.EditAsync(model, id);
 
 				TempData["Success"] = SuccessfulAuthorEdit;
-				return RedirectToAction("Details", "Author", new { id = authorId, area = "" });
+				return RedirectToAction("Details", "Author", new { id, area = "" });
 			}
 			catch (Exception)
 			{
@@ -129,13 +129,16 @@ namespace LibraNET.Areas.Admin.Controllers
 
 		public async Task<IActionResult> Image(string id)
 		{
-			var imageId = await authorService.GetImageIdAsync(id);
-			if (imageId == null)
+			try
+			{
+				var imageId = await authorService.GetImageIdAsync(id);
+				var imageName = imageService.GetAuthorImageNameById(imageId);
+				return Json(imageName);
+			}
+			catch (Exception)
 			{
 				return NotFound();
 			}
-			var imageName = imageService.GetAuthorImageNameById(imageId);
-			return Json(imageName);
 		}
 	}
 }

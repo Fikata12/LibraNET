@@ -24,7 +24,7 @@ namespace LibraNET.Services.Data
 			var order = mapper.Map<Order>(model, opt => opt.Items["UserId"] = userId);
 
 			order.OrdersBooks = await context.CartsBooks
-				.Where(cb => cb.Cart.UserId.Equals(Guid.Parse(userId)))
+				.Where(cb => cb.Cart.UserId.Equals(Guid.Parse(userId)) && !cb.Book.IsDeleted)
 				.ProjectTo<OrderBook>(mapper.ConfigurationProvider)
 				.ToListAsync();
 

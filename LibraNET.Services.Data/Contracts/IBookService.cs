@@ -6,12 +6,12 @@ namespace LibraNET.Services.Data.Contracts
 	{
 		Task<ICollection<BookViewModel>> LastThreeBooksAsync();
 		Task<ICollection<BookViewModel>> AllAsync(AllBooksViewModel model);
-        Task<decimal> MinPriceAsync();
+		Task<decimal> MinPriceAsync();
 		Task<decimal> MaxPriceAsync();
 		Task<string> AddAndReturnIdAsync(BookFormModel model);
 		Task<BookFormModel> GetByIdAsync(string id);
-		Task<string> EditAndReturnIdAsync(BookFormModel model, string id);
-		Task<string?> GetImageIdAsync(string bookId);
+		Task EditAsync(BookFormModel model, string id);
+		Task<string> GetImageIdAsync(string bookId);
 		Task DeleteAsync(string id);
 		Task<bool> ExistsByIdAsync(string id);
 		Task<bool> ExistsByIsbnAsync(string ISBN);
@@ -20,6 +20,6 @@ namespace LibraNET.Services.Data.Contracts
 		Task ToggleFavoriteAsync(string bookId, string userId);
 		Task<ICollection<BookViewModel>> AllFavoritesAsync(FavoriteViewModel model, string userId);
 		Task<int> CommentsCountAsync(string bookId);
-
+		Task<bool> IsbnBelongsToIdAsync(string isbn, string id);
 	}
 }

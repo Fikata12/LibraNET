@@ -1,7 +1,7 @@
 ﻿using LibraNET.Data.Models;
 using LibraNET.Services.Data.Contracts;
-using LibraNET.Web.ViewModels.Book;
 using LibraNET.Web.ViewModels.Cart;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -35,10 +35,17 @@ namespace LibraNET.Controllers
 		}
 
 		[HttpPost]
+		[AllowAnonymous]
 		public async Task<IActionResult> Add(string id, int quantity)
 		{
 			try
 			{
+				if (!User!.Identity!.IsAuthenticated)
+				{
+					string returnUrl = $"/Book/Details/{id}";
+					return RedirectToPage("/Account/Login", new { area = "Identity", returnUrl });
+				}
+
 				if (quantity < 1 || quantity > (await bookService.AvailableCountAsync(id)))
 				{
 					TempData["Error"] = InvalidQuantity;
@@ -54,12 +61,13 @@ namespace LibraNET.Controllers
 				await cartService.AddAsync(id, userId, quantity);
 
 				TempData["Success"] = SuccessfulAddToCart;
+				return RedirectToAction("Details", "Book", new { id });
 			}
 			catch (Exception)
 			{
 				TempData["Error"] = UnsuccessfulAddToCart;
+				return NotFound();
 			}
-			return RedirectToAction("Details", "Book", new { id });
 		}
 
 		[HttpPost]

@@ -11,10 +11,11 @@ namespace LibraNET.Services.Data.Contracts
 		Task<bool> ExistsByNameAsync(string name);
 		Task<string> AddAndReturnIdAsync(AuthorFormModel model);
         Task<AuthorFormModel> GetByIdAsync(string id);
-        Task<string> EditAndReturnIdAsync(AuthorFormModel model, string id);
-        Task<string?> GetImageIdAsync(string id);
+        Task EditAsync(AuthorFormModel model, string id);
+        Task<string> GetImageIdAsync(string id);
 		Task<ICollection<AuthorViewModel>> AllAsync(AllAuthorsViewModel model);
 		Task DeleteAsync(string id);
 		Task<AuthorDetailsViewModel> GetDetailsAsync(string id);
+		Task<bool> NameBelongsToIdAsync(string name, string id);
 	}
 }

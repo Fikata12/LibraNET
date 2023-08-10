@@ -4,12 +4,11 @@ using LibraNET.Data;
 using LibraNET.Data.Models;
 using LibraNET.Services.Data.Contracts;
 using LibraNET.Web.ViewModels.Author;
-using LibraNET.Web.ViewModels.Category;
 using Microsoft.EntityFrameworkCore;
 
 namespace LibraNET.Services.Data
 {
-    public class AuthorService : IAuthorService
+	public class AuthorService : IAuthorService
 	{
 		private readonly LibraNetDbContext context;
 		private readonly IMapper mapper;
@@ -87,7 +86,7 @@ namespace LibraNET.Services.Data
 				.FirstAsync(a => a.Id.Equals(Guid.Parse(id))));
         }
 
-        public async Task<string> EditAndReturnIdAsync(AuthorFormModel model, string id)
+        public async Task EditAsync(AuthorFormModel model, string id)
         {
             var author = await context.Authors
 				.Where(a => !a.IsDeleted)
@@ -98,15 +97,13 @@ namespace LibraNET.Services.Data
             author.Description = model.Description;
 
             await context.SaveChangesAsync();
-
-            return author.Id.ToString();
         }
 
-        public async Task<string?> GetImageIdAsync(string id)
+        public async Task<string> GetImageIdAsync(string id)
         {
             return (await context.Authors
 				.Where(a => !a.IsDeleted)
-				.FirstOrDefaultAsync(a => a.Id.Equals(Guid.Parse(id))))?
+				.FirstAsync(a => a.Id.Equals(Guid.Parse(id))))
                 .ImageId.ToString();
         }
 
@@ -145,6 +142,12 @@ namespace LibraNET.Services.Data
 				.Map<AuthorDetailsViewModel>(await context.Authors
 				.Where(a => !a.IsDeleted)
 				.FirstAsync(a => a.Id.Equals(Guid.Parse(id))));
+		}
+		public async Task<bool> NameBelongsToIdAsync(string name, string id)
+		{
+			return await context.Authors
+				.Where(b => !b.IsDeleted)
+				.AnyAsync(b => b.Id.Equals(Guid.Parse(id)) && b.Name == name);
 		}
 	}
 }

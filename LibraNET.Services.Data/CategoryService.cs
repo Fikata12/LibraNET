@@ -3,14 +3,12 @@ using AutoMapper.QueryableExtensions;
 using LibraNET.Data;
 using LibraNET.Data.Models;
 using LibraNET.Services.Data.Contracts;
-using LibraNET.Web.ViewModels.Author;
 using LibraNET.Web.ViewModels.Category;
-using LibraNET.Web.ViewModels.User;
 using Microsoft.EntityFrameworkCore;
 
 namespace LibraNET.Services.Data
 {
-    public class CategoryService : ICategoryService
+	public class CategoryService : ICategoryService
 	{
 		private readonly LibraNetDbContext context;
 		private readonly IMapper mapper;
@@ -25,6 +23,7 @@ namespace LibraNET.Services.Data
 		{
 			return await context.Categories
 				.AsNoTracking()
+				.Where(c => !c.IsDeleted)
 				.ProjectTo<FiltersCategoryViewModel>(mapper.ConfigurationProvider)
 				.ToListAsync();
 		}
@@ -33,6 +32,7 @@ namespace LibraNET.Services.Data
 		{
 			return await context.Categories
 				.AsNoTracking()
+				.Where(c => !c.IsDeleted)
 				.ProjectTo<CategoryViewModel>(mapper.ConfigurationProvider)
 				.ToListAsync();
 		}
@@ -78,15 +78,17 @@ namespace LibraNET.Services.Data
         {
             return mapper
                 .Map<CategoryFormModel>(await context.Categories
+				.Where(b => !b.IsDeleted)
                 .FirstAsync(a => a.Id.Equals(Guid.Parse(id))));
         }
 
         public async Task EditAsync(CategoryFormModel model, string id)
         {
             var category = await context.Categories
+				.Where(b => !b.IsDeleted)
                 .FirstAsync(b => b.Id.Equals(Guid.Parse(id)));
 
-            category.Name = model.Name;
+			category.Name = model.Name;
 
             await context.SaveChangesAsync();
         }
@@ -114,10 +116,18 @@ namespace LibraNET.Services.Data
 		public async Task DeleteAsync(string id)
 		{
 			var category = context.Categories
+				.Where(b => !b.IsDeleted)
 				.First(c => c.Id.Equals(Guid.Parse(id)));
 
 			category.IsDeleted = true;
 			await context.SaveChangesAsync();
+		}
+
+		public async Task<bool> NameBelongsToIdAsync(string name, string id)
+		{
+			return await context.Categories
+				.Where(b => !b.IsDeleted)
+				.AnyAsync(b => b.Id.Equals(Guid.Parse(id)) && b.Name == name);
 		}
 	}
 }

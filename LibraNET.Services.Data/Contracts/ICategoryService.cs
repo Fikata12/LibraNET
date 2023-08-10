@@ -14,5 +14,6 @@ namespace LibraNET.Services.Data.Contracts
         Task EditAsync(CategoryFormModel model, string id);
 		Task<ICollection<CategoryViewModel>> AllAsync(AllCategoriesViewModel model);
 		Task DeleteAsync(string id);
+		Task<bool> NameBelongsToIdAsync(string name, string id);
 	}
 }

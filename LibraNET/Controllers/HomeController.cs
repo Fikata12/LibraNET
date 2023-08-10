@@ -1,12 +1,10 @@
-﻿using LibraNET.Web.ViewModels;
-using LibraNET.Services.Data.Contracts;
+﻿using LibraNET.Services.Data.Contracts;
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
 using Microsoft.AspNetCore.Authorization;
 
 namespace LibraNET.Controllers
 {
-    public class HomeController : BaseController
+	public class HomeController : BaseController
 	{
         private readonly IBookService bookService;
 

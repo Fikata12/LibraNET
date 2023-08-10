@@ -66,7 +66,7 @@ namespace LibraNET.Areas.Admin.Controllers
 		{
 			try
 			{
-				if (await categoryService.ExistsByNameAsync(model.Name))
+				if (!await categoryService.NameBelongsToIdAsync(model.Name, id))
 				{
 					ModelState.AddModelError(nameof(model.Name), "Already exists category with the same name!");
 				}

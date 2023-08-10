@@ -142,7 +142,7 @@ namespace LibraNET.Areas.Admin.Controllers
 					ModelState.AddModelError(nameof(model.SelectedCategoriesIds), "Too much selected categories!");
 				}
 
-				if (model.ISBN != null && await bookService.ExistsByIsbnAsync(model.ISBN))
+				if (model.ISBN != null && !await bookService.IsbnBelongsToIdAsync(model.ISBN, id))
 				{
 					ModelState.AddModelError(nameof(model.ISBN), "Already exists book with the same ISBN!");
 				}
@@ -165,10 +165,10 @@ namespace LibraNET.Areas.Admin.Controllers
 
 				await imageService.EditBookImageAsync(model.Image, model.ImageId!);
 
-				var bookId = await bookService.EditAndReturnIdAsync(model, id);
+				await bookService.EditAsync(model, id);
 
 				TempData["Success"] = SuccessfulBookEdit;
-				return RedirectToAction("Details", "Book", new { id = bookId, area = "" });
+				return RedirectToAction("Details", "Book", new { id, area = "" });
 			}
 			catch (Exception)
 			{
@@ -186,7 +186,6 @@ namespace LibraNET.Areas.Admin.Controllers
 		{
 			try
 			{
-
 				await bookService.DeleteAsync(id);
 
 				TempData["Success"] = SuccessfulBookDeletion;
@@ -201,13 +200,17 @@ namespace LibraNET.Areas.Admin.Controllers
 
 		public async Task<IActionResult> Image(string id)
 		{
-			var imageId = await bookService.GetImageIdAsync(id);
-			if (imageId == null)
+			try
+			{
+				var imageId = await bookService.GetImageIdAsync(id);
+
+				var imageName = imageService.GetBookImageNameById(imageId);
+				return Json(imageName);
+			}
+			catch (Exception)
 			{
 				return NotFound();
 			}
-			var imageName = imageService.GetBookImageNameById(imageId);
-			return Json(imageName);
 		}
 	}
 }
