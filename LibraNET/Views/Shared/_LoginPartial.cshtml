@@ -8,7 +8,7 @@
 		string name = $"{user.FirstName} {user.LastName}";
 
 		<li class="nav-item px-1">
-			<a class="nav-link text-white" asp-controller="Book" asp-action="Favorites">
+			<a class="nav-link text-white" asp-area="" asp-controller="Book" asp-action="Favorites">
 				<i class="bi bi-heart-fill" style="font-size: 1.2rem;"></i>
 				<span>Favorites</span>
 			</a>
@@ -17,13 +17,13 @@
 			@{
 				var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 			}
-			<a class="nav-link text-white" asp-controller="Cart" asp-action="Index">
+			<a class="nav-link text-white" asp-area="" asp-controller="Cart" asp-action="Index">
 				<i class="bi bi-cart-fill" style="font-size: 1.2rem;"></i>
 				<span>Cart(@(await cartService.CountAsync(userId)))</span>
 			</a>
 		</li>
 		<li class="nav-item px-1">
-			<a class="nav-link text-white" asp-controller="User" asp-action="Account">
+			<a class="nav-link text-white" asp-area="" asp-controller="User" asp-action="Account">
 				<i class="bi bi-person-fill" style="font-size: 1.2rem;"></i>
 				<span>Account</span>
 			</a>

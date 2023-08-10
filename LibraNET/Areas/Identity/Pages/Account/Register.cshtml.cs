@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using static LibraNET.Common.ValidationConstants.ApplicationUser;
 using static LibraNET.Common.GeneralApplicationConstants;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace LibraNET.Areas.Identity.Pages.Account
 {
@@ -29,8 +30,10 @@ namespace LibraNET.Areas.Identity.Pages.Account
 		private readonly IEmailSender emailSender;
 		private readonly ICartService cartService;
 		private readonly IUserService userService;
+        private readonly IMemoryCache memoryCache;
 
-		public RegisterModel(
+
+        public RegisterModel(
 			UserManager<ApplicationUser> userManager,
 			RoleManager<IdentityRole<Guid>> roleManager,
 			IUserStore<ApplicationUser> userStore,
@@ -38,7 +41,8 @@ namespace LibraNET.Areas.Identity.Pages.Account
 			ILogger<RegisterModel> logger,
 			IEmailSender emailSender,
 			ICartService cartService,
-			IUserService userService)
+			IUserService userService,
+            IMemoryCache memoryCache)
 		{
 			this.userManager = userManager;
 			this.roleManager = roleManager;
@@ -49,6 +53,7 @@ namespace LibraNET.Areas.Identity.Pages.Account
 			this.emailSender = emailSender;
 			this.cartService = cartService;
 			this.userService = userService;
+			this.memoryCache = memoryCache;
 		}
 
 		/// <summary>
@@ -185,6 +190,8 @@ namespace LibraNET.Areas.Identity.Pages.Account
 					else
 					{
 						await signInManager.SignInAsync(user, isPersistent: false);
+						memoryCache.Remove(UsersCacheKey);
+
 						return LocalRedirect(returnUrl);
 					}
 				}
