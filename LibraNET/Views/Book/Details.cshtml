@@ -62,9 +62,9 @@
 			<h5>More Info</h5>
 			<hr />
 			<div class="row">
-				<p><span class="fw-bold">ISBN:</span>&nbsp;&nbsp;@Model.ISBN</p>
-				<p><span class="fw-bold">Publisher:</span>&nbsp;&nbsp;@Model.PublisherName</p>
-				<p><span class="fw-bold">Publication date:</span>&nbsp;&nbsp;@Model.PublicationDate.ToShortDateString()</p>
+				<p><span class="fw-bold">ISBN: </span>@Model.ISBN</p>
+				<p><span class="fw-bold">Publisher: </span>@Model.PublisherName</p>
+				<p><span class="fw-bold">Publication date: </span>@Model.PublicationDate.ToShortDateString()</p>
 				<p>
 					<span class="fw-bold">@(Model.Authors.Count > 1 ? "Authors: " : "Author: ")</span>
 					@{

@@ -140,7 +140,6 @@ namespace LibraNET.Services.Data
 			book.BooksAuthors.Clear();
 			book.BooksCategories.Clear();
 
-
 			foreach (var authorId in model.SelectedAuthorsIds)
 			{
 				book.BooksAuthors.Add(new BookAuthor
