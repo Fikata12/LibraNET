@@ -8,10 +8,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Views\Shared\Error404.cshtml" />
     <Content Remove="wwwroot\js\All.js" />
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="Views\Home\Error404.cshtml" />
     <None Include="wwwroot\js\Book\All.js" />
     <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css.map" />
     <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.min.css.map" />
@@ -64,6 +66,14 @@
   <ItemGroup>
     <ProjectReference Include="..\LibraNET.Services.Data\LibraNET.Services.Data.csproj" />
     <ProjectReference Include="..\LibraNET.Web.Infrastructure\LibraNET.Web.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\Shared\Error404.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Views\Shared\Error404.cshtml" />
   </ItemGroup>
 
 </Project>
