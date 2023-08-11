@@ -8,8 +8,6 @@ namespace LibraNET.Data.Configurations
 	{
 		public void Configure(EntityTypeBuilder<BookCategory> builder)
 		{
-			builder.HasKey(e => new { e.BookId, e.CategoryId });
-
 			builder.HasData(new BookCategory[]
 			{
 				new BookCategory

@@ -9,8 +9,6 @@ namespace LibraNET.Data.Configurations
 	{
 		public void Configure(EntityTypeBuilder<BookAuthor> builder)
 		{
-			builder.HasKey(e => new { e.BookId, e.AuthorId });
-
 			builder.HasData(new BookAuthor[]
 			{
 				new BookAuthor

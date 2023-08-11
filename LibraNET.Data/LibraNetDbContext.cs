@@ -8,8 +8,16 @@ namespace LibraNET.Data
 {
 	public class LibraNetDbContext : IdentityDbContext<ApplicationUser, IdentityRole<Guid>, Guid>
 	{
-		public LibraNetDbContext(DbContextOptions options) : base(options)
+		bool seed;
+
+		public LibraNetDbContext(DbContextOptions options, bool seed = true) : base(options)
 		{
+			if (!Database.IsRelational())
+			{
+				Database.EnsureCreated();
+			}
+
+			this.seed = seed;
 		}
 
 		public DbSet<Book> Books { get; set; } = null!;
@@ -63,11 +71,20 @@ namespace LibraNET.Data
 			modelBuilder.Entity<OrderBook>()
 				.HasKey(e => new { e.OrderId, e.BookId });
 
-			modelBuilder.ApplyConfiguration(new AuthorEntityConfiguration());
-			modelBuilder.ApplyConfiguration(new CategoryEntityConfiguration());
-			modelBuilder.ApplyConfiguration(new BookEntityConfiguration());
-			modelBuilder.ApplyConfiguration(new BookAuthorEntityConfiguration());
-			modelBuilder.ApplyConfiguration(new BookCategoryEntityConfiguration());
+			modelBuilder.Entity<BookAuthor>()
+				.HasKey(e => new { e.BookId, e.AuthorId });
+
+			modelBuilder.Entity<BookCategory>()
+				.HasKey(e => new { e.BookId, e.CategoryId });
+
+			if (seed)
+			{
+				modelBuilder.ApplyConfiguration(new AuthorEntityConfiguration());
+				modelBuilder.ApplyConfiguration(new CategoryEntityConfiguration());
+				modelBuilder.ApplyConfiguration(new BookEntityConfiguration());
+				modelBuilder.ApplyConfiguration(new BookAuthorEntityConfiguration());
+				modelBuilder.ApplyConfiguration(new BookCategoryEntityConfiguration());
+			}
 
 			base.OnModelCreating(modelBuilder);
 		}
