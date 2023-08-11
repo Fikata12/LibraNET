@@ -28,7 +28,13 @@ namespace LibraNET.Services.Data
 				.ProjectTo<OrderBook>(mapper.ConfigurationProvider)
 				.ToListAsync();
 
-			var cartBooks = await context.CartsBooks.ToListAsync();
+			var cartBooks = await context.CartsBooks
+				.Include(cb => cb.Book)
+				.Where(cb => cb.Cart.UserId.Equals(Guid.Parse(userId)))
+				.ToListAsync();
+
+			cartBooks.ForEach(cb => cb.Book.AvailableCount -= cb.BookCount);
+
 			context.CartsBooks.RemoveRange(cartBooks);
 
 			await context.Orders.AddAsync(order);

@@ -108,11 +108,6 @@ namespace LibraNET.Controllers
 					TempData["Error"] = InvalidRating;
 				}
 
-				if (!await bookService.ExistsByIdAsync(id))
-				{
-					throw new Exception();
-				}
-
 				var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 				await ratingService.RateBookAsync(id, userId, rating);
 				return RedirectToAction("Details", "Book", new { id });
@@ -133,7 +128,7 @@ namespace LibraNET.Controllers
 				if (!User!.Identity!.IsAuthenticated)
 				{
 					string returnUrl = $"/Book/Details/{id}";
-					return RedirectToPage("/Account/Login", new { area = "Identity", returnUrl });
+					return RedirectToPage("/Account/Login", "", new { area = "Identity", returnUrl }, "comments");
 				}
 
 				comment = comment.Trim();
@@ -143,14 +138,9 @@ namespace LibraNET.Controllers
 					TempData["Error"] = InvalidComment;
 				}
 
-				if (!await bookService.ExistsByIdAsync(id))
-				{
-					throw new Exception();
-				}
-
 				var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 				await commentService.AddComment(id, userId, comment);
-				return RedirectToAction("Details", "Book", new { id });
+				return RedirectToAction("Details", "Book", new { id }, "comments");
 			}
 			catch (Exception)
 			{
@@ -169,11 +159,6 @@ namespace LibraNET.Controllers
 				{
 					string returnUrl = $"/Book/Details/{id}";
 					return RedirectToPage("/Account/Login", new { area = "Identity", returnUrl });
-				}
-
-				if (!await bookService.ExistsByIdAsync(id))
-				{
-					throw new Exception();
 				}
 
 				var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -206,6 +191,7 @@ namespace LibraNET.Controllers
 			}
 		}
 
+		[AllowAnonymous]
 		public async Task<IActionResult> CommentsCount(string id)
 		{
 			try

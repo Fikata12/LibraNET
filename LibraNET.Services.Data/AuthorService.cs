@@ -11,12 +11,14 @@ namespace LibraNET.Services.Data
 	public class AuthorService : IAuthorService
 	{
 		private readonly LibraNetDbContext context;
+		private readonly IBookService bookService;
 		private readonly IMapper mapper;
 
-		public AuthorService(LibraNetDbContext context, IMapper mapper)
+		public AuthorService(LibraNetDbContext context, IMapper mapper, IBookService bookService)
 		{
 			this.context = context;
 			this.mapper = mapper;
+			this.bookService = bookService;
 		}
 
 		public async Task<ICollection<FiltersAuthorViewModel>> AllForFiltersAsync()
@@ -43,7 +45,8 @@ namespace LibraNET.Services.Data
 			{
 				var doesExist = await context.Authors
 					.AsNoTracking()
-					.AnyAsync(a => a.Id.Equals(Guid.Parse(id)) && !a.IsDeleted);
+					.Where(a => !a.IsDeleted)
+					.AnyAsync(a => a.Id.Equals(Guid.Parse(id)));
 
 				if (!doesExist)
 				{
@@ -58,14 +61,16 @@ namespace LibraNET.Services.Data
 		{
 			return await context.Authors
 				.AsNoTracking()
-				.AnyAsync(a => a.Id.Equals(Guid.Parse(id)) && !a.IsDeleted);
+				.Where(a => !a.IsDeleted)
+				.AnyAsync(a => a.Id.Equals(Guid.Parse(id)));
 		}
 
 		public async Task<bool> ExistsByNameAsync(string name)
 		{
 			return await context.Authors
 				.AsNoTracking()
-				.AnyAsync(c => c.Name == name && !c.IsDeleted);
+				.Where(a => !a.IsDeleted)
+				.AnyAsync(c => c.Name == name);
 		}
 
 		public async Task<string> AddAndReturnIdAsync(AuthorFormModel model)
@@ -78,34 +83,36 @@ namespace LibraNET.Services.Data
 			return author.Id.ToString();
 		}
 
-        public async Task<AuthorFormModel> GetByIdAsync(string id)
-        {
-            return mapper
-                .Map<AuthorFormModel>(await context.Authors
+		public async Task<AuthorFormModel> GetByIdAsync(string id)
+		{
+			return mapper
+				.Map<AuthorFormModel>(await context.Authors
+				.AsNoTracking()
 				.Where(a => !a.IsDeleted)
 				.FirstAsync(a => a.Id.Equals(Guid.Parse(id))));
-        }
+		}
 
-        public async Task EditAsync(AuthorFormModel model, string id)
-        {
-            var author = await context.Authors
+		public async Task EditAsync(AuthorFormModel model, string id)
+		{
+			var author = await context.Authors
 				.Where(a => !a.IsDeleted)
 				.FirstAsync(a => a.Id.Equals(Guid.Parse(id)));
 
-            author!.Name = model.Name;
-            author.ImageId = Guid.Parse(model.ImageId!);
-            author.Description = model.Description;
+			author!.Name = model.Name;
+			author.ImageId = Guid.Parse(model.ImageId!);
+			author.Description = model.Description;
 
-            await context.SaveChangesAsync();
-        }
+			await context.SaveChangesAsync();
+		}
 
-        public async Task<string> GetImageIdAsync(string id)
-        {
-            return (await context.Authors
+		public async Task<string> GetImageIdAsync(string id)
+		{
+			return (await context.Authors
+				.AsNoTracking()
 				.Where(a => !a.IsDeleted)
 				.FirstAsync(a => a.Id.Equals(Guid.Parse(id))))
-                .ImageId.ToString();
-        }
+				.ImageId.ToString();
+		}
 
 		public async Task<ICollection<AuthorViewModel>> AllAsync(AllAuthorsViewModel model)
 		{
@@ -128,26 +135,35 @@ namespace LibraNET.Services.Data
 
 		public async Task DeleteAsync(string id)
 		{
-			var author = context.Authors
+			var author = await context.Authors
+				.Include(a => a.BooksAuthors)
 				.Where(a => !a.IsDeleted)
-				.First(c => c.Id.Equals(Guid.Parse(id)));
+				.FirstAsync(a => a.Id.Equals(Guid.Parse(id)));
 
 			author.IsDeleted = true;
+
+			foreach (var bookAuthor in author.BooksAuthors)
+			{
+				await bookService.DeleteAsync(bookAuthor.BookId.ToString());
+			}
+
 			await context.SaveChangesAsync();
 		}
 
-		public async Task<AuthorDetailsViewModel> GetDetailsAsync(string id) 
+		public async Task<AuthorDetailsViewModel> GetDetailsAsync(string id)
 		{
 			return mapper
 				.Map<AuthorDetailsViewModel>(await context.Authors
+				.AsNoTracking()
 				.Where(a => !a.IsDeleted)
 				.FirstAsync(a => a.Id.Equals(Guid.Parse(id))));
 		}
 		public async Task<bool> NameBelongsToIdAsync(string name, string id)
 		{
 			return await context.Authors
-				.Where(b => !b.IsDeleted)
-				.AnyAsync(b => b.Id.Equals(Guid.Parse(id)) && b.Name == name);
+				.AsNoTracking()
+				.Where(a => !a.IsDeleted)
+				.AnyAsync(a => a.Id.Equals(Guid.Parse(id)) && a.Name == name);
 		}
 	}
 }

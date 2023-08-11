@@ -12,11 +12,13 @@ namespace LibraNET.Services.Data
 	{
 		private readonly LibraNetDbContext context;
 		private readonly IMapper mapper;
+		private readonly IBookService bookService;
 
-		public CategoryService(LibraNetDbContext context, IMapper mapper)
+		public CategoryService(LibraNetDbContext context, IMapper mapper, IBookService bookService)
 		{
 			this.context = context;
 			this.mapper = mapper;
+			this.bookService = bookService;
 		}
 
 		public async Task<ICollection<FiltersCategoryViewModel>> AllForFiltersAsync()
@@ -43,7 +45,8 @@ namespace LibraNET.Services.Data
 			{
 				var doesExist = await context.Categories
 					.AsNoTracking()
-					.AnyAsync(c => c.Id.Equals(Guid.Parse(id)) && !c.IsDeleted);
+					.Where(c => !c.IsDeleted)
+					.AnyAsync(c => c.Id.Equals(Guid.Parse(id)));
 
 				if (!doesExist)
 				{
@@ -58,14 +61,16 @@ namespace LibraNET.Services.Data
 		{
 			return await context.Categories
 				.AsNoTracking()
-				.AnyAsync(c => c.Id.Equals(Guid.Parse(id)) && !c.IsDeleted);
+				.Where(c => !c.IsDeleted)
+				.AnyAsync(c => c.Id.Equals(Guid.Parse(id)));
 		}
 
 		public async Task<bool> ExistsByNameAsync(string name)
 		{
 			return await context.Categories
 				.AsNoTracking()
-				.AnyAsync(c => c.Name == name && !c.IsDeleted);
+				.Where(c => !c.IsDeleted)
+				.AnyAsync(c => c.Name == name);
 		}
 
 		public async Task AddAsync(CategoryFormModel model)
@@ -78,15 +83,16 @@ namespace LibraNET.Services.Data
         {
             return mapper
                 .Map<CategoryFormModel>(await context.Categories
+				.AsNoTracking()
 				.Where(b => !b.IsDeleted)
-                .FirstAsync(a => a.Id.Equals(Guid.Parse(id))));
+				.FirstAsync(a => a.Id.Equals(Guid.Parse(id))));
         }
 
         public async Task EditAsync(CategoryFormModel model, string id)
         {
             var category = await context.Categories
-				.Where(b => !b.IsDeleted)
-                .FirstAsync(b => b.Id.Equals(Guid.Parse(id)));
+				.Where(c => !c.IsDeleted)
+                .FirstAsync(c => c.Id.Equals(Guid.Parse(id)));
 
 			category.Name = model.Name;
 
@@ -115,19 +121,27 @@ namespace LibraNET.Services.Data
 
 		public async Task DeleteAsync(string id)
 		{
-			var category = context.Categories
-				.Where(b => !b.IsDeleted)
-				.First(c => c.Id.Equals(Guid.Parse(id)));
+			var category = await context.Categories
+				.Include(c => c.BooksCategories)
+				.Where(c => !c.IsDeleted)
+				.FirstAsync(c => c.Id.Equals(Guid.Parse(id)));
 
 			category.IsDeleted = true;
+
+			foreach (var bookCategory in category.BooksCategories)
+			{
+				await bookService.DeleteAsync(bookCategory.BookId.ToString());
+			}
+
 			await context.SaveChangesAsync();
 		}
 
 		public async Task<bool> NameBelongsToIdAsync(string name, string id)
 		{
 			return await context.Categories
-				.Where(b => !b.IsDeleted)
-				.AnyAsync(b => b.Id.Equals(Guid.Parse(id)) && b.Name == name);
+				.AsNoTracking()
+				.Where(c => !c.IsDeleted)
+				.AnyAsync(c => c.Id.Equals(Guid.Parse(id)) && c.Name == name);
 		}
 	}
 }

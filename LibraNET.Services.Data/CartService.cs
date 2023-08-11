@@ -28,18 +28,23 @@ namespace LibraNET.Services.Data
 		public async Task AddAsync(string bookId, string userId, int quantity)
 		{
 			var cart = await context.Carts
-				.Include(c => c.CartsBooks)
 				.FirstAsync(c => c.UserId.Equals(Guid.Parse(userId)));
 
-			var cartBook = cart.CartsBooks
-				.FirstOrDefault(cb => cb.BookId.Equals(Guid.Parse(bookId)));
+			var book = await context.Books
+				.Where(b => !b.IsDeleted)
+				.FirstAsync(b => b.Id.Equals(Guid.Parse(bookId)));
+
+			var cartBook = await context.CartsBooks
+				.Include(cb => cb.Book)
+				.Include(cb => cb.Cart)
+				.FirstOrDefaultAsync(cb => cb.Book == book && cb.Cart == cart);
 
 			if (cartBook == null)
 			{
 				await context.CartsBooks.AddAsync(new CartBook
 				{
-					CartId = cart.Id,
-					BookId = Guid.Parse(bookId),
+					Cart = cart,
+					Book = book,
 					BookCount = quantity
 				});
 
@@ -54,6 +59,7 @@ namespace LibraNET.Services.Data
 		public async Task<ICollection<BookCartViewModel>> GetCartAsync(string userId)
 		{
 			return mapper.Map<ICollection<BookCartViewModel>>(await context.CartsBooks
+				.AsNoTracking()
 				.Include(c => c.Book)
 				.Where(c => c.Cart.UserId.Equals(Guid.Parse(userId)) && !c.Book.IsDeleted)
 				.ToListAsync());
@@ -76,10 +82,11 @@ namespace LibraNET.Services.Data
 		{
 			var cart = await context.Carts
 				.Include(c => c.CartsBooks)
+				.ThenInclude(cb => cb.Book)
 				.FirstAsync(c => c.UserId.Equals(Guid.Parse(userId)));
 
 			var cartBook = cart.CartsBooks
-				.First(cb => cb.BookId.Equals(Guid.Parse(bookId)));
+				.First(cb => cb.BookId.Equals(Guid.Parse(bookId)) && !cb.Book.IsDeleted);
 
 			context.CartsBooks.Remove(cartBook);
 			await context.SaveChangesAsync();
@@ -88,6 +95,7 @@ namespace LibraNET.Services.Data
 		public async Task<int> CountAsync(string userId)
 		{
 			return (await context.Carts
+				.AsNoTracking()
 				.Include(c => c.CartsBooks)
 				.ThenInclude(cb => cb.Book)
 				.FirstAsync(c => c.UserId.Equals(Guid.Parse(userId))))

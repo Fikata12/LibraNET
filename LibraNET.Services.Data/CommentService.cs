@@ -2,6 +2,7 @@
 using LibraNET.Data;
 using LibraNET.Data.Models;
 using LibraNET.Services.Data.Contracts;
+using Microsoft.EntityFrameworkCore;
 
 namespace LibraNET.Services.Data
 {
@@ -17,9 +18,14 @@ namespace LibraNET.Services.Data
 		}
 		public async Task AddComment(string bookId, string userId, string text)
 		{
+			var book = await context.Books
+				.Where(b => !b.IsDeleted)
+				.Include(b => b.Comments)
+				.FirstAsync(b => b.Id.Equals(Guid.Parse(bookId)));
+
 			await context.Comments.AddAsync(new Comment
 			{
-				BookId = Guid.Parse(bookId),
+				Book = book,
 				UserId = Guid.Parse(userId),
 				Text = text
 			});

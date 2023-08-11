@@ -87,6 +87,7 @@ namespace LibraNET.Services.Data
 		public async Task<decimal> MinPriceAsync()
 		{
 			return await context.Books
+				.AsNoTracking()
 				.Where(b => !b.IsDeleted)
 				.MinAsync(b => b.Price);
 		}
@@ -94,6 +95,7 @@ namespace LibraNET.Services.Data
 		public async Task<decimal> MaxPriceAsync()
 		{
 			return await context.Books
+				.AsNoTracking()
 				.Where(b => !b.IsDeleted)
 				.MaxAsync(b => b.Price);
 		}
@@ -112,6 +114,7 @@ namespace LibraNET.Services.Data
 		{
 			return mapper
 				.Map<BookFormModel>(await context.Books
+				.AsNoTracking()
 				.Where(b => !b.IsDeleted)
 				.Include(b => b.BooksAuthors)
 				.Include(b => b.BooksCategories)
@@ -162,6 +165,7 @@ namespace LibraNET.Services.Data
 		public async Task<string> GetImageIdAsync(string bookId)
 		{
 			return (await context.Books
+				.AsNoTracking()
 				.Where(b => !b.IsDeleted)
 				.FirstAsync(b => b.Id.Equals(Guid.Parse(bookId))))
 				.ImageId.ToString();
@@ -169,14 +173,16 @@ namespace LibraNET.Services.Data
 
 		public async Task DeleteAsync(string id)
 		{
-			var book = context.Books
+			var book = await context.Books
 				.Include(b => b.CartsBooks)
 				.Include(b => b.UsersFavouriteBooks)
 				.Where(b => !b.IsDeleted)
-				.First(c => c.Id.Equals(Guid.Parse(id)));
+				.FirstAsync(b => b.Id.Equals(Guid.Parse(id)));
 
 			book.IsDeleted = true;
 
+			book.CartsBooks.Clear();
+			book.UsersFavouriteBooks.Clear();
 
 			await context.SaveChangesAsync();
 		}
@@ -185,19 +191,22 @@ namespace LibraNET.Services.Data
 		{
 			return await context.Books
 				.AsNoTracking()
-				.AnyAsync(b => b.Id.Equals(Guid.Parse(id)) && !b.IsDeleted);
+				.Where(b => !b.IsDeleted)
+				.AnyAsync(b => b.Id.Equals(Guid.Parse(id)));
 		}
 
 		public async Task<bool> ExistsByIsbnAsync(string ISBN)
 		{
 			return await context.Books
 				.AsNoTracking()
-				.AnyAsync(c => c.ISBN == ISBN && !c.IsDeleted);
+				.Where(b => !b.IsDeleted)
+				.AnyAsync(b => b.ISBN == ISBN);
 		}
 
 		public async Task<BookDetailsViewModel> GetByIdAsync(string bookId, string userId)
 		{
 			var book = await context.Books
+				.AsNoTracking()
 				.Where(b => !b.IsDeleted)
 				.Include(b => b.BooksAuthors)
 				.ThenInclude(ba => ba.Author)
@@ -217,21 +226,26 @@ namespace LibraNET.Services.Data
 		public async Task<int> AvailableCountAsync(string id)
 		{
 			return (await context.Books
+				.AsNoTracking()
 				.Where(b => !b.IsDeleted)
 				.FirstAsync(b => b.Id.Equals(Guid.Parse(id)))).AvailableCount;
 		}
 
 		public async Task ToggleFavoriteAsync(string bookId, string userId)
 		{
-			var favoriteBook = await context.UsersFavouriteBooks
-				.FirstOrDefaultAsync(ufb => ufb.UserId.Equals(Guid.Parse(userId)) && ufb.BookId.Equals(Guid.Parse(bookId)));
+			var book = await context.Books
+				.Where(b => !b.IsDeleted)
+				.Include(b => b.UsersFavouriteBooks)
+				.FirstAsync(b => b.Id.Equals(Guid.Parse(bookId)));
+
+			var favoriteBook = book.UsersFavouriteBooks
+				.FirstOrDefault(ufb => ufb.UserId.Equals(Guid.Parse(userId)));
 
 			if (favoriteBook == null)
 			{
-				await context.UsersFavouriteBooks.AddAsync(new UserFavouriteBook
+				book.UsersFavouriteBooks.Add(new UserFavouriteBook
 				{
-					UserId = Guid.Parse(userId),
-					BookId = Guid.Parse(bookId)
+					UserId = Guid.Parse(userId)
 				});
 
 				await context.SaveChangesAsync();
@@ -246,7 +260,7 @@ namespace LibraNET.Services.Data
 		{
 			var favoriteBooksQuery = context.Books
 				.AsNoTracking()
-				.Where(b => b.UsersFavouriteBooks.Any(ufb => ufb.UserId.Equals(Guid.Parse(userId)) && !ufb.Book.IsDeleted));
+				.Where(b => b.UsersFavouriteBooks.Any(ufb => ufb.UserId.Equals(Guid.Parse(userId))));
 
 			if (!string.IsNullOrWhiteSpace(model.SearchString))
 			{
@@ -267,6 +281,7 @@ namespace LibraNET.Services.Data
 		public async Task<int> CommentsCountAsync(string bookId)
 		{
 			return (await context.Books
+				.AsNoTracking()
 				.Where(b => !b.IsDeleted)
 				.Include(b => b.Comments)
 				.FirstAsync(b => b.Id.Equals(Guid.Parse(bookId)))).Comments.Count(c => !c.IsDeleted);
@@ -275,6 +290,7 @@ namespace LibraNET.Services.Data
 		public async Task<bool> IsbnBelongsToIdAsync(string isbn, string id)
 		{
 			return await context.Books
+				.AsNoTracking()
 				.Where(b => !b.IsDeleted)
 				.AnyAsync(b => b.Id.Equals(Guid.Parse(id)) && b.ISBN == isbn);
 		}

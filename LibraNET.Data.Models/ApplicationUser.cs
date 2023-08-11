@@ -12,6 +12,7 @@ namespace LibraNET.Data.Models
 			UsersFavouriteBooks = new List<UserFavouriteBook>();
 			Comments = new List<Comment>();
 			Ratings = new List<Rating>();
+			Orders = new List<Order>();
         }
 
 		[MaxLength(FirstNameMaxLength)]

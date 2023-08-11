@@ -52,11 +52,6 @@ namespace LibraNET.Controllers
 					return RedirectToAction("Details", "Book", new { id });
 				}
 
-				if (!await bookService.ExistsByIdAsync(id))
-				{
-					throw new Exception();
-				}
-
 				var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 				await cartService.AddAsync(id, userId, quantity);
 
@@ -75,11 +70,6 @@ namespace LibraNET.Controllers
 		{
 			try
 			{
-				if (!await bookService.ExistsByIdAsync(id))
-				{
-					throw new Exception();
-				}
-
 				var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 				await cartService.RemoveAsync(id, userId);
 			}
@@ -99,11 +89,6 @@ namespace LibraNET.Controllers
 				{
 					TempData["Error"] = InvalidQuantity;
 					return RedirectToAction("Index", "Cart", new { }, id);
-				}
-
-				if (!await bookService.ExistsByIdAsync(id))
-				{
-					throw new Exception();
 				}
 
 				var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);

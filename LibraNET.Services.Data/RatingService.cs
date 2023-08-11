@@ -18,14 +18,18 @@ namespace LibraNET.Services.Data
 		}
 		public async Task RateBookAsync(string bookId, string userId, int value)
 		{
-			var rating = await context.Ratings
-				.FirstOrDefaultAsync(r => r.BookId.Equals(Guid.Parse(bookId)) && r.UserId.Equals(Guid.Parse(userId)));
+			var book = await context.Books
+				.Where(b => !b.IsDeleted)
+				.Include(b => b.Ratings)
+				.FirstAsync(b => b.Id.Equals(Guid.Parse(bookId)));
+
+			var rating = book.Ratings
+				.FirstOrDefault(r => r.UserId.Equals(Guid.Parse(userId)));
 
 			if (rating == null)
 			{
-				await context.Ratings.AddAsync(new Rating
+				book.Ratings.Add(new Rating
 				{
-					BookId = Guid.Parse(bookId),
 					UserId = Guid.Parse(userId),
 					Value = value
 				});
