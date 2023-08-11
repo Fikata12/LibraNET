@@ -47,12 +47,12 @@ namespace LibraNET.Data
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
 			modelBuilder.Entity<ApplicationUser>()
-			.Property(e => e.CartId)
-			.IsRequired(false);
+				.Property(e => e.CartId)
+				.IsRequired(false);
 
 			modelBuilder.Entity<ApplicationUser>()
-			.Property(e => e.PhoneNumber)
-			.IsRequired(false);
+				.Property(e => e.PhoneNumber)
+				.IsRequired(false);
 
 			modelBuilder.Entity<ApplicationUser>()
 				.HasOne(e => e.Cart)
