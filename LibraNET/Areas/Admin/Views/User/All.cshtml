@@ -1,20 +1,10 @@
-﻿@model AllUsersViewModel
+﻿@model ICollection<UserViewModel>
 @inject UserManager<ApplicationUser> UserManager
 @{
 	ViewData["Title"] = "All Users";
 }
 <h2 class="text-center">@ViewData["Title"]</h2>
 <hr />
-<form class="justify-content-center d-flex my-4" asp-controller="User" asp-action="All" method="get">
-	<div id="search" class="w-50">
-		<div class="input-group">
-			<input asp-for="SearchString" type="search" class="form-control rounded-left" placeholder="Search by Id or Email" aria-label="Search" aria-describedby="search-addon" />
-			<button type="submit" class="btn btn-outline-success rounded-left">
-				<i class="bi bi-search"></i>
-			</button>
-		</div>
-	</div>
-</form>
 <div class="table-responsive">
 	<table class="table align-middle border">
 		<thead class="table-dark">
@@ -25,7 +15,7 @@
 			</tr>
 		</thead>
 		<tbody>
-			@foreach (var user in Model.Users)
+			@foreach (var user in Model)
 			{
 				<tr class="align-content-center">
 					<th scope="row">@user.Id</th>
@@ -37,7 +27,7 @@
 						}
 						else
 						{
-							<form asp-controller="User" asp-action="MakeAdmin" asp-route-id="@user.Id" method="post">
+							<form asp-area="Admin" asp-controller="User" asp-action="MakeAdmin" asp-route-id="@user.Id" method="post">
 								<button class="btn btn-sm btn-success" type="submit" onclick="return confirm('Are you sure you want to make Admin the user with email: @user.Email')">
 									Make Admin
 								</button>
@@ -49,19 +39,3 @@
 		</tbody>
 	</table>
 </div>
-
-@if (Model.Users.Any())
-{
-	@Html.PagedListPager(Model.Users,
-		CurrentPage => Url.Action("All", "User", new {
-		CurrentPage,
-		SearchString = Model.SearchString
-		}),
-		new PagedListRenderOptions {
-			LiElementClasses = new string[] { "page-item"},
-			PageClasses = new string[] { "page-link", "text-success" },
-			MaximumPageNumbersToDisplay = 3,
-			UlElementClasses = new string[] { "pagination", "justify-content-center"},
-			ContainerDivClasses = new string[] { "pagination-container", "py-5" }
-		})
-}

@@ -17,24 +17,13 @@ namespace LibraNET.Services.Data
 			this.context = context;
 			this.mapper = mapper;
 		}
-		public async Task<ICollection<UserViewModel>> AllAsync(AllUsersViewModel model)
+		public async Task<ICollection<UserViewModel>> AllAsync()
 		{
-			var usersQuery = context.Users.AsNoTracking();
-
-			if (!string.IsNullOrWhiteSpace(model.SearchString))
-			{
-				string wildCard = $"%{model.SearchString}%";
-
-				usersQuery = usersQuery.Where(u => EF.Functions.Like(u.Email, wildCard) ||
-												   EF.Functions.Like(u.Id.ToString(), wildCard));
-			}
-
-			ICollection<UserViewModel> users = await usersQuery
+			return await context.Users
+				.AsNoTracking()
 				.Where(u => u.UserName != null)
 				.ProjectTo<UserViewModel>(mapper.ConfigurationProvider)
 				.ToListAsync();
-
-			return users;
 		}
 
 		public async Task AddCartToUserAsync(string userId)

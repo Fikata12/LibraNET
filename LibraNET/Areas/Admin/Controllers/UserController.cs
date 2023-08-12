@@ -23,13 +23,13 @@ namespace LibraNET.Areas.Admin.Controllers
             this.memoryCache = memoryCache;
         }
 
-        public async Task<IActionResult> All([FromQuery] AllUsersViewModel model)
+        public async Task<IActionResult> All()
         {
             IEnumerable<UserViewModel> allUsers = memoryCache.Get<IEnumerable<UserViewModel>>(UsersCacheKey);
 
             if (allUsers == null)
             {
-                allUsers = await userService.AllAsync(model);
+                allUsers = await userService.AllAsync();
 
                 MemoryCacheEntryOptions options = new MemoryCacheEntryOptions()
                     .SetAbsoluteExpiration(TimeSpan.FromMinutes(3));
@@ -37,10 +37,7 @@ namespace LibraNET.Areas.Admin.Controllers
                 this.memoryCache.Set(UsersCacheKey, allUsers, options);
             }
 
-            model.Users = await allUsers.ToPagedListAsync(model.CurrentPage, UsersPerPage);
-            model.AllUsersCount = allUsers.Count();
-
-            return View(model);
+            return View(allUsers);
         }
 
         [HttpPost]
