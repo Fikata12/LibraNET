@@ -160,10 +160,10 @@ namespace LibraNET.Services.Data
 		}
 		public async Task<bool> NameBelongsToIdAsync(string name, string id)
 		{
-			return await context.Authors
+			return !await context.Authors
 				.AsNoTracking()
 				.Where(a => !a.IsDeleted)
-				.AnyAsync(a => a.Id.Equals(Guid.Parse(id)) && a.Name == name);
+				.AnyAsync(a => !a.Id.Equals(Guid.Parse(id)) && a.Name == name);
 		}
 	}
 }

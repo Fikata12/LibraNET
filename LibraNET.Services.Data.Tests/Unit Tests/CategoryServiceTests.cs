@@ -261,10 +261,10 @@ namespace LibraNET.Services.Data.Tests.Tests
 			// Arrange
 
 			// Act
-			var exists = await categoryService.NameBelongsToIdAsync("NonExistingName", Guid.NewGuid().ToString());
+			var exists = await categoryService.NameBelongsToIdAsync(context.Categories.First().Name, context.Categories.First().Id.ToString());
 
 			// Assert
-			Assert.False(exists);
+			Assert.True(exists);
 		}
 	}
 }

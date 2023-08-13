@@ -138,10 +138,10 @@ namespace LibraNET.Services.Data
 
 		public async Task<bool> NameBelongsToIdAsync(string name, string id)
 		{
-			return await context.Categories
+			return !await context.Categories
 				.AsNoTracking()
 				.Where(c => !c.IsDeleted)
-				.AnyAsync(c => c.Id.Equals(Guid.Parse(id)) && c.Name == name);
+				.AnyAsync(c => !c.Id.Equals(Guid.Parse(id)) && c.Name == name);
 		}
 	}
 }

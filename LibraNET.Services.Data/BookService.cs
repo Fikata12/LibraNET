@@ -289,10 +289,10 @@ namespace LibraNET.Services.Data
 
 		public async Task<bool> IsbnBelongsToIdAsync(string isbn, string id)
 		{
-			return await context.Books
+			return !await context.Books
 				.AsNoTracking()
 				.Where(b => !b.IsDeleted)
-				.AnyAsync(b => b.Id.Equals(Guid.Parse(id)) && b.ISBN == isbn);
+				.AnyAsync(b => !b.Id.Equals(Guid.Parse(id)) && b.ISBN == isbn);
 		}
 	}
 }

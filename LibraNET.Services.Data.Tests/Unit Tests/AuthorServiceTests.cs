@@ -317,10 +317,10 @@ namespace LibraNET.Services.Data.Tests.Tests
 			// Arrange
 
 			// Act
-			var exists = await authorService.NameBelongsToIdAsync("NonExistingName", Guid.NewGuid().ToString());
+			var exists = await authorService.NameBelongsToIdAsync(context.Authors.First().Name, context.Authors.First().Id.ToString());
 
 			// Assert
-			Assert.False(exists);
+			Assert.True(exists);
 		}
 	}
 }
