@@ -27,11 +27,11 @@ namespace LibraNET
 
             builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
             {
-                    options.SignIn.RequireConfirmedAccount = builder.Configuration.GetValue<bool>("Identity:SignIn:RequireConfirmedAccount");
-                    options.Password.RequireLowercase = builder.Configuration.GetValue<bool>("Identity:Password:RequireLowercase");
-                    options.Password.RequireUppercase = builder.Configuration.GetValue<bool>("Identity:Password:RequireUppercase");
-                    options.Password.RequireNonAlphanumeric = builder.Configuration.GetValue<bool>("Identity:Password:RequireNonAlphanumeric");
-                    options.Password.RequiredLength = builder.Configuration.GetValue<int>("Identity:Password:RequiredLength");
+                options.SignIn.RequireConfirmedAccount = builder.Configuration.GetValue<bool>("Identity:SignIn:RequireConfirmedAccount");
+                options.Password.RequireLowercase = builder.Configuration.GetValue<bool>("Identity:Password:RequireLowercase");
+                options.Password.RequireUppercase = builder.Configuration.GetValue<bool>("Identity:Password:RequireUppercase");
+                options.Password.RequireNonAlphanumeric = builder.Configuration.GetValue<bool>("Identity:Password:RequireNonAlphanumeric");
+                options.Password.RequiredLength = builder.Configuration.GetValue<int>("Identity:Password:RequiredLength");
             })
                 .AddRoles<IdentityRole<Guid>>()
                 .AddEntityFrameworkStores<LibraNetDbContext>();
@@ -59,14 +59,14 @@ namespace LibraNET
             builder.Services.AddScoped<ICartService, CartService>();
             builder.Services.AddScoped<IOrderService, OrderService>();
 
-			builder.Services.AddSignalR();
+            builder.Services.AddSignalR();
 
             builder.Services.AddMemoryCache();
 
 			var app = builder.Build();
 
             app.SeedAdminRole();
-            app.SeedUserRole();
+            app.SeedUsers();
 
 			app.MapHub<CommentsHub>("/commentsHub");
 

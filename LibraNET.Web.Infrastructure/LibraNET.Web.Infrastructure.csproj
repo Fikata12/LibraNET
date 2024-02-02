@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\LibraNET.Data.Models\LibraNET.Data.Models.csproj" />
+    <ProjectReference Include="..\LibraNET.Services.Data\LibraNET.Services.Data.csproj" />
   </ItemGroup>
 
 </Project>

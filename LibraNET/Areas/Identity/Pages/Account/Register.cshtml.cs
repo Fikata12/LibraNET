@@ -165,12 +165,12 @@ namespace LibraNET.Areas.Identity.Pages.Account
 					await cartService.AddCartAsync(userId);
 					await userService.AddCartToUserAsync(userId);
 
-					bool roleExists = await roleManager.RoleExistsAsync(UserRoleName);
+					//bool roleExists = await roleManager.RoleExistsAsync(UserRoleName);
 
-					if (roleExists)
-					{
-						await userManager.AddToRoleAsync(user, UserRoleName);
-					}
+					//if (roleExists)
+					//{
+					//	await userManager.AddToRoleAsync(user, UserRoleName);
+					//}
 
 					var code = await userManager.GenerateEmailConfirmationTokenAsync(user);
 					code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
