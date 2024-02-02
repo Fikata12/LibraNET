@@ -30,6 +30,15 @@ In addition to the capabilities of regular users, administrators have the follow
 - Access all users and categories pages for management purposes.
 - Promote other users to the admin role.
 
+## Seeded Accounts
+- **User**
+  - Username: `user@gmail.com`
+  - Password: `12345678`
+    
+- **Admin**
+  - Username: `admin@gmail.com`
+  - Password: `12345678`
+
 ## Built With
 
 LibraNET is built using a variety of technologies and frameworks, including:
