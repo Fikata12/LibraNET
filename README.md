@@ -6,7 +6,7 @@ LibraNET is an ASP.NET MVC application that serves as an online bookstore. It al
 
 ## Users
 
-LibraNET supports three types of users:
+LibraNET supports four types of users:
 
 ### Guest
 
@@ -30,6 +30,12 @@ In addition to the capabilities of regular users, administrators have the follow
 - Access all users and categories pages for management purposes.
 - Promote other users to the admin role.
 
+### Super Admin
+
+In addition to the capabilities of admins, super admins have the following privileges:
+
+- Promote other users to the admin role.
+
 ## Seeded Accounts
 - **User**
   - Username: `user@gmail.com`
@@ -37,6 +43,10 @@ In addition to the capabilities of regular users, administrators have the follow
     
 - **Admin**
   - Username: `admin@gmail.com`
+  - Password: `12345678`
+ 
+- **Super Admin**
+  - Username: `super.admin@gmail.com`
   - Password: `12345678`
 
 ## Built With
