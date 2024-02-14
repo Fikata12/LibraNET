@@ -86,77 +86,54 @@ LibraNET is built using a variety of technologies and frameworks, including:
 
 ![Екранна снимка 2023-09-01 185705](https://github.com/Fikata12/LibraNET/assets/90516828/c87628be-00c1-4b3c-bb8a-edf824230e23)
 
-- #### Admin Layout
+- #### Admin and Super Admin Layout
 
-![Екранна снимка 2023-09-01 185642](https://github.com/Fikata12/LibraNET/assets/90516828/dc4e909a-8e65-4de8-b4da-1ab544798d4e)
-
-![Екранна снимка 2023-09-01 185927](https://github.com/Fikata12/LibraNET/assets/90516828/69ae1c26-fb1f-4d4d-96b4-8ec40bb455ad)
-
-![Екранна снимка 2023-09-01 185936](https://github.com/Fikata12/LibraNET/assets/90516828/aa912cae-7966-45e8-bbf4-10a6d3e14c93)
+![image](https://github.com/Fikata12/LibraNET/assets/90516828/651ec42a-84b5-483e-9382-28fbb20bbfdb)
 
 ### Pages
 
 - #### Home
 
-> Guest and User
-
 ![Екранна снимка 2023-09-01 190439](https://github.com/Fikata12/LibraNET/assets/90516828/73180faf-1909-40bc-8da4-e7d4f09648db)
-
-> Admin
-
-![Екранна снимка 2023-09-01 192124](https://github.com/Fikata12/LibraNET/assets/90516828/d6e5c191-9429-4c35-a3ff-384bb6d7fe55)
 
 - #### All Books
 
-> Guest and User
-
 ![Екранна снимка 2023-09-01 190802](https://github.com/Fikata12/LibraNET/assets/90516828/adf2e976-fa41-4562-aa30-2a58d693c603)
-
-> Admin
-
-![Екранна снимка 2023-09-01 191819](https://github.com/Fikata12/LibraNET/assets/90516828/827b994f-9084-44ce-9c3b-18f07b0ffee1)
 
 - #### All Authors
 
-> Guest and User
-
 ![Екранна снимка 2023-09-01 191008](https://github.com/Fikata12/LibraNET/assets/90516828/0e242089-d4c8-456a-9604-fdb8952f8eb5)
 
-> Admin
+- #### Order Details
 
-![Екранна снимка 2023-09-01 192004](https://github.com/Fikata12/LibraNET/assets/90516828/a2748773-333a-4f91-abd6-591fcd4dadc8)
+> Customer
 
-- #### All Categories
+![image](https://github.com/Fikata12/LibraNET/assets/90516828/8f48fbff-6d88-44ef-bd63-1df55394e330)
 
-![Екранна снимка 2023-09-01 191153](https://github.com/Fikata12/LibraNET/assets/90516828/ed4db5ce-7274-4f14-ba24-21d178ebd907)
+> Admin and Super Admin
 
-- #### All Users
-
-![Екранна снимка 2023-09-01 191301](https://github.com/Fikata12/LibraNET/assets/90516828/cf691fa4-4bed-4c0b-9e8f-38dafb5b0fdb)
-
-
-- #### Add Book
-
-![Екранна снимка 2023-09-01 192635](https://github.com/Fikata12/LibraNET/assets/90516828/f8e9fcf0-9384-4ad2-b815-dfad4ce9457d)
-![Екранна снимка 2023-09-01 192647](https://github.com/Fikata12/LibraNET/assets/90516828/dcdf7d01-4e59-4425-baa1-f8427e3494cb)
-
-- #### Add Author
-
-![Екранна снимка 2023-09-01 191457](https://github.com/Fikata12/LibraNET/assets/90516828/7d9601ec-a8bc-40d7-bb01-37571c1ee232)
-
-- #### Add Category
-
-![Екранна снимка 2023-09-01 191524](https://github.com/Fikata12/LibraNET/assets/90516828/f6c36564-3c62-4c71-8a7d-41b3fe2d1ab4)
+![image](https://github.com/Fikata12/LibraNET/assets/90516828/22c76ab4-860e-4e4a-934d-b1ec64052793)
 
 - #### Book Details
-  
-![Екранна снимка 2023-09-01 192435](https://github.com/Fikata12/LibraNET/assets/90516828/858a3a07-2039-41f3-9771-bacd222ad06d)
+> Customer
 
+![Екранна снимка 2023-09-01 192435](https://github.com/Fikata12/LibraNET/assets/90516828/858a3a07-2039-41f3-9771-bacd222ad06d)
 ![Екранна снимка 2023-09-01 192513](https://github.com/Fikata12/LibraNET/assets/90516828/34038d0e-9040-44cf-9fcc-e0cd215533d2)
+
+> Admin and Super Admin
+
+![image](https://github.com/Fikata12/LibraNET/assets/90516828/d0ba6042-fb98-410f-a703-8c4a83206b35)
+![image](https://github.com/Fikata12/LibraNET/assets/90516828/dc610a9a-0d5e-4bcc-ab9c-efbc9740c5ec)
 
 - #### Author Details
 
+> Customer
+
 ![Екранна снимка 2023-09-01 192825](https://github.com/Fikata12/LibraNET/assets/90516828/ce6ff89f-6743-4f4c-a062-dfecc6c458b9)
+
+> Admin and Super Admin
+
+![image](https://github.com/Fikata12/LibraNET/assets/90516828/2e1f6cf3-84d3-402b-9d0b-8054637abc5c)
 
 - #### Favorites
 
@@ -172,4 +149,57 @@ LibraNET is built using a variety of technologies and frameworks, including:
 
 - #### Account
 
-![Екранна снимка 2023-09-01 193124](https://github.com/Fikata12/LibraNET/assets/90516828/734b1a61-8bce-4fa5-9291-0c79107aade7)
+![image](https://github.com/Fikata12/LibraNET/assets/90516828/54df4ccb-1f7e-4d58-bd85-18d9fed2262f)
+
+### Admin Pages
+
+- #### Dashboard
+
+![image](https://github.com/Fikata12/LibraNET/assets/90516828/a7f601ac-7dc8-4ad6-9e3c-42c385a3141f)
+
+- #### All Users
+  
+> Admin
+
+![image](https://github.com/Fikata12/LibraNET/assets/90516828/cb37f7bf-7c8a-44a1-be6b-8ab325a0e703)
+
+> Super Admin
+
+![image](https://github.com/Fikata12/LibraNET/assets/90516828/4f99e2af-5427-4c65-94dc-91d9625d71dd)
+
+- #### All Orders
+
+![image](https://github.com/Fikata12/LibraNET/assets/90516828/f4fe8358-8494-43d5-a954-a0fb5d2cfc2c)
+
+- #### Entities
+
+  ![image](https://github.com/Fikata12/LibraNET/assets/90516828/8ebf1cda-74d7-45e0-a53a-34aefa59d2db)
+
+- #### All Books
+
+![image](https://github.com/Fikata12/LibraNET/assets/90516828/414e8078-266d-450e-8164-e62287086744)
+
+- #### All Authors
+
+![image](https://github.com/Fikata12/LibraNET/assets/90516828/2877e61f-6ae1-4c62-b189-80a06688dd02)
+
+- #### All Categories
+
+![image](https://github.com/Fikata12/LibraNET/assets/90516828/08ffab02-f122-4a61-839a-5155ab2d6aef)
+
+- #### Add
+
+![image](https://github.com/Fikata12/LibraNET/assets/90516828/67843959-7677-4139-ac07-b3913674bdf9)
+
+- #### Add Book
+
+![Екранна снимка 2023-09-01 192635](https://github.com/Fikata12/LibraNET/assets/90516828/f8e9fcf0-9384-4ad2-b815-dfad4ce9457d)
+![Екранна снимка 2023-09-01 192647](https://github.com/Fikata12/LibraNET/assets/90516828/dcdf7d01-4e59-4425-baa1-f8427e3494cb)
+
+- #### Add Author
+
+![Екранна снимка 2023-09-01 191457](https://github.com/Fikata12/LibraNET/assets/90516828/7d9601ec-a8bc-40d7-bb01-37571c1ee232)
+
+- #### Add Category
+
+![Екранна снимка 2023-09-01 191524](https://github.com/Fikata12/LibraNET/assets/90516828/f6c36564-3c62-4c71-8a7d-41b3fe2d1ab4)
