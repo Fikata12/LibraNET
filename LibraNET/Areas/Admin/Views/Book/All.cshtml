@@ -1,0 +1,67 @@
+﻿@model AdminAllBooksViewModel
+@{
+	ViewData["Title"] = "All Books";
+}
+<h2 class="text-center">@ViewData["Title"]</h2>
+<hr />
+<form id="search-form" class="justify-content-center d-flex my-4" asp-area="Admin" asp-controller="Book" asp-action="All" method="get">
+	<div id="search" class="w-50">
+		<div class="input-group">
+			<input asp-for="SearchString" onblur="onBlur()" id="search" type="search" class="form-control rounded-left" placeholder="Search by Id, Title or ISBN" aria-label="Search" aria-describedby="search-addon" />
+			<button type="submit" class="btn btn-outline-success rounded-left">
+				<i class="bi bi-search"></i>
+			</button>
+		</div>
+	</div>
+</form>
+
+@if (Model.Books.Any())
+{
+	<div class="table-responsive">
+		<table class="table align-middle border">
+			<thead class="table-dark">
+				<tr>
+					<th scope="col">Id</th>
+					<th scope="col">Title</th>
+					<th scope="col">ISBN</th>
+					<th scope="col"></th>
+				</tr>
+			</thead>
+			<tbody>	
+				@foreach (var book in Model.Books)
+				{
+					<tr class="align-content-center">
+						<th scope="row">@book.Id</th>
+						<td>@book.Title</td>
+						<td>@book.ISBN</td>
+						<td>
+							<a asp-controller="Book" asp-area="" asp-action="Details" asp-route-id="@book.Id" class="btn btn-sm btn-success d-inline-flex">
+								Details
+							</a>
+						</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+	</div>
+}
+else
+{
+	<h2 class="my-5 text-center text-muted">No books!</h2>
+}
+
+@if (Model.Books.Any())
+{
+	@Html.PagedListPager(Model.Books,
+		CurrentPage => Url.Action("All", "Book", new {
+		CurrentPage,
+		SearchString = Model.SearchString
+		}),
+		new PagedListRenderOptions {
+			LiElementClasses = new string[] { "page-item"},
+			PageClasses = new string[] { "page-link", "text-success" },
+			MaximumPageNumbersToDisplay = 3,
+			UlElementClasses = new string[] { "pagination", "justify-content-center"},
+			ContainerDivClasses = new string[] { "pagination-container", "py-5" }
+		})
+}

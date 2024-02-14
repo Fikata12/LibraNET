@@ -4,10 +4,10 @@
 }
 <h2 class="text-center">@ViewData["Title"]</h2>
 <hr />
-<form class="justify-content-center d-flex my-4" asp-controller="Category" asp-action="All" method="get">
+<form id="search-form" class="justify-content-center d-flex my-4" asp-controller="Category" asp-action="All" method="get">
 	<div id="search" class="w-50">
 		<div class="input-group">
-			<input asp-for="SearchString" type="search" class="form-control rounded-left" placeholder="Search by Id or Name" aria-label="Search" aria-describedby="search-addon" />
+			<input asp-for="SearchString" type="search" onblur="onBlur()" class="form-control rounded-left" placeholder="Search by Id or Name" aria-label="Search" aria-describedby="search-addon" />
 			<button type="submit" class="btn btn-outline-success rounded-left">
 				<i class="bi bi-search"></i>
 			</button>
@@ -23,7 +23,7 @@
 				<tr>
 					<th scope="col">Id</th>
 					<th scope="col">Name</th>
-					<th scope="col">Edit/Delete</th>
+					<th scope="col"></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -33,7 +33,7 @@
 						<th scope="row">@category.Id</th>
 						<td>@category.Name</td>
 						<td>
-							<a asp-controller="Category" asp-action="Edit" asp-route-id="@category.Id" class="btn btn-sm btn-success d-inline-flex" type="submit">
+							<a asp-controller="Category" asp-action="Edit" asp-route-id="@category.Id" class="btn btn-sm btn-success d-inline-flex">
 								Edit
 							</a>
 							<form class="d-inline-flex" asp-controller="Category" asp-action="Delete" asp-route-id="@category.Id" method="post">

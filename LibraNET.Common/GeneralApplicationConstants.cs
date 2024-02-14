@@ -6,8 +6,19 @@
 
 		public const int BooksPerPage = 9;
 		public const int AuthorsPerPage = 9;
-		public const int CategoriesPerPage = 20;
-		public const int UsersPerPage = 20;
+
+		public const int AdminBooksPerPage = 20;
+		public const int AdminAuthorsPerPage = 20;
+		public const int AdminCategoriesPerPage = 20;
+		public const int AdminUsersPerPage = 20;
+		public const int AdminOrdersPerPage = 20;
+
+        public const string SuperAdminRoleName = "SuperAdmin";
+		public const string SuperAdminFirstName = "SuperAdmin";
+		public const string SuperAdminLastName = "SuperAdmin";
+		public const string SuperAdminEmail = "super.admin@gmail.com";
+		public const string SuperAdminPhoneNumber = "0891237654";
+		public const string SuperAdminPassword = "12345678";
 
 		public const string AdminRoleName = "Admin";
 		public const string AdminFirstName = "Admin";

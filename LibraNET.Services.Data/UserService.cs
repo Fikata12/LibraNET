@@ -4,6 +4,7 @@ using LibraNET.Data;
 using LibraNET.Services.Data.Contracts;
 using LibraNET.Web.ViewModels.User;
 using Microsoft.EntityFrameworkCore;
+using static LibraNET.Common.GeneralApplicationConstants;
 
 namespace LibraNET.Services.Data
 {
@@ -59,5 +60,35 @@ namespace LibraNET.Services.Data
 
 			await context.SaveChangesAsync();
 		}
-	}
+
+		public async Task<int> CustomersCountAsync()
+		{
+			return await context.Users
+				.AsNoTracking()
+				.Where(u => u.UsersRoles.Count == 0)
+				.CountAsync();
+		}
+
+		public async Task<int> AdminsCountAsync()
+		{
+			return await context.Users
+				.AsNoTracking()
+				.Where(u => u.UsersRoles.Any(ur => ur.Role.Name == AdminRoleName))
+				.CountAsync();
+		}
+
+		public async Task<int> SuperAdminsCountAsync()
+		{
+			return await context.Users
+				.AsNoTracking()
+				.Where(u => u.UsersRoles.Any(ur => ur.Role.Name == SuperAdminRoleName))
+				.CountAsync();
+		}
+        public async Task<int> CountAsync()
+        {
+            return await context.Users
+                .AsNoTracking()
+                .CountAsync();
+        }
+    }
 }

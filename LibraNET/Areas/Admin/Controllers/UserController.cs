@@ -1,16 +1,16 @@
 ﻿using LibraNET.Data.Models;
 using LibraNET.Services.Data.Contracts;
 using LibraNET.Web.ViewModels.User;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
-using X.PagedList;
 using static LibraNET.Common.GeneralApplicationConstants;
 using static LibraNET.Common.NotificationMessagesConstants;
 
 namespace LibraNET.Areas.Admin.Controllers
 {
-    public class UserController : BaseAdminController
+	public class UserController : BaseAdminController
     {
         private readonly IUserService userService;
         private readonly UserManager<ApplicationUser> userManager;
@@ -41,6 +41,7 @@ namespace LibraNET.Areas.Admin.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = SuperAdminRoleName)]
         public async Task<IActionResult> MakeAdmin(string id)
         {
             var user = await userManager.FindByIdAsync(id);
@@ -65,6 +66,35 @@ namespace LibraNET.Areas.Admin.Controllers
             }
 
             TempData["Success"] = SuccessfulUserAdminify;
+            return RedirectToAction("All", "User");
+        }
+
+        [HttpPost]
+        [Authorize(Roles = SuperAdminRoleName)]
+        public async Task<IActionResult> RemoveAdmin(string id)
+        {
+            var user = await userManager.FindByIdAsync(id);
+            if (user == null)
+            {
+                TempData["Error"] = UserNotFound;
+                return RedirectToAction("All", "User");
+            }
+
+            if (!await userManager.IsInRoleAsync(user, AdminRoleName))
+            {
+                TempData["Warning"] = TheUserIsNotAdmin;
+                return RedirectToAction("All", "User");
+            }
+
+            var removeFromAdminRoleResult = await userManager.RemoveFromRoleAsync(user, AdminRoleName);
+
+            if (!removeFromAdminRoleResult.Succeeded)
+            {
+                TempData["Error"] = UnsuccessfulAdminRemoval;
+                return RedirectToAction("All", "User");
+            }
+
+            TempData["Success"] = SuccessfulAdminRemoval;
             return RedirectToAction("All", "User");
         }
     }

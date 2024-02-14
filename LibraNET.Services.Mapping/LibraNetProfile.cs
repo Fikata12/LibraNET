@@ -7,6 +7,7 @@ using LibraNET.Web.ViewModels.Category;
 using LibraNET.Web.ViewModels.Comment;
 using LibraNET.Web.ViewModels.Order;
 using LibraNET.Web.ViewModels.User;
+using System.Globalization;
 
 namespace LibraNET.Services.Mapping
 {
@@ -24,6 +25,8 @@ namespace LibraNET.Services.Mapping
 				opt => opt.MapFrom(s => s.BooksAuthors))
 				.ForMember(d => d.Categories,
 				opt => opt.MapFrom(s => s.BooksCategories));
+
+			CreateMap<Book, AdminBookViewModel>();
 
 			CreateMap<BookFormModel, Book>()
 				.ForMember(d => d.BooksAuthors,
@@ -100,7 +103,9 @@ namespace LibraNET.Services.Mapping
 
 			CreateMap<Author, AuthorViewModel>();
 
-			CreateMap<Author, AuthorDetailsViewModel>();
+			CreateMap<Author, AdminAuthorViewModel>();
+
+            CreateMap<Author, AuthorDetailsViewModel>();
 
 			// Category
 			CreateMap<Category, CategoryViewModel>();
@@ -149,12 +154,25 @@ namespace LibraNET.Services.Mapping
 				.ForMember(d => d.UserId,
 				opt => opt.MapFrom((s, d, _, context) => context.Items["UserId"]!.ToString()));
 
-			CreateMap<Order, OrderViewModel>()
+			CreateMap<Order, OrderDetailsViewModel>()
 				.ForMember(d => d.Books,
 				opt => opt.MapFrom(s => s.OrdersBooks));
 
-			// OrderBook
-			CreateMap<CartBook, OrderBook>();
+			CreateMap<Order, AdminOrderViewModel>()
+				.ForMember(d => d.Email,
+				opt => opt.MapFrom(s => s.User.Email))
+				.ForMember(d => d.Date,
+				opt => opt.MapFrom(s => s.Date.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)));
+
+            CreateMap<Order, OrderViewModel>()
+                .ForMember(d => d.Price,
+                opt => opt.MapFrom(s => s.OrdersBooks.Sum(ob => ob.Book.Price).ToString("f2")))
+                .ForMember(d => d.Date,
+                opt => opt.MapFrom(s => s.Date.ToString("f")));
+
+
+            // OrderBook
+            CreateMap<CartBook, OrderBook>();
 
 			CreateMap<OrderBook, BookOrderViewModel>()
 				.ForMember(d => d.Id,

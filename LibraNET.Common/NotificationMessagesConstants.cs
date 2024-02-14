@@ -27,10 +27,14 @@
 
 		public const string UserNotFound = "User not found!";
         public const string TheUserIsAdmin = "The user you are trying to make Admin is already Admin!";
-		public const string UnsuccessfulUserAdminify = "Failed to make the user an Admin.";
+        public const string TheUserIsNotAdmin = "The user isn't Admin!";
+        public const string UnsuccessfulUserAdminify = "Failed to make the user an Admin.";
 		public const string SuccessfulUserAdminify = "Successfully adminified user!";
+		public const string SuccessfulAdminRemoval = "Successfully removed user from Admin role!";
+		public const string UnsuccessfulAdminRemoval = "Unsuccessful Admin removal!";
 
-		public const string InvalidRating = "The rating must be between 1 and 5 stars!";
+
+        public const string InvalidRating = "The rating must be between 1 and 5 stars!";
 		public const string UnsuccessfulBookRate = "Unexpected error occurred while trying to rate a book!";
 
 		public const string InvalidComment = "The field comment must be between 1 and 300 characters long!";
@@ -44,6 +48,6 @@
 		public const string SuccessfulAddToFavorite = "Successfully added book to your favorite books!";
 		public const string UnsuccessfulAddToFavorite = "Unexpected error occurred while trying to add a book to your favorite books!";
 
-		public const string SuccessfullyPlacedOrder = "Thank You for Your Order! Your order has been successfully placed. We appreciate your business!";
+		public const string SuccessfullyPlacedOrder = "Thank you for your order! Your order has been successfully placed. We appreciate your business!";
 	}
 }

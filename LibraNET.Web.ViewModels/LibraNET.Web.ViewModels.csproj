@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\LibraNET.Common\LibraNET.Common.csproj" />
+    <ProjectReference Include="..\LibraNET.Data.Models\LibraNET.Data.Models.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,0 +1,46 @@
+﻿@model AdminHomeViewModel
+@{
+    ViewData["Title"] = "Admin";
+}
+<div class="admin-panel text-center d-flex flex-column gap-3 pt-5 pb-4">
+    <a asp-controller="User" asp-area="Admin" asp-action="All" class="text-decoration-none text-dark h2">
+        <p>Users: @(Model.TotalCount)</p>
+        <div class="user-types flex-wrap d-flex justify-content-between">
+            <div class="type">
+                <div>
+                    @(Model.CustomersCount)
+                </div>
+                <div>
+                    Customers
+                </div>
+            </div>
+            <div class="type border-inline">
+                <div>
+                    @(Model.AdminsCount)
+                </div>
+                <div>
+                    Admins
+                </div>
+            </div>
+            <div class="type">
+                <div>
+                    @(Model.SuperAdminsCount)
+                </div>
+                <div>
+                    Super Admins
+                </div>
+            </div>
+        </div>
+    </a>
+    <div class="flex-column wrap d-flex justify-content-center flex-md-row gap-2 mt-5">
+        <a asp-controller="Order" asp-area="Admin" asp-action="All" class="text-decoration-none text-dark dashboard-links rounded border-solid-dark bg-light shadow">
+            <i class="bi bi-cart-fill"></i> Orders
+        </a>
+        <a asp-controller="Dashboard" asp-area="Admin" asp-action="Entities" class="text-decoration-none text-dark dashboard-links rounded border-solid-dark bg-light shadow">
+            <i class="bi bi-hdd-stack-fill"></i> Entities
+        </a>
+        <a asp-controller="Dashboard" asp-area="Admin" asp-action="Add" class="text-decoration-none text-dark dashboard-links rounded border-solid-dark bg-light shadow">
+            <i class="bi bi-database-fill-add"></i> Add Entity
+        </a>
+    </div>
+</div>

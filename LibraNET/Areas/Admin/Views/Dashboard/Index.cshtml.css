@@ -1,0 +1,18 @@
+﻿.type {
+    flex: 1 1 30%;
+    padding-block: 3em;
+}
+
+.border-inline {
+    border-inline: 3px solid #212529;
+}
+
+@media(max-width: 400px) {
+    .border-inline {
+        border-block: 3px solid #212529;
+        border-inline: 0px;
+    }
+    .user-types {
+        flex-direction: column
+    }
+}

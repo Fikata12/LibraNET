@@ -6,7 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace LibraNET.Data
 {
-	public class LibraNetDbContext : IdentityDbContext<ApplicationUser, IdentityRole<Guid>, Guid>
+	public class LibraNetDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, Guid, 
+		IdentityUserClaim<Guid>, ApplicationUserRole, IdentityUserLogin<Guid>, 
+		IdentityRoleClaim<Guid>, IdentityUserToken<Guid>>
 	{
 		bool seed;
 
@@ -46,6 +48,8 @@ namespace LibraNET.Data
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
+			base.OnModelCreating(modelBuilder);
+
 			modelBuilder.Entity<ApplicationUser>()
 				.Property(e => e.CartId)
 				.IsRequired(false);
@@ -77,6 +81,30 @@ namespace LibraNET.Data
 			modelBuilder.Entity<BookCategory>()
 				.HasKey(e => new { e.BookId, e.CategoryId });
 
+			modelBuilder.Entity<ApplicationUser>()
+				.HasMany(e => e.UsersRoles)
+				.WithOne(e => e.User)
+				.HasForeignKey(ur => ur.UserId)
+				.IsRequired();
+
+			modelBuilder.Entity<ApplicationRole>()
+				.HasMany(e => e.UsersRoles)
+				.WithOne(e => e.Role)
+				.HasForeignKey(ur => ur.RoleId)
+				.IsRequired();
+
+			modelBuilder.Entity<ApplicationUserRole>()
+				.HasOne(e => e.Role)
+				.WithMany(e => e.UsersRoles)
+				.HasForeignKey(ur => ur.RoleId)
+				.IsRequired();
+
+			modelBuilder.Entity<ApplicationUserRole>()
+				.HasOne(e => e.User)
+				.WithMany(e => e.UsersRoles)
+				.HasForeignKey(ur => ur.UserId)
+				.IsRequired();
+
 			if (seed)
 			{
 				modelBuilder.ApplyConfiguration(new AuthorEntityConfiguration());
@@ -85,8 +113,6 @@ namespace LibraNET.Data
 				modelBuilder.ApplyConfiguration(new BookAuthorEntityConfiguration());
 				modelBuilder.ApplyConfiguration(new BookCategoryEntityConfiguration());
 			}
-
-			base.OnModelCreating(modelBuilder);
 		}
 	}
 }

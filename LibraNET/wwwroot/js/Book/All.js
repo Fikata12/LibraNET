@@ -75,7 +75,7 @@ filterbar.addEventListener('show.bs.collapse', function () {
 })
 
 function submitForm() {
-    document.getElementById("filterForm").submit();
+    document.getElementById("search-form").submit();
 }
 
 function resetFilters() {

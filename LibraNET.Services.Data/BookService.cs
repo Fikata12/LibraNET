@@ -51,8 +51,8 @@ namespace LibraNET.Services.Data
 			{
 				string wildCard = $"%{model.SearchString}%";
 
-				booksQuery = booksQuery.Where(b => EF.Functions.Like(b.Title, wildCard) ||
-										 (b.ISBN != null && EF.Functions.Like(b.ISBN!, wildCard)));
+				booksQuery = booksQuery.Where(b => EF.Functions.Like(b.Title, wildCard) || 
+										(b.ISBN != null && EF.Functions.Like(b.ISBN!, wildCard)));
 			}
 
 			booksQuery = booksQuery.Where(b => b.Price >= model.SelectedMinPrice && b.Price <= model.SelectedMaxPrice);
@@ -84,7 +84,28 @@ namespace LibraNET.Services.Data
 			return books;
 		}
 
-		public async Task<decimal> MinPriceAsync()
+        public async Task<ICollection<AdminBookViewModel>> AllAsync(AdminAllBooksViewModel model)
+        {
+            var booksQuery = context.Books.AsNoTracking();
+
+            if (!string.IsNullOrWhiteSpace(model.SearchString))
+            {
+                string wildCard = $"%{model.SearchString}%";
+
+                booksQuery = booksQuery.Where(b => EF.Functions.Like(b.Title, wildCard) || 
+										(b.ISBN != null && EF.Functions.Like(b.ISBN!, wildCard)) ||
+                                        EF.Functions.Like(b.Id.ToString(), wildCard));
+            }
+
+            ICollection<AdminBookViewModel> books = await booksQuery
+                .Where(b => !b.IsDeleted)
+                .ProjectTo<AdminBookViewModel>(mapper.ConfigurationProvider)
+                .ToListAsync();
+
+            return books;
+        }
+
+        public async Task<decimal> MinPriceAsync()
 		{
 			return await context.Books
 				.AsNoTracking()

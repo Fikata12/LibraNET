@@ -4,9 +4,6 @@
 <ul class="navbar-nav">
 	@if (SignInManager.IsSignedIn(User))
 	{
-		var user = await UserManager.GetUserAsync(User);
-		string name = $"{user.FirstName} {user.LastName}";
-
 		<li class="nav-item px-1">
 			<a class="nav-link text-white" asp-area="" asp-controller="Book" asp-action="Favorites">
 				<i class="bi bi-heart-fill" style="font-size: 1.2rem;"></i>

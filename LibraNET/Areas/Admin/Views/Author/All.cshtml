@@ -1,0 +1,65 @@
+﻿@model AdminAllAuthorsViewModel
+@{
+    ViewData["Title"] = "All Authors";
+}
+<h2 class="text-center">@ViewData["Title"]</h2>
+<hr />
+<form id="search-form" class="justify-content-center d-flex my-4" asp-area="Admin" asp-controller="Author" asp-action="All" method="get">
+    <div id="search" class="w-50">
+        <div class="input-group">
+            <input asp-for="SearchString" onblur="onBlur()" id="search" type="search" class="form-control rounded-left" placeholder="Search by Id or Name" aria-label="Search" aria-describedby="search-addon" />
+            <button type="submit" class="btn btn-outline-success rounded-left">
+                <i class="bi bi-search"></i>
+            </button>
+        </div>
+    </div>
+</form>
+
+@if (Model.Authors.Any())
+{
+    <div class="table-responsive">
+        <table class="table align-middle border">
+            <thead class="table-dark">
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Name</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var author in Model.Authors)
+                {
+                    <tr class="align-content-center">
+                        <th scope="row">@author.Id</th>
+                        <td>@author.Name</td>
+                        <td>
+                            <a asp-controller="Author" asp-area="" asp-action="Details" asp-route-id="@author.Id" class="btn btn-sm btn-success d-inline-flex">
+                                Details
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <h2 class="my-5 text-center text-muted">No authors!</h2>
+}
+
+@if (Model.Authors.Any())
+{
+    @Html.PagedListPager(Model.Authors,
+		CurrentPage => Url.Action("All", "Author", new {
+		CurrentPage,
+		SearchString = Model.SearchString
+		}),
+		new PagedListRenderOptions {
+			LiElementClasses = new string[] { "page-item"},
+			PageClasses = new string[] { "page-link", "text-success" },
+			MaximumPageNumbersToDisplay = 3,
+			UlElementClasses = new string[] { "pagination", "justify-content-center"},
+			ContainerDivClasses = new string[] { "pagination-container", "py-5" }
+		})
+}

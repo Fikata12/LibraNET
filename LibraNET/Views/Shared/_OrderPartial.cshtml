@@ -1,0 +1,15 @@
+﻿@model OrderViewModel
+<a class="text-decoration-none text-dark" asp-controller="Order" asp-area="" asp-action="Details" asp-route-id="@Model.Id">
+    <div class="card mb-3">
+        <div class="card-header bg-dark text-white fw-bold d-flex justify-content-between">
+            <div>@Model.Date</div>
+            <div>@Model.Status</div>
+        </div>
+        <div class="card-body">
+            <div class="d-flex justify-content-between h5">
+                <div><strong>Order:</strong> @Model.Id</div>
+                <div><strong>Price:</strong> $@Model.Price</div>
+            </div>
+        </div>
+    </div>
+</a>

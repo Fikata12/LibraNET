@@ -56,7 +56,7 @@ namespace LibraNET.Controllers
 				await cartService.AddAsync(id, userId, quantity);
 
 				TempData["Success"] = SuccessfulAddToCart;
-				return RedirectToAction("Details", "Book", new { id });
+				return RedirectToAction("All", "Book");
 			}
 			catch (Exception)
 			{

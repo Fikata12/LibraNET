@@ -1,7 +1,9 @@
 ﻿using LibraNET.Services.Data.Contracts;
 using LibraNET.Web.ViewModels.Book;
 using Microsoft.AspNetCore.Mvc;
+using X.PagedList;
 using static LibraNET.Common.NotificationMessagesConstants;
+using static LibraNET.Common.GeneralApplicationConstants;
 
 
 namespace LibraNET.Areas.Admin.Controllers
@@ -198,7 +200,17 @@ namespace LibraNET.Areas.Admin.Controllers
 			}
 		}
 
-		public async Task<IActionResult> Image(string id)
+		[HttpGet]
+        public async Task<IActionResult> All([FromQuery] AdminAllBooksViewModel model)
+        {
+            var allBooks = await bookService.AllAsync(model);
+
+            model.Books = await allBooks.ToPagedListAsync(model.CurrentPage, AdminBooksPerPage);
+
+            return View(model);
+        }
+
+        public async Task<IActionResult> Image(string id)
 		{
 			try
 			{

@@ -13,7 +13,8 @@ namespace LibraNET.Data.Models
 			Comments = new List<Comment>();
 			Ratings = new List<Rating>();
 			Orders = new List<Order>();
-        }
+			UsersRoles = new List<ApplicationUserRole>();
+		}
 
 		[MaxLength(FirstNameMaxLength)]
 		public string? FirstName { get; set; }
@@ -32,5 +33,6 @@ namespace LibraNET.Data.Models
 		public virtual ICollection<Comment> Comments { get; set; }
 		public virtual ICollection<Order> Orders { get; set; }
 		public virtual ICollection<Rating> Ratings { get; set; }	
+		public virtual ICollection<ApplicationUserRole> UsersRoles { get; set; }
 	}
 }

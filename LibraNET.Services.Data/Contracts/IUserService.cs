@@ -8,5 +8,10 @@ namespace LibraNET.Services.Data.Contracts
 		Task AddCartToUserAsync(string userId);
 		Task<AccountViewModel> GetByIdAsync(string userId);
         Task EditAsync(AccountViewModel model, string userId);
-	}
+		Task<int> CustomersCountAsync();
+		Task<int> AdminsCountAsync();
+		Task<int> SuperAdminsCountAsync();
+		Task<int> CountAsync();
+
+    }
 }

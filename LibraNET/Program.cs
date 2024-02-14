@@ -6,13 +6,12 @@ using LibraNET.Services.Data.Contracts;
 using LibraNET.Services.Mapping;
 using LibraNET.Web.Infrastructure.Extensions;
 using LibraNET.Web.Infrastructure.ModelBinders;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace LibraNET
 {
-    public class Program
+	public class Program
     {
         public static void Main(string[] args)
         {
@@ -33,7 +32,7 @@ namespace LibraNET
                 options.Password.RequireNonAlphanumeric = builder.Configuration.GetValue<bool>("Identity:Password:RequireNonAlphanumeric");
                 options.Password.RequiredLength = builder.Configuration.GetValue<int>("Identity:Password:RequiredLength");
             })
-                .AddRoles<IdentityRole<Guid>>()
+                .AddRoles<ApplicationRole>()
                 .AddEntityFrameworkStores<LibraNetDbContext>();
 
             builder.Services
@@ -65,8 +64,9 @@ namespace LibraNET
 
 			var app = builder.Build();
 
+            app.SeedSuperAdminRole();
             app.SeedAdminRole();
-            app.SeedUsers();
+			app.SeedUsers();
 
 			app.MapHub<CommentsHub>("/commentsHub");
 

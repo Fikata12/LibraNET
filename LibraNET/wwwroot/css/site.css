@@ -332,3 +332,65 @@ input[type=number]::-webkit-outer-spin-button {
     padding: 0 !important;
 }
 
+/*Dashboard*/
+.bg-gray {
+    background-color: #D1D1D1
+}
+
+.border-solid-dark {
+    border: 3px solid #212529;
+}
+
+.dashboard-links {
+    flex: 1 1 30%;
+    padding-block: 3em;
+}
+
+.admin-panel {
+    font-size: 1.3em;
+    font-weight: bold;
+}
+
+.dashboard-links2 {
+    width: 100%;
+    padding-block: 3em;
+}
+
+@media (min-width: 350px) {
+    .dashboard-links2 {
+        width: 50%;
+    }
+}
+
+tr {
+    transition: background-color 0.4s ease-in-out;
+}
+
+    tr:hover {
+        background-color: #525660;
+        color: white;
+    }
+
+        tr:hover [class^="order-status"] {
+            color: inherit;
+        }
+
+.order-status-placed {
+    color: #888; /* Light Gray */
+}
+
+.order-status-processing {
+    color: #DAA520; /* Yellow */
+}
+
+.order-status-shipping {
+    color: #4169E1; /* Blue */
+}
+
+.order-status-delivered {
+    color: #008000; /* Green */
+}
+
+.order-status-cancelled {
+    color: #FF0000; /* Red */
+}

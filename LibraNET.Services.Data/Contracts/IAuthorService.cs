@@ -14,7 +14,8 @@ namespace LibraNET.Services.Data.Contracts
         Task EditAsync(AuthorFormModel model, string id);
         Task<string> GetImageIdAsync(string id);
 		Task<ICollection<AuthorViewModel>> AllAsync(AllAuthorsViewModel model);
-		Task DeleteAsync(string id);
+		Task<ICollection<AdminAuthorViewModel>> AllAsync(AdminAllAuthorsViewModel model);
+        Task DeleteAsync(string id);
 		Task<AuthorDetailsViewModel> GetDetailsAsync(string id);
 		Task<bool> NameBelongsToIdAsync(string name, string id);
 	}

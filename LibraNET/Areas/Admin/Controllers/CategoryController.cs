@@ -93,7 +93,7 @@ namespace LibraNET.Areas.Admin.Controllers
 		{
 			var allCategories = await categoryService.AllAsync(model);
 
-			model.Categories = await allCategories.ToPagedListAsync(model.CurrentPage, CategoriesPerPage);
+			model.Categories = await allCategories.ToPagedListAsync(model.CurrentPage, AdminCategoriesPerPage);
 			model.AllCategoriesCount = allCategories.Count;
 
 			return View(model);

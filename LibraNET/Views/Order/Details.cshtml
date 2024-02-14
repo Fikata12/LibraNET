@@ -1,0 +1,53 @@
+﻿@model OrderDetailsViewModel
+@{
+    ViewData["Title"] = "Order Details";
+}
+
+@if (User.IsInRole(AdminRoleName) || User.IsInRole(SuperAdminRoleName))
+{
+    <div class="m-5 text-center d-flex justify-content-center align-items-center">
+        <label for="order-status" class="h1 mx-2">Order status: </label>
+        <form id="order-status-form" asp-controller="Order" asp-area="Admin" asp-action="ChangeStatus" asp-route-id="@Model.Id" method="post" onchange="submitForm()">
+            <select asp-for="NewOrderStatus" id="order-status" class="form-select select-order-status">
+                <option selected="@(Model.Status == OrderStatus.Placed)" value="@((int)OrderStatus.Placed)">@OrderStatus.Placed.ToString()</option>
+                <option selected="@(Model.Status == OrderStatus.Processing)" value="@((int)OrderStatus.Processing)">@OrderStatus.Processing.ToString()</option>
+                <option selected="@(Model.Status == OrderStatus.Shipping)" value="@((int)OrderStatus.Shipping)">@OrderStatus.Shipping.ToString()</option>
+                <option selected="@(Model.Status == OrderStatus.Delivered)" value="@((int)OrderStatus.Delivered)">@OrderStatus.Delivered.ToString()</option>
+                <option selected="@(Model.Status == OrderStatus.Cancelled)" value="@((int)OrderStatus.Cancelled)">@OrderStatus.Cancelled.ToString()</option>
+            </select>
+        </form>
+    </div>
+}
+else
+{
+
+    <h1 class="m-5 text-center">Order status: <strong>@Model.Status</strong></h1>
+}
+
+<div class="pb-5">
+    <div class="card">
+        <div class="card-header bg-dark text-white fw-bold">@Model.Date.ToString("f")</div>
+        <div class="card-body">
+            @foreach (var book in Model.Books)
+            {
+                <partial name="_BookOrderPartial" model="@book"></partial>
+            }
+            <div class="row border-top pt-2 mt-2 justify-content-between">
+                <p class="mb-0">Recipient: @Model.RecipientName</p>
+                <p class="mb-0">Address: @Model.Town, @Model.PostCode, @Model.Address</p>
+            </div>
+            <div class="row border-top pt-2 mt-2 justify-content-between">
+                <div class="col-6">
+                    <p class="mb-0">Shipping Price: Free</p>
+                </div>
+                <div class="col-6 text-end">
+                    <p class="mb-0">Total Price: $@Model.Books.Sum(b => b.TotalPrice).ToString("f2")</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/Order/Details.js"></script>
+}

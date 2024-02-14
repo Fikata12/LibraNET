@@ -9,74 +9,92 @@ namespace LibraNET.Web.Infrastructure.Extensions
 {
     public static class ApplicationBuilderExtensions
     {
-        public static IApplicationBuilder SeedAdminRole(this IApplicationBuilder app)
+		public static IApplicationBuilder SeedSuperAdminRole(this IApplicationBuilder app)
+		{
+			using IServiceScope scopedServices = app.ApplicationServices.CreateScope();
+
+			IServiceProvider serviceProvider = scopedServices.ServiceProvider;
+
+			RoleManager<ApplicationRole> roleManager = serviceProvider.GetRequiredService<RoleManager<ApplicationRole>>();
+
+			Task.Run(async () =>
+			{
+				if (await roleManager.RoleExistsAsync(SuperAdminRoleName))
+				{
+					return;
+				}
+
+				ApplicationRole role = new ApplicationRole();
+                role.Name = SuperAdminRoleName;
+
+				await roleManager.CreateAsync(role);
+			})
+			.GetAwaiter()
+			.GetResult();
+
+			return app;
+		}
+		public static IApplicationBuilder SeedAdminRole(this IApplicationBuilder app)
         {
-            using IServiceScope scopedServices = app.ApplicationServices.CreateScope();
+			using IServiceScope scopedServices = app.ApplicationServices.CreateScope();
 
-            IServiceProvider serviceProvider = scopedServices.ServiceProvider;
+			IServiceProvider serviceProvider = scopedServices.ServiceProvider;
 
-            RoleManager<IdentityRole<Guid>> roleManager =
-                serviceProvider.GetRequiredService<RoleManager<IdentityRole<Guid>>>();
+			RoleManager<ApplicationRole> roleManager = serviceProvider.GetRequiredService<RoleManager<ApplicationRole>>();
 
-            Task.Run(async () =>
-            {
-                if (await roleManager.RoleExistsAsync(AdminRoleName))
-                {
-                    return;
-                }
+			Task.Run(async () =>
+			{
+				if (await roleManager.RoleExistsAsync(AdminRoleName))
+				{
+					return;
+				}
 
-                IdentityRole<Guid> role =
-                    new IdentityRole<Guid>(AdminRoleName);
+				ApplicationRole role = new ApplicationRole();
+				role.Name = AdminRoleName;
 
-                await roleManager.CreateAsync(role);
-            })
-            .GetAwaiter()
-            .GetResult();
+				await roleManager.CreateAsync(role);
+			})
+			.GetAwaiter()
+			.GetResult();
 
-            return app;
-        }
+			return app;
+		}
         public static IApplicationBuilder SeedUserRole(this IApplicationBuilder app)
         {
-            using IServiceScope scopedServices = app.ApplicationServices.CreateScope();
+			using IServiceScope scopedServices = app.ApplicationServices.CreateScope();
 
-            IServiceProvider serviceProvider = scopedServices.ServiceProvider;
+			IServiceProvider serviceProvider = scopedServices.ServiceProvider;
 
-            RoleManager<IdentityRole<Guid>> roleManager =
-                serviceProvider.GetRequiredService<RoleManager<IdentityRole<Guid>>>();
+			RoleManager<ApplicationRole> roleManager = serviceProvider.GetRequiredService<RoleManager<ApplicationRole>>();
 
-            Task.Run(async () =>
-            {
-                if (await roleManager.RoleExistsAsync(UserRoleName))
-                {
-                    return;
-                }
+			Task.Run(async () =>
+			{
+				if (await roleManager.RoleExistsAsync(UserRoleName))
+				{
+					return;
+				}
 
-                IdentityRole<Guid> role =
-                    new IdentityRole<Guid>(UserRoleName);
+				ApplicationRole role = new ApplicationRole();
+				role.Name = UserRoleName;
 
-                await roleManager.CreateAsync(role);
-            })
-            .GetAwaiter()
-            .GetResult();
+				await roleManager.CreateAsync(role);
+			})
+			.GetAwaiter()
+			.GetResult();
 
-            return app;
-        }
+			return app;
+		}
         public static IApplicationBuilder SeedUsers(this IApplicationBuilder app)
         {
             using IServiceScope scopedServices = app.ApplicationServices.CreateScope();
 
             IServiceProvider serviceProvider = scopedServices.ServiceProvider;
 
-            IUserStore<ApplicationUser> userStore = 
-                serviceProvider.GetRequiredService<IUserStore<ApplicationUser>>();
-            IUserEmailStore<ApplicationUser> emailStore = 
-                (IUserEmailStore<ApplicationUser>)userStore;
-            UserManager<ApplicationUser> userManager = 
-                serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
-            ICartService cartService =
-                serviceProvider.GetRequiredService<ICartService>();
-            IUserService userService =
-                serviceProvider.GetRequiredService<IUserService>();
+            IUserStore<ApplicationUser> userStore = serviceProvider.GetRequiredService<IUserStore<ApplicationUser>>();
+            IUserEmailStore<ApplicationUser> emailStore = (IUserEmailStore<ApplicationUser>)userStore;
+            UserManager<ApplicationUser> userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+            ICartService cartService = serviceProvider.GetRequiredService<ICartService>();
+            IUserService userService = serviceProvider.GetRequiredService<IUserService>();
 
             Task.Run(async () =>
             {
@@ -110,7 +128,23 @@ namespace LibraNET.Web.Infrastructure.Extensions
                     await cartService.AddCartAsync(admin.Id.ToString());
                     await userService.AddCartToUserAsync(admin.Id.ToString());
                 }
-            })
+
+				if (await userManager.FindByEmailAsync(SuperAdminEmail) == null)
+				{
+					var superAdmin = new ApplicationUser();
+
+					superAdmin.FirstName = SuperAdminFirstName;
+					superAdmin.LastName = SuperAdminLastName;
+					superAdmin.PhoneNumber = SuperAdminPhoneNumber;
+
+					await userStore.SetUserNameAsync(superAdmin, SuperAdminEmail, CancellationToken.None);
+					await emailStore.SetEmailAsync(superAdmin, SuperAdminEmail, CancellationToken.None);
+					await userManager.CreateAsync(superAdmin, SuperAdminPassword);
+					await userManager.AddToRoleAsync(superAdmin, SuperAdminRoleName);
+					await cartService.AddCartAsync(superAdmin.Id.ToString());
+					await userService.AddCartToUserAsync(superAdmin.Id.ToString());
+				}
+			})
             .GetAwaiter()
             .GetResult();
 

@@ -1,30 +1,12 @@
-﻿using LibraNET.Web.ViewModels.Book;
-using System.ComponentModel.DataAnnotations;
+﻿using LibraNET.Data.Models.Enums;
 
 namespace LibraNET.Web.ViewModels.Order
 {
-	public class OrderViewModel
-	{
-        public OrderViewModel()
-        {
-            Books = new List<BookOrderViewModel>();
-        }
+    public class OrderViewModel
+    {
         public string Id { get; set; } = null!;
-
-		public string RecipientName { get; set; } = null!;
-
-		public string PhoneNumber { get; set; } = null!;
-
-		public string Town { get; set; } = null!;
-
-		public string PostCode { get; set; } = null!;
-
-		public string Address { get; set; } = null!;
-
-		public DateTime Date { get; set; }
-
-		public string Status { get; set; } = null!;
-
-		public ICollection<BookOrderViewModel> Books { get; set; }
-	}
+        public string Price { get; set; } = null!;
+        public string Date { get; set; } = null!;
+        public OrderStatus Status { get; set; }
+    }
 }

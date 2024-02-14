@@ -1,41 +1,67 @@
 ﻿@model ICollection<UserViewModel>
 @inject UserManager<ApplicationUser> UserManager
 @{
-	ViewData["Title"] = "All Users";
+    ViewData["Title"] = "All Users";
 }
 <h2 class="text-center">@ViewData["Title"]</h2>
 <hr />
 <div class="table-responsive">
-	<table class="table align-middle border">
-		<thead class="table-dark">
-			<tr>
-				<th scope="col">Id</th>
-				<th scope="col">Email</th>
-				<th scope="col">Make Admin</th>
-			</tr>
-		</thead>
-		<tbody>
-			@foreach (var user in Model)
-			{
-				<tr class="align-content-center">
-					<th scope="row">@user.Id</th>
-					<td>@user.Email</td>
-					<td>
-						@if (await UserManager.IsInRoleAsync(await UserManager.FindByIdAsync(user.Id), "Admin"))
-						{
-							<span class="text-muted">Already Admin</span>
-						}
-						else
-						{
-							<form asp-area="Admin" asp-controller="User" asp-action="MakeAdmin" asp-route-id="@user.Id" method="post">
-								<button class="btn btn-sm btn-success" type="submit" onclick="return confirm('Are you sure you want to make Admin the user with email: @user.Email')">
-									Make Admin
-								</button>
-							</form>
-						}
-					</td>
-				</tr>
-			}
-		</tbody>
-	</table>
+    <table class="table align-middle border">
+        <thead class="table-dark">
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Email</th>
+                <th scope="col">Role</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in Model)
+            {
+                <tr class="align-content-center @(user.Email == User?.Identity?.Name ? "bg-gray" : "")">
+                    <th scope="row">@user.Id</th>
+                    <td>@user.Email</td>
+                    <td>
+                        @if (User.IsInRole(SuperAdminRoleName))
+                        {
+                            @if (await UserManager.IsInRoleAsync(await UserManager.FindByIdAsync(user.Id), AdminRoleName))
+                            {
+                                <form asp-area="Admin" asp-controller="User" asp-action="RemoveAdmin" asp-route-id="@user.Id" method="post">
+                                    <button class="btn btn-sm btn-danger" type="submit" onclick="return confirm('Are you sure you want to remove the Admin role from the user with email: @user.Email')">
+                                        Remove Admin
+                                    </button>
+                                </form>
+                            }
+                            else if (await UserManager.IsInRoleAsync(await UserManager.FindByIdAsync(user.Id), SuperAdminRoleName))
+                            {
+                                <span class="text-muted">Super Admin</span>
+                            }
+                            else
+                            {
+                                <form asp-area="Admin" asp-controller="User" asp-action="MakeAdmin" asp-route-id="@user.Id" method="post">
+                                    <button class="btn btn-sm btn-success" type="submit" onclick="return confirm('Are you sure you want to make Admin the user with email: @user.Email')">
+                                        Make Admin
+                                    </button>
+                                </form>
+                            }
+                        }
+                        else
+                        {
+                            if (await UserManager.IsInRoleAsync(await UserManager.FindByIdAsync(user.Id), AdminRoleName))
+                            {
+                                <span class="text-muted">Admin</span>
+                            }
+                            else if (await UserManager.IsInRoleAsync(await UserManager.FindByIdAsync(user.Id), SuperAdminRoleName))
+                            {
+                                <span class="text-muted">Super Admin</span>
+                            }
+                            else
+                            {
+                                <span class="text-muted">Customer</span>
+                            }
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </div>

@@ -108,7 +108,7 @@ namespace LibraNET.Services.Data
 				string wildCard = $"%{model.SearchString}%";
 
 				categoriesQuery = categoriesQuery.Where(c => EF.Functions.Like(c.Name, wildCard) ||
-												   EF.Functions.Like(c.Id.ToString(), wildCard));
+												  EF.Functions.Like(c.Id.ToString(), wildCard));
 			}
 
 			ICollection<CategoryViewModel> categories = await categoriesQuery

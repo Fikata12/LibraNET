@@ -1,0 +1,91 @@
+﻿@model AdminAllOrdersViewModel
+@{
+    ViewData["Title"] = "All Orders";
+}
+<h2 class="text-center">@ViewData["Title"]</h2>
+<hr />
+<form id="search-form" class="justify-content-center d-flex my-4" asp-area="Admin" asp-controller="Order" asp-action="All" method="get">
+    <div id="search" class="w-50">
+        <div class="input-group">
+            <input asp-for="SearchString" onblur="onBlur()" id="search" type="search" class="form-control rounded-left" placeholder="Search by Id, Email, Date (dd/MM/yyyy) or Status" />
+            <button type="submit" class="btn btn-outline-success rounded-left">
+                <i class="bi bi-search"></i>
+            </button>
+        </div>
+    </div>
+</form>
+
+@if (Model.Orders.Any())
+{
+    <div class="table-responsive">
+        <table class="table align-middle border">
+            <thead class="table-dark">
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Status</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var order in Model.Orders)
+                {
+                    var orderClass = "";
+                    switch (order.Status)
+                    {
+                        case OrderStatus.Placed:
+                            orderClass = "order-status-placed";
+                            break;
+                        case OrderStatus.Processing:
+                            orderClass = "order-status-processing";
+                            break;
+                        case OrderStatus.Shipping:
+                            orderClass = "order-status-shipping";
+                            break;
+                        case OrderStatus.Delivered:
+                            orderClass = "order-status-delivered";
+                            break;
+                        case OrderStatus.Cancelled:
+                            orderClass = "order-status-cancelled";
+                            break;
+                        default:
+                            break;
+                    }
+
+                    <tr class="align-content-center">
+                        <th scope="row">@order.Id</th>
+                        <td>@order.Email</td>
+                        <td>@order.Date</td>
+                        <td class="@orderClass fw-bold">@order.Status</td>
+                        <td>
+                            <a asp-controller="Order" asp-area="" asp-action="Details" asp-route-id="@order.Id" class="btn btn-sm btn-success d-inline-flex">
+                                Details
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <h2 class="my-5 text-center text-muted">No orders!</h2>
+}
+
+@if (Model.Orders.Any())
+{
+    @Html.PagedListPager(Model.Orders,
+		CurrentPage => Url.Action("All", "Order", new {
+		CurrentPage,
+		SearchString = Model.SearchString
+		}),
+		new PagedListRenderOptions {
+			LiElementClasses = new string[] { "page-item"},
+			PageClasses = new string[] { "page-link", "text-success" },
+			MaximumPageNumbersToDisplay = 3,
+			UlElementClasses = new string[] { "pagination", "justify-content-center"},
+			ContainerDivClasses = new string[] { "pagination-container", "py-5" }
+		})
+}

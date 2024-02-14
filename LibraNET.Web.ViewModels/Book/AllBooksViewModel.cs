@@ -38,8 +38,6 @@ namespace LibraNET.Web.ViewModels.Book
 
         public int MaxPrice { get; set; }
 
-        public int AllBooksCount { get; set; }
-
         public int CurrentPage { get; set; }
 
         public IPagedList<BookViewModel> Books { get; set; } = null!;
