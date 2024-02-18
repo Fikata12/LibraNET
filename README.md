@@ -28,7 +28,6 @@ In addition to the capabilities of regular users, administrators have the follow
 
 - Add new books, categories, and authors to the store.
 - Access all users and categories pages for management purposes.
-- Promote other users to the admin role.
 
 ### Super Admin
 
