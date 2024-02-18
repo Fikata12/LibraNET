@@ -105,6 +105,7 @@ namespace LibraNET.Controllers
 				if (rating < RatingMinValue || rating > RatingMaxValue)
 				{
 					TempData["Error"] = InvalidRating;
+					return RedirectToAction("Details", "Book", new { id });
 				}
 
 				var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);

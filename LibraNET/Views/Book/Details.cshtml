@@ -15,24 +15,24 @@
         <div class="col-lg-5">
             <div class="ps-lg-3">
                 <h4 class="title text-dark">@Model.Title</h4>
-                <div class="d-inline-block flex-row my-3">
-                    <div class="d-inline-flex">
+                <div class="d-flex align-items-center my-3 flex-wrap">
+                    <div>
                         <div class="full-star-ratings" data-rateyo-full-star="true" data-rateyo-star-width="20px"></div>
                         <form id="rating-form" asp-controller="Book" asp-action="Rate" asp-route-id="@Model.Id" method="post">
                             <input asp-for="Rating" type="hidden" />
                         </form>
                     </div>
-                    <span class="text-warning mb-1 me-2 d-inline-flex">
+                    <span class="text-warning me-2">
                         @((((double)Model.Ratings.Sum() / (Model.Ratings.Count == 0 ? 1 : Model.Ratings.Count)) * 2).ToString("f1", CultureInfo.InvariantCulture))/10 (@Model.Ratings.Count)
                     </span>
-                    <span class="text-muted d-inline-flex"><i class="bi bi-cart-fill"></i>&nbsp;@(Model.OrdersCount) orders</span>
+                    <span class="text-muted me-2"><i class="bi bi-cart-fill"></i>&nbsp;@(Model.OrdersCount) orders</span>
                     @if (Model.AvailableCount > 0)
                     {
-                        <span class="text-success ms-2 d-inline-flex">In stock</span>
+                        <span class="text-success me-2">In stock</span>
                     }
                     else
                     {
-                        <span class="text-danger ms-2 d-inline-flex">Out of stock</span>
+                        <span class="text-danger me-2">Out of stock</span>
                     }
                 </div>
                 <h5 class="my-3">$@Model.Price.ToString("f2")</h5>
