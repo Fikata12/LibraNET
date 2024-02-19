@@ -27,7 +27,7 @@ Guests have limited access to the web store and can perform the following action
 In addition to the capabilities of regular users, administrators have the following privileges:
 
 - Add new books, categories, and authors to the store.
-- Access all users and categories pages for management purposes.
+- Access admin pages.
 
 ### Super Admin
 
