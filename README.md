@@ -15,7 +15,7 @@ Guests have limited access to the web store and can perform the following action
 - View the home page.
 - Browse all books and authors.
 
-### User
+### Customers
 
 - View the home page.
 - Browse all books and authors.
@@ -24,7 +24,7 @@ Guests have limited access to the web store and can perform the following action
 
 ### Admin
 
-In addition to the capabilities of regular users, administrators have the following privileges:
+In addition to the capabilities of customers, administrators have the following privileges:
 
 - Add new books, categories, and authors to the store.
 - Access admin pages.
