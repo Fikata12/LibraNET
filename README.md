@@ -15,7 +15,7 @@ Guests have limited access to the web store and can perform the following action
 - View the home page.
 - Browse all books and authors.
 
-### Customers
+### Customer
 
 - View the home page.
 - Browse all books and authors.
