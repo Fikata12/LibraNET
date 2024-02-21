@@ -1,4 +1,4 @@
-![image](https://github.com/Fikata12/LibraNET/assets/90516828/271fe8a7-e52b-455d-9f76-4a388f2c71db)# LibraNET - Web Store for Books
+# LibraNET - Web Store for Books
 
 ## Introduction
 
