@@ -15,7 +15,7 @@ Guests have limited access to the web store and can perform the following action
 - View the home page.
 - Browse all books and authors.
 
-### User
+### Customer
 
 - View the home page.
 - Browse all books and authors.
@@ -24,10 +24,10 @@ Guests have limited access to the web store and can perform the following action
 
 ### Admin
 
-In addition to the capabilities of regular users, administrators have the following privileges:
+In addition to the capabilities of customers, administrators have the following privileges:
 
 - Add new books, categories, and authors to the store.
-- Access all users and categories pages for management purposes.
+- Access admin pages.
 
 ### Super Admin
 
@@ -79,11 +79,13 @@ LibraNET is built using a variety of technologies and frameworks, including:
 
 - #### Guest Layout
 
-![Екранна снимка 2023-09-01 185628](https://github.com/Fikata12/LibraNET/assets/90516828/f2d56527-e6c8-4177-9c16-a40bbac8230c)
+![image](https://github.com/Fikata12/LibraNET/assets/90516828/375ee8a9-35d1-4064-b62b-8b7519661c8c)
+
 
 - #### User Layout
 
-![Екранна снимка 2023-09-01 185705](https://github.com/Fikata12/LibraNET/assets/90516828/c87628be-00c1-4b3c-bb8a-edf824230e23)
+![image](https://github.com/Fikata12/LibraNET/assets/90516828/d894848c-47d2-48e2-8918-0c83b43f1675)
+
 
 - #### Admin and Super Admin Layout
 
@@ -136,15 +138,16 @@ LibraNET is built using a variety of technologies and frameworks, including:
 
 - #### Favorites
 
-![Екранна снимка 2023-09-01 193033](https://github.com/Fikata12/LibraNET/assets/90516828/76710a7c-2698-4353-bbe8-525f62665854)
+![image](https://github.com/Fikata12/LibraNET/assets/90516828/4ec73bf8-d03c-4912-a607-09fc6ee144a0)
 
 - #### Cart
 
-![Екранна снимка 2023-09-01 193059](https://github.com/Fikata12/LibraNET/assets/90516828/03bb7878-81aa-4c13-b897-1705bb5550e7)
+![image](https://github.com/Fikata12/LibraNET/assets/90516828/5ecd5776-64e7-466c-9723-7725bff50b22)
+
 
 - #### Checkout
 
-![Екранна снимка 2023-09-01 193108](https://github.com/Fikata12/LibraNET/assets/90516828/a367b8b4-18ac-46f3-99c8-745e376c5f90)
+![image](https://github.com/Fikata12/LibraNET/assets/90516828/fc26a505-dadd-4e8b-927a-63bf92373df3)
 
 - #### Account
 
