@@ -166,7 +166,7 @@ namespace LibraNET.Services.Mapping
 
             CreateMap<Order, OrderViewModel>()
                 .ForMember(d => d.Price,
-                opt => opt.MapFrom(s => s.OrdersBooks.Sum(ob => ob.Book.Price).ToString("f2")))
+                opt => opt.MapFrom(s => s.OrdersBooks.Sum(ob => ob.Book.Price * ob.BookCount).ToString("f2")))
                 .ForMember(d => d.Date,
                 opt => opt.MapFrom(s => s.Date.ToString("f")));
 
