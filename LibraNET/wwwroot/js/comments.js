@@ -9,7 +9,7 @@ connection.on("ReceiveComment", function (username, comment, dateTime, bookId) {
     let urlBookId = urlParts[urlParts.length - 1];
     if (urlBookId.toLowerCase().includes(bookId.toLowerCase().substring(0, 32))) {
         let count = 0;
-        $.get("https://localhost:7219/Book/CommentsCount/" + urlBookId, async function (data, status) {
+        $.get("/Book/CommentsCount/" + urlBookId, async function (data, status) {
 
             count = Number(data);
             if (count == 0) {

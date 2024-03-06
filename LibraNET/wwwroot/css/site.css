@@ -365,11 +365,15 @@ input[type=number]::-webkit-outer-spin-button {
 tr {
     transition: background-color 0.4s ease-in-out;
 }
-
+    
     tr:hover {
         background-color: #525660;
         color: white;
     }
+
+        tr:hover span {
+            color: white !important;
+        }
 
         tr:hover [class^="order-status"] {
             color: inherit;

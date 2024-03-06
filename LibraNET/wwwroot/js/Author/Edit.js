@@ -3,11 +3,11 @@
 const urlParts = window.location.href.split('/');
 let bookId = urlParts[urlParts.length - 1];
 
-$.get("https://localhost:7219/Admin/Author/Image/" + bookId, async function (data, status) {
+$.get("/Admin/Author/Image/" + bookId, async function (data, status) {
 
 	let imageName = data;
 	if (imageName) {
-		let url = "https://localhost:7219/Images/Authors/" + imageName;
+		let url = "/Images/Authors/" + imageName;
 
 		const response = await fetch(url);
 		const blob = await response.blob();
